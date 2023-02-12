@@ -1,0 +1,11 @@
+{
+  "testPathIgnorePatterns": ["/node_modules/", "/__types__/"],
+  "transform": {
+    "\\.[jt]sx?$": [
+      "babel-jest",
+      {
+        "extends": "./babel.jest.config.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+@keyframes blink {
+  0% {
+    opacity: 100%;
+  }
+  50% {
+    opacity: 20%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.effect--blink {
+  animation: blink 2s infinite;
+}

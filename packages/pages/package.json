@@ -1,0 +1,19 @@
+{
+  "name": "react-wrap-with-pages",
+  "version": "0.0.0-0",
+  "description": "",
+  "scripts": {
+    "build": "esbuild --bundle --minify --outfile=./public/static/js/main.js ./src/index.tsx",
+    "start": "esbuild --bundle --outfile=./public/static/js/main.js --servedir=./public ./src/index.tsx"
+  },
+  "author": "William Wong (https://github.com/compulim)",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.17.4"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-wrap-with": "file:../react-wrap-with/react-wrap-with-0.0.0-0.tgz"
+  }
+}

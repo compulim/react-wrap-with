@@ -1,0 +1,67 @@
+name: Pull request validation
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm clean-install
+      - name: Run ESLint
+        run: npm run precommit
+      - run: npm run build --if-present
+      - name: Run npm pack
+        run: |
+          cd packages/react-wrap-with
+          npm pack
+      - name: Upload tarball artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: tarball
+          path: packages/react-wrap-with/*.tgz
+      - name: Run unit tests
+        run: |
+          cd packages/react-wrap-with
+          npm test
+
+  integration-test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Download tarball artifact
+        uses: actions/download-artifact@v3.0.1
+        with:
+          name: tarball
+          path: packages/react-wrap-with
+      - name: Run npm install
+        run: |
+          cd packages/integration-test
+          npm install
+      - name: Run integration tests
+        run: |
+          cd packages/integration-test
+          npm test

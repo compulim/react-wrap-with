@@ -1,0 +1,7 @@
+/.env
+/*.tgz
+/CHANGELOG.md
+/lib
+/LICENSE
+/node_modules
+/README.md
