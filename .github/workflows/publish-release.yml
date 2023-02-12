@@ -5,11 +5,8 @@ on:
     tags: 'v*'
 
 jobs:
-  build-and-draft:
+  build:
     runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.get-version.outputs.tag }}
-
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js 16
@@ -17,41 +14,55 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-      - id: get-version
-        name: Get version
-        run: |
-          echo tag=`echo ${{ github.ref }} | awk '{ sub(/^refs\/tags\//, ""); print; }'` > $GITHUB_OUTPUT
-          echo version=`cat package.json | jq -r '.version'` >> $GITHUB_OUTPUT
-      - name: Check version number
-        if: ${{ contains(steps.get-version.outputs.version, '-') }}
-        run: |
-          echo Version number must not be a prerelease.
-          exit 1
+      - id: read-package-json
+        name: Read package.json
+        run: echo version=`cat package.json | jq -r '.version'` >> $GITHUB_OUTPUT
       - name: Propagate versions
         run: |
           cd packages/react-wrap-with
-          npm version --no-git-tag-version ${{ steps.get-version.outputs.version }}
+          npm version --no-git-tag-version ${{ steps.read-package-json.outputs.version }}
       - run: npm clean-install
       - run: npm run build --if-present
       - name: Run npm pack
         run: |
           cd packages/react-wrap-with
           npm pack
+      - name: Upload changelog artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: changelog
+          path: CHANGELOG.md
       - name: Upload tarball artifact
         uses: actions/upload-artifact@v3.1.1
         with:
           name: tarball
           path: packages/react-wrap-with/*.tgz
+
+  draft-release:
+    needs:
+      - build
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download changelog artifact
+        uses: actions/download-artifact@v3.0.1
+        with:
+          name: changelog
+      - name: Download tarball artifact
+        uses: actions/download-artifact@v3.0.1
+        with:
+          name: tarball
       - name: Draft a new release
-        run: gh release create ${{ steps.get-version.outputs.tag }} ./packages/react-wrap-with/*.tgz --draft --notes-file ./CHANGELOG.md
+        run: gh release create ${{ github.ref_name }} ./*.tgz --draft --notes-file ./CHANGELOG.md --repo ${{ github.repository }}
         env:
           GH_TOKEN: ${{ github.token }}
 
   publish-package:
     environment: production
-    needs: build-and-draft
+    needs:
+      - build
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -61,18 +72,71 @@ jobs:
         uses: actions/download-artifact@v3.0.1
         with:
           name: tarball
-      - run: npm publish `ls ./*.tgz`
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - id: read-package-json
+        name: Read package.json
+        run: |
+          echo package-name=`tar --extract --file=\`ls ./*.tgz\` --to-stdout package/package.json | jq -r .name` >> $GITHUB_OUTPUT
+          echo version=`tar --extract --file=\`ls ./*.tgz\` --to-stdout package/package.json | jq -r .version` >> $GITHUB_OUTPUT
+      - if: ${{ contains(steps.read-package-json.outputs.version, '-') }}
+        name: Check version number
+        run: |
+          echo ::error::Cannot publish prerelease version ${{ steps.read-package-json.outputs.version }}
+          exit 1
+      - name: Summarize job
+        run: echo NPM package published to https://npmjs.com/package/${{ steps.read-package-json.outputs.package-name }}/v/${{ steps.read-package-json.outputs.version }}. >> $GITHUB_STEP_SUMMARY
 
   publish-release:
     needs:
-      - build-and-draft
+      - draft-release
       - publish-package
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
-
     steps:
       - name: Publish release
-        run: gh release edit ${{ needs.build-and-draft.outputs.tag }} --draft=false --repo ${{ github.repository }}
+        run: gh release edit ${{ github.ref_name }} --draft=false --repo ${{ github.repository }}
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: Summarize job
+        run: echo GitHub release created at https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}. >> $GITHUB_STEP_SUMMARY
+
+  create-bump-pull-request:
+    needs:
+      - publish-package
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure user profile
+        run: |
+          git config user.email "${{ format('@{0}', github.actor) }}"
+          git config user.name "${{ format('@{0}', github.actor) }}"
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - id: bump-version
+        run: |
+          npm version prepatch --no-git-tag-version
+          echo version=`cat package.json | jq -r .version` >> $GITHUB_OUTPUT
+      - name: Create branch
+        run: |
+          git checkout -b bump-${{ steps.bump-version.outputs.version }}
+          git add --all
+          git commit --message "Bump to ${{ steps.bump-version.outputs.version }}"
+          git push --set-upstream origin bump-${{ steps.bump-version.outputs.version }}
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        id: create-pull-request
+        name: Create pull request
+        run: echo url=`gh pr create --assignee ${{ github.actor }} --base main --body "" --title "Bump to ${{ steps.bump-version.outputs.version }}" || true` >> $GITHUB_OUTPUT
+      - name: Summarize job
+        run: |
+          if [ "${{ steps.create-pull-request.outputs.url }}" = "" ]; then
+            echo "Branch created at [bump-${{ steps.bump-version.outputs.version }}](https://github.com/${{ github.repository }}/compare/main...bump-${{ steps.bump-version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
+          else
+            echo Pull request created at ${{ steps.create-pull-request.outputs.url }}. >> $GITHUB_STEP_SUMMARY
+          fi
