@@ -82,6 +82,9 @@ jobs:
         run: |
           echo ::error::Cannot publish prerelease version ${{ steps.read-package-json.outputs.version }}
           exit 1
+      - run: npm publish `ls ./*.tgz`
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Summarize job
         run: echo NPM package published to https://npmjs.com/package/${{ steps.read-package-json.outputs.package-name }}/v/${{ steps.read-package-json.outputs.version }}. >> $GITHUB_STEP_SUMMARY
 
