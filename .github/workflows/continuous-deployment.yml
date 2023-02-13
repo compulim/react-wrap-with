@@ -23,7 +23,7 @@ jobs:
         name: Run npx version-from-git --no-git-tag-version
         run: |
           npx version-from-git --no-git-tag-version
-          echo version=`cat package.json | jq -r '.version'` > $GITHUB_OUTPUT
+          echo version=`cat package.json | jq -r '.version'` >> $GITHUB_OUTPUT
       - name: Propagate versions
         run: |
           cd packages/react-wrap-with
@@ -40,7 +40,7 @@ jobs:
           name: tarball
           path: packages/react-wrap-with/*.tgz
 
-  publish:
+  publish-package:
     needs: build
     runs-on: ubuntu-latest
     environment: prerelease
@@ -54,16 +54,18 @@ jobs:
         uses: actions/download-artifact@v3.0.1
         with:
           name: tarball
-      - id: get-version
-        name: Get version
-        run: echo version=`tar --extract --file=\`ls ./*.tgz\` --to-stdout package/package.json | jq -r .version` > $GITHUB_OUTPUT
-      - name: Print version
-        run: echo ${{ steps.get-version.outputs.version }}
-      - if: ${{ !contains(steps.get-version.outputs.version, '-') }}
-        name: Validate version
+      - id: read-package-json
+        name: Read package.json
         run: |
-          echo Cannot publish production version
+          echo package-name=`tar --extract --file=\`ls ./*.tgz\` --to-stdout package/package.json | jq -r .name` >> $GITHUB_OUTPUT
+          echo version=`tar --extract --file=\`ls ./*.tgz\` --to-stdout package/package.json | jq -r .version` >> $GITHUB_OUTPUT
+      - if: ${{ !contains(steps.read-package-json.outputs.version, '-') }}
+        name: Check version number
+        run: |
+          echo ::error::Cannot publish production version ${{ steps.read-package-json.outputs.version }}
           exit 1
-      - run: npm publish --tag main `ls *.tgz`
+      - run: npm publish --tag ${{ github.ref_name }} `ls *.tgz`
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Summarize job
+        run: echo NPM package published to https://npmjs.com/package/${{ steps.read-package-json.outputs.package-name }}/v/${{ steps.read-package-json.outputs.version }}. >> $GITHUB_STEP_SUMMARY
