@@ -17,7 +17,7 @@ export default function wrapWith(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unnecessary-type-constraint
 export default function wrapWith<WrapperProps extends object>(
-  WrapperComponent: ComponentType<PropsWithChildren<WrapperProps>> | false | null | undefined,
+  WrapperComponent: ComponentType<PropsWithChildren<WrapperProps>>,
   wrapperProps: WrapperProps
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): <WrappedComponent extends ComponentType<any>>(

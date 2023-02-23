@@ -7,6 +7,13 @@
   "license": "MIT",
   "scripts": {
     "build": "cd packages/react-wrap-with && npm run build",
+    "bump": "npm run bump:prod && npm run bump:dev && npm run bump:auditfix && npm run bump:packages",
+    "bump:auditfix": "npm audit fix || exit 0",
+    "bump:dev": "if [ `cat package.json | jq -r '(.devDependencies // {}) | length'` -ne 0 ]; then npm install $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.devDependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
+    "bump:packages": "npm run bump:packages:main && npm run bump:packages:pages",
+    "bump:packages:main": "cd packages/react-wrap-with && npm run bump",
+    "bump:packages:pages": "cd packages/pages && npm run bump",
+    "bump:prod": "if [ `cat package.json | jq -r '(.dependencies // {}) | length'` -ne 0 ]; then npm install --save-exact $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.dependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
     "precommit": "npm run precommit:main && npm run precommit:integration",
     "precommit:integration": "cd packages/react-wrap-with && npm run precommit",
     "precommit:main": "cd packages/react-wrap-with && npm run precommit",
@@ -16,11 +23,11 @@
     "test:unit": "cd packages/react-wrap-with && npm test"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.48.0",
-    "@typescript-eslint/parser": "^5.48.0",
-    "eslint": "^8.31.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "eslint": "^8.34.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.11",
-    "prettier": "^2.8.1"
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^2.8.4"
   }
 }
