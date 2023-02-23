@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#XXX](https://github.com/compulim/react-wrap-with/pull/XXX)
+- Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#3](https://github.com/compulim/react-wrap-with/pull/3)
    -  Production dependencies
       -  [`@babel/runtime-corejs3@7.21.0`](https://npmjs.com/package/@babel/runtime-corejs3)
    -  Development dependencies
