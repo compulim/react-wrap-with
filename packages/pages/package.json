@@ -4,16 +4,25 @@
   "description": "",
   "scripts": {
     "build": "esbuild --bundle --minify --outfile=./public/static/js/main.js ./src/index.tsx",
+    "bump": "npm run bump:prod && npm run bump:dev && npm run bump:auditfix",
+    "bump:auditfix": "npm audit fix || exit 0",
+    "bump:dev": "if [ `cat package.json | jq -r '(.devDependencies // {}) | length'` -ne 0 ]; then npm install $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.devDependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
+    "bump:prod": "if [ `cat package.json | jq -r '(.dependencies // {}) | length'` -ne 0 ]; then npm install --save-exact $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.dependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
+    "postbump": "cat package.json | jq '. + (.dependencies = (((.dependencies // {}) + (.localPeerDependencies // {})) | to_entries | sort_by(.key) | from_entries)) | (.devDependencies = (((.devDependencies // {}) + (.localPeerDevDependencies // {})) | to_entries | sort_by(.key) | from_entries))' > package-temp.json && mv package-temp.json package.json",
+    "prebump": "cat package.json | jq '(((.localPeerDependencies // {}) | keys | map([\"dependencies\", .])) + ((.localPeerDevDependencies // {}) | keys | map([\"devDependencies\", .]))) as $localPeerPaths | delpaths($localPeerPaths)' > package-temp.json && mv package-temp.json package.json",
     "start": "esbuild --bundle --outfile=./public/static/js/main.js --servedir=./public ./src/index.tsx"
   },
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.17.4"
+    "esbuild": "^0.17.10"
   },
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-wrap-with": "file:../react-wrap-with/react-wrap-with-0.0.0-0.tgz"
+  },
+  "localPeerDependencies": {
     "react-wrap-with": "file:../react-wrap-with/react-wrap-with-0.0.0-0.tgz"
   }
 }
