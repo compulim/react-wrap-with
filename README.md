@@ -14,10 +14,10 @@ This function will wrap as an intermediate component and reduce complexity in th
 import { createRoot } from 'react-render';
 import { wrapWith } from 'react-wrap-with';
 
-const Blink = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
-const withBlink = wrapWith(Blink, { effect: 'blink' });
+const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
+const withEffect = wrapWith(Effect, { effect: 'blink' });
 
-const Hello = withBlink(() => <h1>Hello</h1>);
+const Hello = withEffect(() => <h1>Hello</h1>);
 
 createRoot(document.getElementById('root')).render(<Hello />);
 ```
@@ -32,20 +32,20 @@ Will produce the HTML:
 
 ### Extracting props
 
-Sometimes, instead of initializing props during setup, you can extract and pass props into the wrapper component during render.
+Sometimes, instead of initializing props during setup, you can extract and pass specific props into the wrapper component during render.
 
 ```diff
   import { createRoot } from 'react-render';
   import { wrapWith } from 'react-wrap-with';
 
-  const Blink = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
-- const withBlink = wrapWith(Blink, { effect: 'blink' });
-+ const withBlink = wrapWith(Blink, {}, ['effect']); // "effect" prop will be extracted from render-time and passed to wrapper component.
+  const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
+- const withEffect = wrapWith(Effect, { effect: 'blink' });
++ const withEffect = wrapWith(Effect, {}, ['effect']); // "effect" prop will be extracted during render and passed to the wrapper component <Effect>.
 
-  const Hello = withBlink(() => <h1>Hello</h1>);
+  const Hello = withEffect(() => <h1>Hello</h1>);
 
 - createRoot(document.getElementById('root')).render(<Hello />);
-+ createRoot(document.getElementById('root')).render(<Hello effect="blink" />); // Specifying "effect" prop at render-time.
++ createRoot(document.getElementById('root')).render(<Hello effect="blink" />); // Specifying "effect" prop during render.
 ```
 
 ## API
