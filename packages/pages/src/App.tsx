@@ -1,15 +1,16 @@
-import { wrapWith } from 'react-wrap-with';
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import Effect from './Effect';
-import Hello from './Hello';
-
-const withBlink = wrapWith(Effect, { effect: 'blink' });
-
-const BlinkingHello = withBlink(Hello);
+import Extract from './Extract';
+import Simple from './Simple';
 
 const App = () => {
-  return <BlinkingHello />;
+  return (
+    <Fragment>
+      <Simple />
+      <hr />
+      <Extract />
+    </Fragment>
+  );
 };
 
 export default App;

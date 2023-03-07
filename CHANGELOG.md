@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Extract props during render and pass to the wrapper component, by [@compulim](https://github.com/compulim), in PR [#4](https://github.com/compulim/react-wrap-with/pull/4)
+
 ### Changed
 
 - Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#3](https://github.com/compulim/react-wrap-with/pull/3)
