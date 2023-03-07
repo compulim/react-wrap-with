@@ -19,12 +19,12 @@ type TextBoxProps = { className?: string };
 
 const TextBox = ({ className }: TextBoxProps) => <input className={className} data-testid="input" type="text" />;
 
-describe('Wrapping <TextBox> with <Form> and extract "action" and "method" props', () => {
-  const SingleFormInput = wrapWith(Form, {}, ['action', 'method'])(TextBox);
+describe('Wrapping <TextBox> with <Form method="post"> and extract "action" props', () => {
+  const SingleFormInput = wrapWith(Form, { method: 'post' }, ['action'])(TextBox);
 
   test('should render', () => {
     // WHEN: Rendering the wrapped component.
-    const result = render(<SingleFormInput action="https://example.com/" className="text-input" method="post" />);
+    const result = render(<SingleFormInput action="https://example.com/" className="text-input" />);
 
     const form = result.getByRole('form');
 
