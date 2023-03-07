@@ -7,7 +7,7 @@ import wrapWith from './wrapWith';
 
 import type { PropsWithChildren } from 'react';
 
-type ListItemProps = PropsWithChildren<{ className?: string; containerClassName?: string }>;
+type ListItemProps = PropsWithChildren<{ className?: string }>;
 
 const ListItem = ({ children, className }: ListItemProps) => (
   <li className={className} role="listitem">
