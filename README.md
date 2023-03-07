@@ -30,13 +30,37 @@ Will produce the HTML:
 </span>
 ```
 
+### Extracting props
+
+Sometimes, instead of initializing props during setup, you can extract and pass props into the wrapper component during render.
+
+```diff
+  import { createRoot } from 'react-render';
+  import { wrapWith } from 'react-wrap-with';
+
+  const Blink = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
+- const withBlink = wrapWith(Blink, { effect: 'blink' });
++ const withBlink = wrapWith(Blink, {}, ['effect']); // "effect" prop will be extracted from render-time and passed to wrapper component.
+
+  const Hello = withBlink(() => <h1>Hello</h1>);
+
+- createRoot(document.getElementById('root')).render(<Hello />);
++ createRoot(document.getElementById('root')).render(<Hello effect="blink" />); // Specifying "effect" prop at render-time.
+```
+
 ## API
 
 ```ts
-function wrapWith(
-  wrapperComponentType: ComponentType<WrapperProps>,
-  props: WrapperProps
-): (wrappedComponentType: ComponentType<WrappedProps>) => ComponentType<WrappedProps>;
+function wrapWith<
+  Wrapper extends ComponentType<PropsWithChildren<any>>,
+  ExtractPropKey extends keyof PropsOf<Wrapper> = never
+>(
+  WrapperComponent: Wrapper | false | null | undefined,
+  wrapperProps?: Omit<PropsOf<Wrapper>, ExtractPropKey>,
+  extractPropKeys: ExtractPropKey[] = []
+): (
+  WrappedComponent: Wrapped | false | null | undefined
+) => ComponentType<Pick<PropsOf<Wrapper>, ExtractPropKey> & PropsOf<Wrapped>>;
 ```
 
 ## Behaviors
