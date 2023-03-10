@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Extract props during render and pass to the wrapper component, by [@compulim](https://github.com/compulim), in PR [#4](https://github.com/compulim/react-wrap-with/pull/4)
+- Extract props during render and pass to the wrapper component, by [@compulim](https://github.com/compulim), in PR [#4](https://github.com/compulim/react-wrap-with/pull/4) and [#5](https://github.com/compulim/react-wrap-with/pull/5)
 
 ### Changed
 
