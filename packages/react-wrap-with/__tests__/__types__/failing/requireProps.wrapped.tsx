@@ -6,5 +6,7 @@ import type { ReactNode } from 'react';
 
 const Header = ({ children }: { children?: ReactNode | undefined }) => <h1>{children}</h1>;
 
-// "className" is not allowed in prop.
-wrapWith(Header, { className: '123' });
+const Component = wrapWith(Header)(({ role }: { role: string }) => <div role={role} />);
+
+// "role" prop is required.
+<Component />;
