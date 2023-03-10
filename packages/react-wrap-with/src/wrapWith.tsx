@@ -2,9 +2,8 @@ import React, { createElement, Fragment } from 'react';
 
 import pickAndOmit from './util/pickAndOmit';
 
-import type { ComponentType, PropsWithChildren } from 'react';
+import type { ComponentType, PropsWithChildren, ReactNode } from 'react';
 
-type EmptyProps = Record<number | string | symbol, never>;
 type PropsOf<T> = T extends ComponentType<infer P> ? P : never;
 
 const EmptyComponent = () => <Fragment />;
@@ -12,10 +11,10 @@ const EmptyComponent = () => <Fragment />;
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Wrapper extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof PropsOf<Wrapper> = never
+  ExtractPropKey extends keyof Omit<PropsOf<Wrapper>, 'children'> = never
 >(
   WrapperComponent: Wrapper | false | null | undefined,
-  wrapperProps: Omit<PropsOf<Wrapper>, ExtractPropKey>,
+  wrapperProps: Omit<PropsOf<Wrapper> & { children?: never }, ExtractPropKey> | undefined,
   extractPropKeys: ExtractPropKey[]
   // @types/react did not put a restrictions on what can be props.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,7 +28,7 @@ export default function wrapWith<
 >(
   WrapperComponent: Wrapper | false | null | undefined,
   // There is a bug in TypeScript that Omit<T, never> & Partial<Pick<T>, never>> does not equals to T.
-  wrapperProps: Omit<PropsOf<Wrapper>, never>,
+  wrapperProps: PropsOf<Wrapper> & { children?: never },
   extractedPropKeys?: undefined
   // @types/react did not put a restrictions on what can be props.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,10 +38,10 @@ export default function wrapWith<
 
 // If Wrapper need no props other than children, wrapperProps is optional.
 export default function wrapWith<
-  Wrapper extends ComponentType<PropsWithChildren<EmptyProps>> | false | null | undefined
+  Wrapper extends ComponentType<{ children?: ReactNode | undefined }> | false | null | undefined
 >(
   WrapperComponent: Wrapper | false | null | undefined,
-  wrapperProps?: undefined | EmptyProps
+  wrapperProps?: undefined | Record<number | string | symbol, never>
   // @types/react did not put a restrictions on what can be props.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): <Wrapped extends ComponentType<any>>(
@@ -52,10 +51,10 @@ export default function wrapWith<
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Wrapper extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof PropsOf<Wrapper> = never
+  ExtractPropKey extends keyof Omit<PropsOf<Wrapper>, 'children'> = never
 >(
   WrapperComponent: Wrapper | false | null | undefined,
-  wrapperProps?: Omit<PropsOf<Wrapper>, ExtractPropKey>,
+  wrapperProps?: Omit<PropsOf<Wrapper> & { children?: never }, ExtractPropKey>,
   extractPropKeys: ExtractPropKey[] = [] as never[]
 ) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
