@@ -1,4 +1,5 @@
 {
+  "extends": "./babel.production.config.json",
   "plugins": [
     [
       "@babel/plugin-transform-runtime",
@@ -15,9 +16,7 @@
       "@babel/preset-env",
       {
         "modules": false,
-        "targets": {
-          "ie": "11"
-        }
+        "targets": { "ie": "11" }
       }
     ]
   ],

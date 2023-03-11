@@ -1,3 +1,14 @@
 {
-  "extends": "./babel.commonjs.config.json"
+  "presets": [
+    "@babel/preset-react",
+    "@babel/preset-typescript",
+    [
+      "@babel/preset-env",
+      {
+        "modules": "commonjs",
+        "targets": { "node": "16" }
+      }
+    ]
+  ],
+  "sourceMaps": true
 }
