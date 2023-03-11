@@ -1,7 +1,7 @@
 {
   "name": "react-wrap-with",
   "version": "0.0.0-0",
-  "description": "Render middleware for React.",
+  "description": "Creates React higher-order component by wrapping with a container component.",
   "files": [
     "./lib/*"
   ],
