@@ -3,5 +3,6 @@
     "esModuleInterop": true,
     "jsx": "react",
     "strict": true
-  }
+  },
+  "exclude": ["**/*.spec.*", "**/*.test.*"]
 }

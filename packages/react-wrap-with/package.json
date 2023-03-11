@@ -42,9 +42,11 @@
     "url": "git+https://github.com/compulim/react-wrap-with.git"
   },
   "keywords": [
-    "react",
-    "react-hook",
-    "react-hooks"
+    "higher order",
+    "hoc",
+    "hook",
+    "hooks",
+    "react"
   ],
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
