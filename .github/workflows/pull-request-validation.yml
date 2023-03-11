@@ -3,6 +3,7 @@ name: Pull request validation
 on:
   pull_request:
     branches: [main]
+  workflow_dispatch: {}
 
 jobs:
   build:
@@ -11,6 +12,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
+        package-name: [react-wrap-with]
 
     steps:
       - uses: actions/checkout@v3
@@ -25,17 +27,49 @@ jobs:
       - run: npm run build --if-present
       - name: Run npm pack
         run: |
-          cd packages/react-wrap-with
+          cd packages/${{ matrix.package-name }}
           npm pack
       - name: Upload tarball artifact
         uses: actions/upload-artifact@v3.1.1
         with:
           name: tarball
-          path: packages/react-wrap-with/*.tgz
+          path: packages/${{ matrix.package-name }}/*.tgz
       - name: Run unit tests
         run: |
-          cd packages/react-wrap-with
+          cd packages/${{ matrix.package-name }}
           npm test
+
+  sanity-check:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        package-name: [react-wrap-with]
+
+    steps:
+      - name: Download tarball artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: tarball
+      - name: Extract tarball to root
+        run: tar -xvf ${{ matrix.package-name }}-*.tgz --strip-components=1
+      - name: "Sanity check: has LICENSE"
+        run: compgen -G LICENSE
+      - name: "Sanity check: has README.md"
+        run: compgen -G README.md
+      - name: "Sanity check: main exists"
+        run: cat package.json | jq -r '.main' | xargs -L1 test -f $1
+      - name: "Sanity check: typings exists"
+        run: cat package.json | jq -r '.types // .typings' | xargs -L1 test -f $1
+      - name: "Sanity check: all exports exists"
+        run: cat package.json | jq '.exports | map(flatten) | flatten | .[]' | xargs -L1 test -f $1
+      - name: "Sanity check: has source maps"
+        run: compgen -G lib/**/*.js.map
+      - name: "Sanity check: no **/*.spec.*"
+        run: ! compgen -G lib/**/*.spec.*
+      - name: "Sanity check: no **/*.test.*"
+        run: ! compgen -G lib/**/*.test.*
 
   # Uncomment "integration-test" section when ready.
   # integration-test:
