@@ -67,9 +67,9 @@ jobs:
       - name: "Sanity check: has source maps"
         run: compgen -G lib/**/*.js.map
       - name: "Sanity check: no **/*.spec.*"
-        run: ! compgen -G lib/**/*.spec.*
+        run: "! compgen -G lib/**/*.spec.*"
       - name: "Sanity check: no **/*.test.*"
-        run: ! compgen -G lib/**/*.test.*
+        run: "! compgen -G lib/**/*.test.*"
 
   # Uncomment "integration-test" section when ready.
   # integration-test:
