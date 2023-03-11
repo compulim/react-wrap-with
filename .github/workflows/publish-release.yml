@@ -7,6 +7,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package-name: [react-wrap-with]
+
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js 16
@@ -19,13 +23,13 @@ jobs:
         run: echo version=`cat package.json | jq -r '.version'` >> $GITHUB_OUTPUT
       - name: Propagate versions
         run: |
-          cd packages/react-wrap-with
+          cd packages/${{ matrix.package-name }}
           npm version --no-git-tag-version ${{ steps.read-package-json.outputs.version }}
       - run: npm clean-install
       - run: npm run build --if-present
       - name: Run npm pack
         run: |
-          cd packages/react-wrap-with
+          cd packages/${{ matrix.package-name }}
           npm pack
       - name: Upload changelog artifact
         uses: actions/upload-artifact@v3.1.1
@@ -36,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: tarball
-          path: packages/react-wrap-with/*.tgz
+          path: packages/${{ matrix.package-name }}/*.tgz
 
   draft-release:
     needs:
