@@ -30,19 +30,19 @@ jobs:
           echo version=`cat package.json | jq -r '.version'` >> $GITHUB_OUTPUT
       - name: Propagate versions
         run: |
-          cd packages/{{ matrix.package-name }}
+          cd packages/${{ matrix.package-name }}
           npm version --no-git-tag-version ${{ steps.set-version.outputs.version }}
       - run: npm clean-install
       - run: npm run build --if-present
       - name: Run npm pack
         run: |
-          cd packages/{{ matrix.package-name }}
+          cd packages/${{ matrix.package-name }}
           npm pack
       - name: Upload tarball artifact
         uses: actions/upload-artifact@v3.1.1
         with:
           name: tarball
-          path: packages/{{ matrix.package-name }}/*.tgz
+          path: packages/${{ matrix.package-name }}/*.tgz
 
   publish-package:
     needs: build
