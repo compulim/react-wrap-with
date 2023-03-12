@@ -8,8 +8,18 @@ extends:
 overrides:
   - extends: .eslintrc.jest.yml
     files:
+    - '__tests__/**'
+    - '__tests__/**'
+    - '__tests__/**'
+    - '__tests__/**'
     - '*.spec.js'
+    - '*.spec.jsx'
+    - '*.spec.ts'
+    - '*.spec.tsx'
     - '*.test.js'
+    - '*.test.jsx'
+    - '*.test.ts'
+    - '*.test.tsx'
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: latest

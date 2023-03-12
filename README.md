@@ -1,12 +1,12 @@
 # `react-wrap-with`
 
-Wrap a React component in another component by Higher-Order Component.
+Creates higher-order component for wrapping component in another component.
 
 ## Background
 
 When using React Context, sometimes it is inevitable to create an intermediate component to consume the context.
 
-This function will wrap as an intermediate component and reduce complexity in the code.
+This function will wrap as an intermediate component and reduce code complexity.
 
 ## How to use
 
@@ -47,6 +47,10 @@ Sometimes, instead of initializing props during setup, you can extract and pass 
 - createRoot(document.getElementById('root')).render(<Hello />);
 + createRoot(document.getElementById('root')).render(<Hello effect="blink" />); // Specifying "effect" prop during render.
 ```
+
+### Referencing
+
+Refs are automatically forwarded to the inner component.
 
 ## API
 

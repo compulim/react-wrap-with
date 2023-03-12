@@ -1,7 +1,6 @@
 /** @jest-environment jsdom */
 /// <reference types="@types/jest" />
 
-import { render } from '@testing-library/react';
 import React from 'react';
 
 import wrapWith from './wrapWith';
@@ -12,17 +11,14 @@ type EffectProps = PropsWithChildren<{ effect: 'blink' }>;
 
 const Effect = ({ children, effect }: EffectProps) => <span className={`effect effect--${effect}`}>{children}</span>;
 
+Effect.displayName = 'Effect';
+
 const Hello = () => <h1>Hello, World!</h1>;
 
 test('simple scenario', () => {
-  // GIVEN: Wrapping <Hello> with <Effect effect="blink">.
+  // WHEN: Wrapping <Hello> with <Effect effect="blink">.
   const BlinkingHello = wrapWith(Effect, { effect: 'blink' })(Hello);
 
-  // WHEN: Render.
-  const result = render(<BlinkingHello />);
-
-  // THEN: It should produce HTML equivalent to <Effect><Hello /></Effect>.
-  expect(result.container.innerHTML).toMatchInlineSnapshot(
-    `"<span class="effect effect--blink"><h1>Hello, World!</h1></span>"`
-  );
+  // THEN: Wrapped component should have display name of "WrappedWithEffect".
+  expect(BlinkingHello).toHaveProperty('displayName', 'WrappedWithEffect');
 });
