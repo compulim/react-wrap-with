@@ -51,9 +51,9 @@ describe('Wrapping <ListItem> with <OrderedList>', () => {
   });
 });
 
-test.each([false, null, undefined] as [false, null, undefined])('wrapping <ListItem> with `%s`', wrapper => {
+test.each([false, null, undefined] as [false, null, undefined])('wrapping <ListItem> with `%s`', ContainerComponent => {
   // GIVEN: Wrapping <ListItem> with false/null/undefined.
-  const Wrapped = wrapWith(wrapper, {})(ListItem);
+  const Wrapped = wrapWith(ContainerComponent, {})(ListItem);
 
   // WHEN: When rendering the wrapped component.
   const result = render(<Wrapped>Hello, World!</Wrapped>);
@@ -88,9 +88,9 @@ test.each([false, null, undefined] as [false, null, undefined])('wrapping `%s` w
 
 test.each([false, null, undefined] as [false, null, undefined])(
   'wrapping `%s` with the same type of component',
-  wrapperAndWrapping => {
+  ComponentComponent => {
     // GIVEN: Wrapping false/null/undefined with false/null/undefined.
-    const Wrapped = wrapWith(wrapperAndWrapping, {})(wrapperAndWrapping);
+    const Wrapped = wrapWith(ComponentComponent, {})(ComponentComponent);
 
     // WHEN: Rendering the wrapped component.
     const result = render(<Wrapped>Hello, World!</Wrapped>);
