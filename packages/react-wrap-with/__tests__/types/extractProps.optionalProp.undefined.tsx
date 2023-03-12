@@ -8,7 +8,7 @@ const Header = ({ children, className }: PropsWithChildren<{ className?: string 
   <h1 className={className}>{children}</h1>
 );
 
-// Because "className" is extracted, it should be okay to pass undefined for wrapperProps.
+// Because "className" is extracted, it should be okay to pass undefined for initialProps.
 const Component = wrapWith(Header, undefined, ['className'])(() => <div />);
 
 // It is okay to render without "className" prop because "className" prop is optional.

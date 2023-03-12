@@ -32,7 +32,7 @@ Will produce the HTML:
 
 ### Extracting props
 
-Sometimes, instead of initializing props during setup, you can extract and pass specific props into the wrapper component during render.
+Sometimes, instead of initializing props during setup, you can extract and pass specific props into the container component during render.
 
 ```diff
   import { createRoot } from 'react-render';
@@ -40,7 +40,7 @@ Sometimes, instead of initializing props during setup, you can extract and pass 
 
   const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
 - const withEffect = wrapWith(Effect, { effect: 'blink' });
-+ const withEffect = wrapWith(Effect, {}, ['effect']); // "effect" prop will be extracted during render and passed to the wrapper component <Effect>.
++ const withEffect = wrapWith(Effect, {}, ['effect']); // "effect" prop will be extracted during render and passed to the container component <Effect>.
 
   const Hello = withEffect(() => <h1>Hello</h1>);
 
@@ -55,25 +55,30 @@ Refs are automatically forwarded to the inner component.
 ## API
 
 ```ts
-function wrapWith<
-  Wrapper extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof PropsOf<Wrapper> = never
->(
-  WrapperComponent: Wrapper | false | null | undefined,
-  wrapperProps?: Omit<PropsOf<Wrapper>, ExtractPropKey>,
+import { ComponentType } from 'react';
+
+type ContainerProps = {};
+type ContainerComponentType = ComponentType<ContainerProps>;
+
+type ContentProps = {};
+type ContentComponentType = ComponentType<ContentProps>;
+
+function wrapWith(
+  ContainerComponent: ContainerComponentType | false | null | undefined,
+  initialProps?: Omit<ContainerProps, ExtractPropKey>,
   extractPropKeys: ExtractPropKey[] = []
 ): (
-  WrappedComponent: Wrapped | false | null | undefined
-) => ComponentType<Pick<PropsOf<Wrapper>, ExtractPropKey> & PropsOf<Wrapped>>;
+  ContentComponent: ContentComponentType | false | null | undefined
+) => ComponentType<Pick<ContainerProps, ExtractPropKey> & ContentProps & { ref?: Ref }>;
 ```
 
 ## Behaviors
 
-### TypeScript: All wrappers must have props of `children`
+### TypeScript: All containers must have props of `children`
 
-Wrappers must allow `children` props. This is because wrapper is going to wrap around another component in parent-child relationship.
+Containers must allow `children` props. This is because container is going to wrap around another component in parent-child relationship.
 
-If you are seeing the following error in TypeScript, please make sure the wrapper component allow `children` props. `React.PropsWithChildren<>` is a typing helper to add `children` to any props.
+If you are seeing the following error in TypeScript, please make sure the container component allow `children` props. `React.PropsWithChildren<>` is a helper type to add `children` to any props. If the component does not have props, use this prop type: `{ children?: ReactNode }`.
 
 ```
 Argument of type 'FC<Props>' is not assignable to parameter of type 'false | ComponentType<PropsWithChildren<EmptyProps>> | null | undefined'.

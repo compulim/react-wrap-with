@@ -8,5 +8,5 @@ type Props = { className: string };
 
 const Header: FC<Props> = () => <h1>Hello, World!</h1>;
 
-// All wrappers must allow "children" prop.
+// All containers must allow "children" prop.
 wrapWith(Header);
