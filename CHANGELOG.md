@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Terminology changed from "wrapper"/"wrapped" to "container"/"content", by [@compulim](https://github.com/compulim), in PR [#10](https://github.com/compulim/react-wrap-with/pull/10)
 - Will no longer publish `*.spec.*` and `*.test.*` to NPM, by [@compulim](https://github.com/compulim), in PR [#6](https://github.com/compulim/react-wrap-with/pull/6) and PR [#7](https://github.com/compulim/react-wrap-with/pull/7)
 - Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#3](https://github.com/compulim/react-wrap-with/pull/3)
    -  Production dependencies
