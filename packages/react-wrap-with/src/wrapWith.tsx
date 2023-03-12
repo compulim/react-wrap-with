@@ -97,7 +97,7 @@ export default function wrapWith<
 
     if (ContentComponent) {
       const WithContainer = forwardRef<Ref, PropsOf<ContentComponentType>>((props, ref) => {
-        const [_, contentProps] = pickAndOmit<
+        const [, contentProps] = pickAndOmit<
           Pick<PropsOf<ContainerComponentType>, ExtractPropKey>,
           PropsOf<ContentComponentType> & { ref?: Ref }
         >(props, extractPropKeys);
