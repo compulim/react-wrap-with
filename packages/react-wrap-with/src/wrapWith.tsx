@@ -1,10 +1,11 @@
-import React, { createElement, Fragment } from 'react';
+import React, { createElement, forwardRef, Fragment } from 'react';
 
 import pickAndOmit from './util/pickAndOmit';
 
-import type { ComponentType, PropsWithChildren, ReactNode } from 'react';
+import type { ComponentType, PropsWithChildren, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 
 type PropsOf<T> = T extends ComponentType<infer P> ? P : never;
+type RefOf<T> = T extends RefAttributes<infer R> ? R : never;
 
 const EmptyComponent = () => <Fragment />;
 
@@ -18,9 +19,9 @@ export default function wrapWith<
   extractPropKeys: ExtractPropKey[]
   // @types/react did not put a restrictions on what can be props.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): <Wrapped extends ComponentType<any>>(
+): <Wrapped extends ComponentType<any>, Ref = RefOf<PropsOf<Wrapped>>>(
   WrappedComponent: Wrapped | false | null | undefined
-) => ComponentType<Pick<PropsOf<Wrapper>, ExtractPropKey> & PropsOf<Wrapped>>;
+) => ComponentType<PropsWithoutRef<Pick<PropsOf<Wrapper>, ExtractPropKey> & PropsOf<Wrapped>> & RefAttributes<Ref>>;
 
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,9 +33,9 @@ export default function wrapWith<
   extractedPropKeys?: undefined
   // @types/react did not put a restrictions on what can be props.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): <Wrapped extends ComponentType<any>>(
+): <Wrapped extends ComponentType<any>, Ref = RefOf<PropsOf<Wrapped>>>(
   WrappedComponent: Wrapped | false | null | undefined
-) => ComponentType<PropsOf<Wrapped>>;
+) => ComponentType<PropsWithoutRef<PropsOf<Wrapped>> & RefAttributes<Ref>>;
 
 // If Wrapper need no props other than children, wrapperProps is optional.
 export default function wrapWith<
@@ -44,9 +45,9 @@ export default function wrapWith<
   wrapperProps?: undefined | Record<number | string | symbol, never>
   // @types/react did not put a restrictions on what can be props.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): <Wrapped extends ComponentType<any>>(
+): <Wrapped extends ComponentType<any>, Ref = RefOf<PropsOf<Wrapped>>>(
   WrappedComponent: Wrapped | false | null | undefined
-) => ComponentType<PropsOf<Wrapped>>;
+) => ComponentType<PropsWithoutRef<PropsOf<Wrapped>> & RefAttributes<Ref>>;
 
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,15 +59,15 @@ export default function wrapWith<
   extractPropKeys: ExtractPropKey[] = [] as never[]
 ) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return function wrap<Wrapped extends ComponentType<any>>(
+  return function wrap<Wrapped extends ComponentType<any>, Ref = RefOf<PropsOf<Wrapped>>>(
     WrappedComponent: Wrapped | false | null | undefined
-  ): ComponentType<Pick<PropsOf<Wrapper>, ExtractPropKey> & PropsOf<Wrapped>> {
+  ): ComponentType<PropsWithoutRef<Pick<PropsOf<Wrapper>, ExtractPropKey> & PropsOf<Wrapped>> & RefAttributes<Ref>> {
     if (WrapperComponent) {
-      const WithWrapper = (props: Pick<PropsOf<Wrapper>, ExtractPropKey> & PropsOf<Wrapped>) => {
-        const [extractedProps, wrappedProps] = pickAndOmit<Pick<PropsOf<Wrapper>, ExtractPropKey>, PropsOf<Wrapped>>(
-          props,
-          extractPropKeys
-        );
+      const WithWrapper = forwardRef<Ref, Pick<PropsOf<Wrapper>, ExtractPropKey> & PropsOf<Wrapped>>((props, ref) => {
+        const [extractedProps, wrappedProps] = pickAndOmit<
+          Pick<PropsOf<Wrapper>, ExtractPropKey>,
+          PropsOf<Wrapped> & { ref?: Ref }
+        >(props, extractPropKeys);
 
         return createElement(
           WrapperComponent,
@@ -74,17 +75,19 @@ export default function wrapWith<
           // If there are no "WrappedComponent", don't override children. It will override the `props.children`.
           // False positive: we are unpacking the array rightaway.
           // eslint-disable-next-line react/jsx-key
-          ...(WrappedComponent ? [<WrappedComponent {...wrappedProps} />] : [])
+          ...(WrappedComponent ? [createElement(WrappedComponent, { ...wrappedProps, ref })] : [])
         );
-      };
+      });
 
-      WithWrapper.displayName = `WrappedWith${WrapperComponent.displayName}`;
+      WithWrapper.displayName = `WrappedWith${WrapperComponent.displayName || 'Component'}`;
 
       return WithWrapper;
     }
 
     if (WrappedComponent) {
-      const WithWrapper = (props: PropsOf<Wrapped>) => <WrappedComponent {...props} />;
+      const WithWrapper = forwardRef<Ref, PropsOf<Wrapped>>((props, ref) =>
+        createElement<PropsOf<Wrapped>>(WrappedComponent, { ...props, ref })
+      );
 
       WithWrapper.displayName = WrappedComponent.displayName;
 

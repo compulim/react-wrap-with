@@ -1,7 +1,7 @@
 {
   "name": "react-wrap-with",
   "version": "0.0.0-0",
-  "description": "Creates React higher-order component by wrapping with a container component.",
+  "description": "Creates higher-order component for wrapping component in another component.",
   "files": [
     "./lib/*"
   ],
