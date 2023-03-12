@@ -96,9 +96,14 @@ export default function wrapWith<
     }
 
     if (ContentComponent) {
-      const WithContainer = forwardRef<Ref, PropsOf<ContentComponentType>>((props, ref) =>
-        createElement<PropsOf<ContentComponentType>>(ContentComponent, { ...props, ref })
-      );
+      const WithContainer = forwardRef<Ref, PropsOf<ContentComponentType>>((props, ref) => {
+        const [, contentProps] = pickAndOmit<
+          Pick<PropsOf<ContainerComponentType>, ExtractPropKey>,
+          PropsOf<ContentComponentType> & { ref?: Ref }
+        >(props, extractPropKeys);
+
+        return createElement<PropsOf<ContentComponentType>>(ContentComponent, { ...contentProps, ref });
+      });
 
       WithContainer.displayName = ContentComponent.displayName;
 

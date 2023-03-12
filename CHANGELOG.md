@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extracts props during render and pass to the wrapper component, by [@compulim](https://github.com/compulim), in PR [#4](https://github.com/compulim/react-wrap-with/pull/4) and [#5](https://github.com/compulim/react-wrap-with/pull/5)
 - Forwards ref to the inner component, by [@compulim](https://github.com/compulim), in PR [#8](https://github.com/compulim/react-wrap-with/pull/8)
 
+### Fixed
+
+- Fixes [#9](https://github.com/compulim/react-wrap-with/issues/9), props should be extracted even if container is falsy, by [@compulim](https://github.com/compulim), in PR [#11](https://github.com/compulim/react-wrap-with/pull/11)
+
 ### Changed
 
 - Terminology changed from "wrapper"/"wrapped" to "container"/"content", by [@compulim](https://github.com/compulim), in PR [#10](https://github.com/compulim/react-wrap-with/pull/10)
