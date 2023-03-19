@@ -3,7 +3,9 @@
   "version": "0.0.0-0",
   "description": "",
   "scripts": {
-    "build": "esbuild --bundle --minify --outfile=./public/static/js/main.js ./src/index.tsx",
+    "build": "npm run build:typescript && npm run build:esbuild",
+    "build:esbuild": "esbuild --bundle --minify --outfile=./public/static/js/main.js ./src/index.tsx",
+    "build:typescript": "tsc --project ./src/tsconfig.json",
     "bump": "npm run bump:prod && npm run bump:dev && npm run bump:auditfix",
     "bump:auditfix": "npm audit fix || exit 0",
     "bump:dev": "if [ `cat package.json | jq -r '(.devDependencies // {}) | length'` -ne 0 ]; then npm install $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.devDependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
@@ -15,7 +17,10 @@
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.17.10"
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "esbuild": "^0.17.10",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "react": "18.2.0",

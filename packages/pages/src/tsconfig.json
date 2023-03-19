@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react",
+    "moduleResolution": "nodenext",
+    "noEmit": true,
+    "strict": true,
+    "target": "ESNext"
+  },
+  "exclude": ["**/*.spec.*", "**/*.test.*"]
+}

@@ -3,4 +3,6 @@ import React from 'react';
 
 import App from './App';
 
-createRoot(document.getElementById('root')).render(<App />);
+const rootElement = document.getElementById('root');
+
+rootElement && createRoot(rootElement).render(<App />);
