@@ -8,11 +8,13 @@
   "exports": {
     ".": {
       "import": "./lib/esmodules/index.js",
-      "require": "./lib/commonjs/index.js"
+      "require": "./lib/commonjs/index.js",
+      "types": "./lib/types/index.d.ts"
     },
     "./wrapWith": {
       "import": "./lib/esmodules/wrapWith.js",
-      "require": "./lib/commonjs/wrapWith.js"
+      "require": "./lib/commonjs/wrapWith.js",
+      "types": "./lib/types/wrapWith.d.ts"
     }
   },
   "main": "./lib/commonjs/index.js",
