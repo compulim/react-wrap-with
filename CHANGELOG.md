@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixes [#9](https://github.com/compulim/react-wrap-with/issues/9), props should be extracted even if container is falsy, by [@compulim](https://github.com/compulim), in PR [#11](https://github.com/compulim/react-wrap-with/pull/11)
-- Fixes [#12](https://github.com/compulim/react-wrap-with/issues/12), exports typings through conditional exports, by [@compulim](https://github.com/compulim), in PR [#13](https://github.com/compulim/react-wrap-with-pull/13)
+- Fixes [#12](https://github.com/compulim/react-wrap-with/issues/12), exports typings through conditional exports, by [@compulim](https://github.com/compulim), in PR [#13](https://github.com/compulim/react-wrap-with/pull/13)
 
 ### Changed
 

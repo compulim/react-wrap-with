@@ -79,6 +79,7 @@ jobs:
   #   strategy:
   #     matrix:
   #       node-version: [16.x]
+  #       package-name: [react-wrap-with]
 
   #   steps:
   #     - uses: actions/checkout@v3
@@ -91,7 +92,7 @@ jobs:
   #       uses: actions/download-artifact@v3.0.1
   #       with:
   #         name: tarball
-  #         path: packages/react-wrap-with
+  #         path: packages/${{ matrix.package-name }}
   #     - name: Run npm install
   #       run: |
   #         cd packages/integration-test
