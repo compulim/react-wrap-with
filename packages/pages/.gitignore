@@ -1,3 +1,4 @@
 /node_modules
 /package-lock.json
-/public/static/js/
+/public/static/css/main.css
+/public/static/js/main.js

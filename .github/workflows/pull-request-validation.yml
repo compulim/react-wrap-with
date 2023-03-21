@@ -34,6 +34,15 @@ jobs:
         with:
           name: tarball
           path: packages/${{ matrix.package-name }}/*.tgz
+      - name: Build pages
+        run: |
+          cd packages/pages
+          npm install
+          npm run build
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: packages/pages/public
       - name: Run unit tests
         run: |
           cd packages/${{ matrix.package-name }}
@@ -66,12 +75,13 @@ jobs:
         run: cat package.json | jq '.exports | map(flatten) | flatten | .[]' | xargs -L1 test -f $1
       - name: "Sanity check: has source maps"
         run: compgen -G lib/**/*.js.map
-      - name: "Sanity check: no **/*.spec.*"
+      - name: "Sanity check: no lib/**/*.spec.*"
         run: "! compgen -G lib/**/*.spec.*"
-      - name: "Sanity check: no **/*.test.*"
+      - name: "Sanity check: no lib/**/*.test.*"
         run: "! compgen -G lib/**/*.test.*"
+      - name: "Sanity check: no dependencies are pre-release"
+        run: cat package.json | jq '.dependencies | to_entries | map(.value | select(contains("-"))) | if length > 0 then halt_error(1) else empty end'
 
-  # Uncomment "integration-test" section when ready.
   # integration-test:
   #   needs: build
   #   runs-on: ubuntu-latest

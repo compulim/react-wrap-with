@@ -41,6 +41,15 @@ jobs:
         with:
           name: tarball
           path: packages/${{ matrix.package-name }}/*.tgz
+      - name: Build pages
+        run: |
+          cd packages/pages
+          npm install ../${{ matrix.package-name }}/*.tgz
+          npm run build
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: packages/pages/public
 
   draft-release:
     needs:
@@ -108,6 +117,8 @@ jobs:
         run: echo GitHub release created at https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}. >> $GITHUB_STEP_SUMMARY
 
   create-bump-pull-request:
+    continue-on-error: true
+    environment: production
     needs:
       - publish-package
     permissions:
@@ -130,20 +141,43 @@ jobs:
           npm version prepatch --no-git-tag-version
           echo version=`cat package.json | jq -r .version` >> $GITHUB_OUTPUT
       - name: Create branch
+        id: create-branch
         run: |
-          git checkout -b bump-${{ steps.bump-version.outputs.version }}
+          BRANCH_NAME=bump-${{ steps.bump-version.outputs.version }}
+          echo branch-name=$BRANCH_NAME >> $GITHUB_OUTPUT
+
+          git checkout -b $BRANCH_NAME
           git add --all
           git commit --message "Bump to ${{ steps.bump-version.outputs.version }}"
-          git push --set-upstream origin bump-${{ steps.bump-version.outputs.version }}
-      - env:
-          GH_TOKEN: ${{ github.token }}
+          git push --set-upstream origin $BRANCH_NAME
+      - continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN_CREATE_PULL_REQUEST }}
         id: create-pull-request
         name: Create pull request
-        run: echo url=`gh pr create --assignee ${{ github.actor }} --base main --body "" --title "Bump to ${{ steps.bump-version.outputs.version }}" || true` >> $GITHUB_OUTPUT
+        run: |
+          PULL_REQUEST_NUMBER=`gh api repos/${{ github.repository }}/pulls --field base=main --field head=${{ steps.create-branch.outputs.branch-name }} --field title="Bump to ${{ steps.bump-version.outputs.version }}" | jq -r '.number'`
+          gh api repos/${{ github.repository }}/issues/$PULL_REQUEST_NUMBER/assignees --field assignees[]=${{ github.actor }}
+          echo url=https://github.com/${{ github.repository }}/pull/$PULL_REQUEST_NUMBER >> $GITHUB_OUTPUT
       - name: Summarize job
         run: |
           if [ "${{ steps.create-pull-request.outputs.url }}" = "" ]; then
-            echo "Branch created at [bump-${{ steps.bump-version.outputs.version }}](https://github.com/${{ github.repository }}/compare/main...bump-${{ steps.bump-version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
+            echo "Branch created at [bump-${{ steps.bump-version.outputs.version }}](https://github.com/${{ github.repository }}/compare/main...${{ steps.create-branch.outputs.branch-name }})" >> $GITHUB_STEP_SUMMARY
           else
             echo Pull request created at ${{ steps.create-pull-request.outputs.url }}. >> $GITHUB_STEP_SUMMARY
           fi
+
+  publish-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: deployment
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2

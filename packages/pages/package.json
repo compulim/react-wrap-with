@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "npm run build:typescript && npm run build:esbuild",
-    "build:esbuild": "esbuild --bundle --minify --outfile=./public/static/js/main.js ./src/index.tsx",
+    "build:esbuild": "esbuild --bundle --entry-names=[dir]/[ext]/main --minify --outdir=./public/static/ ./src/index.tsx",
     "build:typescript": "tsc --project ./src/tsconfig.json",
     "bump": "npm run bump:prod && npm run bump:dev && npm run bump:auditfix",
     "bump:auditfix": "npm audit fix || exit 0",
@@ -12,7 +12,7 @@
     "bump:prod": "if [ `cat package.json | jq -r '(.dependencies // {}) | length'` -ne 0 ]; then npm install --save-exact $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.dependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
     "postbump": "cat package.json | jq '. + (.dependencies = (((.dependencies // {}) + (.localPeerDependencies // {})) | to_entries | sort_by(.key) | from_entries)) | (.devDependencies = (((.devDependencies // {}) + (.localPeerDevDependencies // {})) | to_entries | sort_by(.key) | from_entries))' > package-temp.json && mv package-temp.json package.json",
     "prebump": "cat package.json | jq '(((.localPeerDependencies // {}) | keys | map([\"dependencies\", .])) + ((.localPeerDevDependencies // {}) | keys | map([\"devDependencies\", .]))) as $localPeerPaths | delpaths($localPeerPaths)' > package-temp.json && mv package-temp.json package.json",
-    "start": "esbuild --bundle --outfile=./public/static/js/main.js --servedir=./public ./src/index.tsx"
+    "start": "esbuild --bundle --entry-names=[dir]/[ext]/main --minify --outdir=./public/static/ --servedir=./public ./src/index.tsx"
   },
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",

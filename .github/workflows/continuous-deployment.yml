@@ -43,6 +43,15 @@ jobs:
         with:
           name: tarball
           path: packages/${{ matrix.package-name }}/*.tgz
+      - name: Build pages
+        run: |
+          cd packages/pages
+          npm install ../${{ matrix.package-name }}/*.tgz
+          npm run build
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: packages/pages/public
 
   publish-package:
     needs: build
@@ -73,3 +82,18 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Summarize job
         run: echo NPM package published to https://npmjs.com/package/${{ steps.read-package-json.outputs.package-name }}/v/${{ steps.read-package-json.outputs.version }}. >> $GITHUB_STEP_SUMMARY
+
+  publish-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: deployment
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
