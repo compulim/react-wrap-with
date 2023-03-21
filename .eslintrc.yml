@@ -9,9 +9,6 @@ overrides:
   - extends: .eslintrc.jest.yml
     files:
     - '__tests__/**'
-    - '__tests__/**'
-    - '__tests__/**'
-    - '__tests__/**'
     - '*.spec.js'
     - '*.spec.jsx'
     - '*.spec.ts'
@@ -31,6 +28,9 @@ plugins:
 root: true
 rules:
   prettier/prettier: error
+  no-empty:
+    - error
+    - allowEmptyCatch: true
 settings:
   react:
     version: '16.8'

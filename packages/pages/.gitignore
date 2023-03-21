@@ -1,4 +1,4 @@
-/node_modules
+/node_modules/
 /package-lock.json
 /public/static/css/main.css
 /public/static/js/main.js
