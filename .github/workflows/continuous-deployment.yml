@@ -8,92 +8,10 @@ on:
       - '.github/**'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-        package-name: [react-wrap-with]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - id: set-version
-        name: Run npx version-from-git --no-git-tag-version
-        run: |
-          npx version-from-git --no-git-tag-version
-          echo version=`cat package.json | jq -r '.version'` >> $GITHUB_OUTPUT
-      - name: Propagate versions
-        run: |
-          cd packages/${{ matrix.package-name }}
-          npm version --no-git-tag-version ${{ steps.set-version.outputs.version }}
-      - run: npm clean-install
-      - run: npm run build --if-present
-      - name: Run npm pack
-        run: |
-          cd packages/${{ matrix.package-name }}
-          npm pack
-      - name: Upload tarball artifact
-        uses: actions/upload-artifact@v3.1.1
-        with:
-          name: tarball
-          path: packages/${{ matrix.package-name }}/*.tgz
-      - name: Build pages
-        run: |
-          cd packages/pages
-          npm install ../${{ matrix.package-name }}/*.tgz
-          npm run build
-      - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: packages/pages/public
-
-  publish-package:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: prerelease
-
-    steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - name: Download tarball artifact
-        uses: actions/download-artifact@v3.0.1
-        with:
-          name: tarball
-      - id: read-package-json
-        name: Read package.json
-        run: |
-          echo package-name=`tar --extract --file=\`ls ./*.tgz\` --to-stdout package/package.json | jq -r .name` >> $GITHUB_OUTPUT
-          echo version=`tar --extract --file=\`ls ./*.tgz\` --to-stdout package/package.json | jq -r .version` >> $GITHUB_OUTPUT
-      - if: ${{ !contains(steps.read-package-json.outputs.version, '-') }}
-        name: Check version number
-        run: |
-          echo ::error::Cannot publish production version ${{ steps.read-package-json.outputs.version }}
-          exit 1
-      - run: npm publish --tag ${{ github.ref_name }} `ls *.tgz`
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Summarize job
-        run: echo NPM package published to https://npmjs.com/package/${{ steps.read-package-json.outputs.package-name }}/v/${{ steps.read-package-json.outputs.version }}. >> $GITHUB_STEP_SUMMARY
-
-  publish-pages:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
+  call-workflow:
     permissions:
       pages: write
       id-token: write
-    runs-on: ubuntu-latest
-
-    steps:
-      - id: deployment
-        name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+    uses: compulim/workflows/.github/workflows/continuous-deployment.yml@main
+    with:
+      package-name: react-wrap-with
