@@ -12,6 +12,7 @@ jobs:
     permissions:
       pages: write
       id-token: write
+    secrets: inherit
     uses: compulim/workflows/.github/workflows/continuous-deployment.yml@main
     with:
       package-name: react-wrap-with
