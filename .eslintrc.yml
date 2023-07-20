@@ -8,15 +8,15 @@ extends:
 overrides:
   - extends: .eslintrc.jest.yml
     files:
-    - '__tests__/**'
-    - '*.spec.js'
-    - '*.spec.jsx'
-    - '*.spec.ts'
-    - '*.spec.tsx'
-    - '*.test.js'
-    - '*.test.jsx'
-    - '*.test.ts'
-    - '*.test.tsx'
+      - '__tests__/**'
+      - '*.spec.js'
+      - '*.spec.jsx'
+      - '*.spec.ts'
+      - '*.spec.tsx'
+      - '*.test.js'
+      - '*.test.jsx'
+      - '*.test.ts'
+      - '*.test.tsx'
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: latest
@@ -33,4 +33,4 @@ rules:
     - allowEmptyCatch: true
 settings:
   react:
-    version: '16.8'
+    version: '17.0.2'
