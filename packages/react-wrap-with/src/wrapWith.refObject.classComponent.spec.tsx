@@ -11,7 +11,7 @@ import type { PropsWithChildren, Ref } from 'react';
 type EffectProps = PropsWithChildren<{ containerRef?: Ref<HTMLSpanElement>; effect: 'blink' }>;
 
 class Effect extends Component<EffectProps> {
-  render() {
+  override render() {
     const { children, containerRef, effect } = this.props;
 
     return (
@@ -23,7 +23,7 @@ class Effect extends Component<EffectProps> {
 }
 
 class Hello extends Component {
-  render() {
+  override render() {
     return <h1>Hello, World!</h1>;
   }
 }

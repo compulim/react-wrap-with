@@ -3,28 +3,38 @@
   "version": "0.0.0-0",
   "description": "Creates higher-order component for wrapping component in another component.",
   "files": [
-    "./lib/*"
+    "./lib/"
   ],
   "exports": {
     ".": {
-      "import": "./lib/esmodules/index.js",
-      "require": "./lib/commonjs/index.js",
-      "types": "./lib/types/index.d.ts"
+      "import": {
+        "types": "./lib/esmodules-types/index.d.ts",
+        "default": "./lib/esmodules/index.js"
+      },
+      "require": {
+        "types": "./lib/commonjs-types/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
     },
     "./wrapWith": {
-      "import": "./lib/esmodules/wrapWith.js",
-      "require": "./lib/commonjs/wrapWith.js",
-      "types": "./lib/types/wrapWith.d.ts"
+      "import": {
+        "types": "./lib/esmodules-types/wrapWith.d.ts",
+        "default": "./lib/esmodules/wrapWith.js"
+      },
+      "require": {
+        "types": "./lib/commonjs-types/wrapWith.d.ts",
+        "default": "./lib/commonjs/wrapWith.js"
+      }
     }
   },
   "main": "./lib/commonjs/index.js",
-  "typings": "./lib/types/index.d.ts",
+  "typings": "./lib/commonjs-types/index.d.ts",
   "scripts": {
-    "build": "npm run build:babel && npm run build:typescript",
-    "build:babel": "npm run build:babel:commonjs && npm run build:babel:esmodules",
+    "build": "npm run build:babel:commonjs && npm run build:babel:esmodules && npm run build:typescript:commonjs && npm run build:typescript:esmodules",
     "build:babel:commonjs": "babel src --config-file ./babel.commonjs.config.json --extensions .ts,.tsx --out-dir ./lib/commonjs/",
     "build:babel:esmodules": "babel src --config-file ./babel.esmodules.config.json --extensions .ts,.tsx --out-dir ./lib/esmodules/",
-    "build:typescript": "tsc --project ./src/tsconfig.declaration.json",
+    "build:typescript:commonjs": "tsc --project ./src/tsconfig.declaration.commonjs.json",
+    "build:typescript:esmodules": "tsc --project ./src/tsconfig.declaration.esmodules.json",
     "bump": "npm run bump:prod && npm run bump:dev && npm run bump:auditfix && npm run bump:babel",
     "bump:auditfix": "npm audit fix || exit 0",
     "bump:babel": "npm run bump:babel:commonjs && npm run bump:babel:esmodules",
@@ -34,9 +44,11 @@
     "bump:prod": "if [ `cat package.json | jq -r '(.dependencies // {}) | length'` -ne 0 ]; then npm install --save-exact $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.dependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
     "postbump": "cat package.json | jq '. + (.dependencies = (((.dependencies // {}) + (.localPeerDependencies // {})) | to_entries | sort_by(.key) | from_entries)) | (.devDependencies = (((.devDependencies // {}) + (.localPeerDevDependencies // {})) | to_entries | sort_by(.key) | from_entries))' > package-temp.json && mv package-temp.json package.json",
     "prebump": "cat package.json | jq '(((.localPeerDependencies // {}) | keys | map([\"dependencies\", .])) + ((.localPeerDevDependencies // {}) | keys | map([\"devDependencies\", .]))) as $localPeerPaths | delpaths($localPeerPaths)' > package-temp.json && mv package-temp.json package.json",
-    "precommit": "eslint ./src/",
+    "precommit": "npm run precommit:eslint && npm run precommit:typescript:production && npm run precommit:typescript:test",
+    "precommit:eslint": "eslint ./src/",
+    "precommit:typescript:production": "tsc --noEmit --project ./src/tsconfig.precommit.production.json",
+    "precommit:typescript:test": "tsc --noEmit --project ./src/tsconfig.precommit.test.json",
     "prepack": "cp ../../CHANGELOG.md . && cp ../../LICENSE . && cp ../../README.md .",
-    "start": "esbuild --bundle --outfile=./public/main.js --servedir=./public --sourcemap ./scenarios/index.jsx",
     "test": "jest"
   },
   "repository": {
@@ -87,6 +99,8 @@
     "@babel/preset-typescript": "^7.22.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
+    "@tsconfig/recommended": "^1.0.2",
+    "@tsconfig/strictest": "^2.0.2",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.4.2",
     "@types/react": "^17.0.62",
