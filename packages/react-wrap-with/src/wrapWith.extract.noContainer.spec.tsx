@@ -7,7 +7,7 @@ import React from 'react';
 
 import wrapWith from './wrapWith';
 
-const Hello = ({ className }) => <h1 className={className}>Hello, World!</h1>;
+const Hello = ({ className }: { className?: string }) => <h1 className={className}>Hello, World!</h1>;
 
 Hello.propTypes = { className: PropTypes.string };
 

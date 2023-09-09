@@ -3,24 +3,26 @@
   "version": "0.0.0-0",
   "description": "",
   "scripts": {
-    "build": "npm run build:typescript && npm run build:esbuild",
-    "build:esbuild": "esbuild --bundle --entry-names=[dir]/[ext]/main --minify --outdir=./public/static/ ./src/index.tsx",
-    "build:typescript": "tsc --project ./src/tsconfig.json",
+    "build": "esbuild --bundle --entry-names=[name]/[ext]/main --minify --outdir=./public/static/ --sourcemap app=./src/app/index.tsx",
     "bump": "npm run bump:prod && npm run bump:dev && npm run bump:auditfix",
     "bump:auditfix": "npm audit fix || exit 0",
     "bump:dev": "if [ `cat package.json | jq -r '(.devDependencies // {}) | length'` -ne 0 ]; then npm install $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.devDependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
     "bump:prod": "if [ `cat package.json | jq -r '(.dependencies // {}) | length'` -ne 0 ]; then npm install --save-exact $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.dependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
     "postbump": "cat package.json | jq '. + (.dependencies = (((.dependencies // {}) + (.localPeerDependencies // {})) | to_entries | sort_by(.key) | from_entries)) | (.devDependencies = (((.devDependencies // {}) + (.localPeerDevDependencies // {})) | to_entries | sort_by(.key) | from_entries))' > package-temp.json && mv package-temp.json package.json",
     "prebump": "cat package.json | jq '(((.localPeerDependencies // {}) | keys | map([\"dependencies\", .])) + ((.localPeerDevDependencies // {}) | keys | map([\"devDependencies\", .]))) as $localPeerPaths | delpaths($localPeerPaths)' > package-temp.json && mv package-temp.json package.json",
-    "start": "esbuild --bundle --entry-names=[dir]/[ext]/main --minify --outdir=./public/static/ --servedir=./public ./src/index.tsx"
+    "precommit": "npm run precommit:typescript",
+    "precommit:typescript": "tsc --project ./src/tsconfig.json",
+    "reinstall": "rm -r node_modules package-lock.json && npm install",
+    "start": "npm run build -- --servedir=./public"
   },
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18.2.15",
+    "@tsconfig/strictest": "^2.0.2",
+    "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
-    "esbuild": "^0.18.14",
-    "typescript": "^5.1.6"
+    "esbuild": "^0.19.2",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "react": "18.2.0",

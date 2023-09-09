@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "jsx": "react",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "noEmit": false
+    "noEmit": true,
+    "strict": true
   },
-  "exclude": ["**/*.spec.*", "**/*.test.*", "__test__/**/*"],
+  "exclude": ["**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts", "**/*.test.tsx", "__tests__/**/*"],
   "extends": "@tsconfig/strictest/tsconfig.json"
 }
