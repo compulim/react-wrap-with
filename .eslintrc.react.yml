@@ -1,0 +1,7 @@
+extends:
+  - plugin:react/recommended
+plugins:
+  - react
+settings:
+  react:
+    version: 17.0.2

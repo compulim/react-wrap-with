@@ -4,8 +4,6 @@
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
     "noEmit": false
   },
   "exclude": ["**/*.spec.*", "**/*.test.*", "__test__/**/*"],

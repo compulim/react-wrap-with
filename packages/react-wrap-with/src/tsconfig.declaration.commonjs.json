@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "declarationDir": "../lib/commonjs-types/",
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "moduleResolution": "Node10"
   },
   "extends": "./tsconfig.declaration.json"
 }
