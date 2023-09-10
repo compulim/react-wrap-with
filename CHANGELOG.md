@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added type-checking for test, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
 - Updates `tsconfig.json` to extend from [`@tsconfig/strictest`](https://npmjs.com/package/@tsconfig/strictest), by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
-- Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20) and PR [#22](https://github.com/compulim/react-wrap-with/pull/22)
+- Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20), PR [#22](https://github.com/compulim/react-wrap-with/pull/22), and PR [#23](https://github.com/compulim/react-wrap-with/pull/23)
    - Production dependencies
       - [`@babel/runtime-corejs3@7.22.15`](https://npmjs.com/package/@babel/runtime-corejs3)
    - Development dependencies
@@ -21,10 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - [`@babel/preset-env@7.22.15`](https://npmjs.com/package/@babel/preset-env)
       - [`@babel/preset-react@7.22.15`](https://npmjs.com/package/@babel/preset-react)
       - [`@babel/preset-typescript@7.22.15`](https://npmjs.com/package/@babel/preset-typescript)
+      - [`@testing-library/react@14.0.0`](https://npmjs.com/package/@testing-library/react)
       - [`@types/jest@29.5.4`](https://npmjs.com/package/@types/jest)
       - [`@types/node@20.6.0`](https://npmjs.com/package/@types/node)
       - [`@types/react-dom@18.2.7`](https://npmjs.com/package/@types/react-dom)
-      - [`@types/react@17.0.65`](https://npmjs.com/package/@types/react)
       - [`@types/react@18.2.21`](https://npmjs.com/package/@types/react)
       - [`@typescript-eslint/eslint-plugin@6.6.0`](https://npmjs.com/package/@typescript-eslint/eslint-plugin)
       - [`@typescript-eslint/parser@6.6.0`](https://npmjs.com/package/@typescript-eslint/parser)
@@ -35,6 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - [`jest-environment-jsdom@29.6.4`](https://npmjs.com/package/jest-environment-jsdom)
       - [`jest@29.6.4`](https://npmjs.com/package/jest)
       - [`prettier@3.0.3`](https://npmjs.com/package/prettier)
+      - [`react-dom@18.2.0`](https://npmjs.com/package/react-dom)
+      - [`react-test-renderer@18.2.0`](https://npmjs.com/package/react-test-renderer)
+      - [`react@18.2.0`](https://npmjs.com/package/react)
       - [`typescript@5.2.2`](https://npmjs.com/package/typescript)
 
 ### Fixed

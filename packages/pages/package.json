@@ -15,6 +15,9 @@
   },
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
+  "localPeerDependencies": {
+    "react-wrap-with": "^0.0.0-0"
+  },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.2",
     "@types/react": "^18.2.21",
@@ -25,9 +28,6 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-wrap-with": "file:../react-wrap-with/react-wrap-with-0.0.0-0.tgz"
-  },
-  "localPeerDependencies": {
-    "react-wrap-with": "file:../react-wrap-with/react-wrap-with-0.0.0-0.tgz"
+    "react-wrap-with": "^0.0.0-0"
   }
 }
