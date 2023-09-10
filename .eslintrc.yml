@@ -42,6 +42,3 @@ rules:
   no-empty:
     - error
     - allowEmptyCatch: true
-settings:
-  react:
-    version: 17.0.2

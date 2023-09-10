@@ -4,8 +4,7 @@
     [
       "@babel/plugin-transform-runtime",
       {
-        "corejs": 3,
-        "version": "7.22.15"
+        "corejs": 3
       }
     ]
   ],
@@ -16,9 +15,7 @@
       "@babel/preset-env",
       {
         "modules": false,
-        "targets": {
-          "ie": "11"
-        }
+        "targets": { "ie": "11" }
       }
     ]
   ],
