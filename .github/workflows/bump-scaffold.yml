@@ -14,7 +14,7 @@ on:
         required: true
         type: boolean
       skip-integration-test:
-        default: true
+        default: false
         description: Skip integration test
         required: true
         type: boolean

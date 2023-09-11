@@ -7,7 +7,8 @@
   "license": "MIT",
   "workspaces": [
     "packages/react-wrap-with",
-    "packages/pages"
+    "packages/pages",
+    "packages/integration-test"
   ],
   "scripts": {
     "build": "npm run build --if-present --workspaces",
