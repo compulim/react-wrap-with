@@ -1,8 +1,8 @@
-name: Publish release on push tag
+name: Publish release
 
 on:
-  push:
-    tags: 'v*'
+  release:
+    types: [created]
 
 jobs:
   call-workflow:
@@ -14,3 +14,4 @@ jobs:
     uses: compulim/workflows/.github/workflows/publish-release.yml@main
     with:
       package-name: react-wrap-with
+      tag: ${{ github.ref_name }}

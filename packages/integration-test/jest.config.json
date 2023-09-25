@@ -1,26 +1,9 @@
 {
-  "testMatch": ["**/__tests__/**/*.?([cm])[jt]s?(x)", "**/?(*.)+(spec|test).?([cm])[jt]s?(x)"],
+  "testMatch": [
+    "**/__tests__/**/*.?([cm])[jt]s?(x)",
+    "**/?(*.)+(spec|test).?([cm])[tj]s?(x)"
+  ],
   "transform": {
-    "\\.cjsx?$": [
-      "babel-jest",
-      {
-        "presets": ["@babel/preset-react"]
-      }
-    ],
-    "\\.mjsx?$": [
-      "babel-jest",
-      {
-        "presets": [
-          "@babel/preset-react",
-          [
-            "@babel/preset-env",
-            {
-              "modules": "commonjs",
-              "targets": "defaults"
-            }
-          ]
-        ]
-      }
-    ]
+    "\\.mjsx?$": ["babel-jest"]
   }
 }
