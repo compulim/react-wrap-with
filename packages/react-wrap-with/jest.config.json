@@ -5,7 +5,20 @@
     "\\.[jt]sx?$": [
       "babel-jest",
       {
-        "extends": "./babel.jest.config.json"
+        "presets": [
+          "@babel/preset-react",
+          "@babel/preset-typescript",
+          [
+            "@babel/preset-env",
+            {
+              "modules": "commonjs",
+              "targets": {
+                "node": "18"
+              }
+            }
+          ]
+        ],
+        "sourceMaps": true
       }
     ]
   }
