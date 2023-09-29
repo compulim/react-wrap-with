@@ -4,7 +4,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import wrapWith from './wrapWith';
+import wrapWith, { ExtractProp } from './wrapWith';
 
 import type { PropsWithChildren } from 'react';
 
@@ -21,7 +21,7 @@ type TextBoxProps = { className?: string };
 const TextBox = ({ className }: TextBoxProps) => <input className={className} data-testid="input" type="text" />;
 
 describe('Wrapping <TextBox> with <Form method="post"> and extract "action" props', () => {
-  const SingleFormInput = wrapWith(Form, { method: 'post' }, ['action'])(TextBox);
+  const SingleFormInput = wrapWith(Form, { action: ExtractProp, method: 'post' })(TextBox);
 
   test('should render', () => {
     // WHEN: Rendering the wrapped component.
@@ -49,7 +49,7 @@ describe('Wrapping <TextBox> with <Form method="post"> and extract "action" prop
 });
 
 describe('Wrapping <TextBox> with <Form> and extract "classname" props', () => {
-  const Wrapped = wrapWith(Form, {}, ['className'])(TextBox);
+  const Wrapped = wrapWith(Form, { className: ExtractProp })(TextBox);
 
   test('should extract "className"', () => {
     // WHEN: Rendering the wrapped component.

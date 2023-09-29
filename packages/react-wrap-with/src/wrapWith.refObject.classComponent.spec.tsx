@@ -4,7 +4,7 @@
 import { render } from '@testing-library/react';
 import React, { Component, useEffect, useRef } from 'react';
 
-import wrapWith from './wrapWith';
+import wrapWith, { ExtractProp } from './wrapWith';
 
 import type { PropsWithChildren, Ref } from 'react';
 
@@ -30,7 +30,7 @@ class Hello extends Component {
 
 test('ref of RefObject should be passed', () => {
   // GIVEN: Wrapping <Hello> with <Effect effect="blink">.
-  const BlinkingHello = wrapWith(Effect, { effect: 'blink' }, ['containerRef'])(Hello);
+  const BlinkingHello = wrapWith(Effect, { containerRef: ExtractProp, effect: 'blink' } as const)(Hello);
 
   const App = ({ onRef }: { onRef: (refs: [HTMLSpanElement | null, Hello | undefined]) => void }) => {
     const containerRef = useRef<HTMLSpanElement | null>(null);

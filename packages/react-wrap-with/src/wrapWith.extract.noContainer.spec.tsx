@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import wrapWith from './wrapWith';
+import wrapWith, { ExtractProp } from './wrapWith';
 
 const Hello = ({ className }: { className?: string }) => <h1 className={className}>Hello, World!</h1>;
 
@@ -13,7 +13,7 @@ Hello.propTypes = { className: PropTypes.string };
 
 test('extract props without a container', () => {
   // GIVEN: Wrapping <Hello> with false and extract "className" prop.
-  const BlinkingHello = wrapWith(false, {}, ['className'])(Hello);
+  const BlinkingHello = wrapWith(false, { className: ExtractProp })(Hello);
 
   // WHEN: Render.
   const result = render(<BlinkingHello className="blink" />);

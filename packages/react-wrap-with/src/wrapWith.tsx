@@ -10,139 +10,120 @@ type RefOf<T> = T extends RefAttributes<infer R> ? R : never;
 
 const EmptyComponent = () => <Fragment />;
 
-const Extract = Symbol('Extract');
-const Spy = Symbol('Spy');
+const ExtractProp = Symbol('ExtractProp');
+const SpyProp = Symbol('SpyProp');
 
-export { Extract, Spy };
+export { ExtractProp, SpyProp };
 
 // Everything.
 export default function wrapWith<
-  // ContainerComponentType extends ComponentType<PropsWithChildren<Record<ExtractPropKey, any> & { spy: ContentProps }>>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof Omit<PropsOf<ContainerComponentType>, 'children'> = never,
-  SpyPropKey extends keyof Omit<PropsOf<ContainerComponentType>, 'children'> = never
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // ContainerProps extends Record<string, any> = object,
+  ContainerProps extends PropsOf<ContainerComponentType> = PropsOf<ContainerComponentType>,
+  How extends {
+    [K in keyof ContainerProps]: K extends 'children'
+      ? never
+      :
+          | typeof ExtractProp
+          | typeof SpyProp
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          | (ContainerProps[K] extends any ? any : never);
+  } = {
+    [K in keyof ContainerProps]: K extends 'children'
+      ? never
+      :
+          | typeof ExtractProp
+          | typeof SpyProp
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          | (ContainerProps[K] extends any ? any : never);
+  },
+  ExtractPropsKeys extends keyof How = keyof {
+    [K in keyof How as How[K] extends typeof ExtractProp ? K : never]: How[K];
+  },
+  SpyPropsKeys extends keyof How = keyof {
+    [K in keyof How as How[K] extends typeof SpyProp ? K : never]: How[K];
+  }
 >(
   ContainerComponent: ContainerComponentType | false | null | undefined,
-  initialProps: Omit<PropsOf<ContainerComponentType> & { children?: never }, ExtractPropKey | SpyPropKey> | undefined,
-  extractPropKeys: ExtractPropKey[],
-  spyPropKeys: SpyPropKey[]
+  how: How
 ): <
-  ContentComponentType extends ComponentType<Pick<PropsOf<ContainerComponentType>, SpyPropKey>>,
-  Ref = RefOf<PropsOf<ContentComponentType>>
+  ContentComponentType extends ComponentType<ContentProps>,
+  ContentProps extends Pick<ContainerProps, SpyPropsKeys> = Pick<ContainerProps, SpyPropsKeys>,
+  Ref = RefOf<ContentProps>
 >(
   ContentComponent: ContentComponentType | false | null | undefined
 ) => ComponentType<
-  PropsWithoutRef<Pick<PropsOf<ContainerComponentType>, ExtractPropKey> & PropsOf<ContentComponentType>> &
-    RefAttributes<Ref>
+  PropsWithoutRef<PropsOf<ContentComponentType> & Pick<ContainerProps, ExtractPropsKeys>> & RefAttributes<Ref>
 >;
-
-// Empty or no "spyPropKeys".
-export default function wrapWith<
-  // ContainerComponentType extends ComponentType<PropsWithChildren<Record<ExtractPropKey, any> & { spy: ContentProps }>>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof Omit<PropsOf<ContainerComponentType>, 'children'> = never
->(
-  ContainerComponent: ContainerComponentType | false | null | undefined,
-  initialProps: Omit<PropsOf<ContainerComponentType> & { children?: never }, ExtractPropKey> | undefined,
-  extractPropKeys: ExtractPropKey[],
-  spyPropKeys?: undefined
-  // @types/react did not put a restrictions on what can be props.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): <ContentComponentType extends ComponentType<any>, Ref = RefOf<PropsOf<ContentComponentType>>>(
-  ContentComponent: ContentComponentType | false | null | undefined
-) => ComponentType<
-  PropsWithoutRef<PropsOf<ContentComponentType> & Pick<PropsOf<ContainerComponentType>, ExtractPropKey>> &
-    RefAttributes<Ref>
->;
-
-// Empty or no "extractPropKeys".
-export default function wrapWith<
-  // ContainerComponentType extends ComponentType<PropsWithChildren<Record<ExtractPropKey, any> & { spy: ContentProps }>>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  SpyPropKey extends keyof Omit<PropsOf<ContainerComponentType>, 'children'> = never
->(
-  ContainerComponent: ContainerComponentType | false | null | undefined,
-  initialProps: Omit<PropsOf<ContainerComponentType> & { children?: never }, SpyPropKey> | undefined,
-  extractPropKeys: undefined,
-  spyPropKeys: SpyPropKey[]
-  // @types/react did not put a restrictions on what can be props.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): <
-  ContentComponentType extends ComponentType<Pick<PropsOf<ContainerComponentType>, SpyPropKey>>,
-  Ref = RefOf<PropsOf<ContentComponentType>>
->(
-  ContentComponent: ContentComponentType | false | null | undefined
-) => ComponentType<PropsWithoutRef<PropsOf<ContentComponentType>> & RefAttributes<Ref>>;
-
-// Empty or no "extractPropKeys" and "spyPropKeys"
-export default function wrapWith<
-  // ContainerComponentType extends ComponentType<PropsWithChildren<{ spy: ContentProps }>>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ContainerComponentType extends ComponentType<PropsWithChildren<any>>
->(
-  ContainerComponent: ContainerComponentType | false | null | undefined,
-  // There is a bug in TypeScript that Omit<T, never> & Partial<Pick<T>, never>> does not equals to T.
-  initialProps: PropsOf<ContainerComponentType> & { children?: never },
-  extractedPropKeys?: undefined,
-  spyPropKeys?: undefined
-  // @types/react did not put a restrictions on what can be props.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): <ContentComponentType extends ComponentType<any>, Ref = RefOf<PropsOf<ContentComponentType>>>(
-  ContentComponent: ContentComponentType | false | null | undefined
-) => ComponentType<PropsWithoutRef<PropsOf<ContentComponentType>> & RefAttributes<Ref>>;
 
 // If <Container> need no props other than children, initialProps is optional.
 export default function wrapWith<
-  // ContainerComponentType extends // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   ComponentType<PropsWithChildren<{ spy: ContentProps }>> | false | null | undefined,
   ContainerComponentType extends // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ComponentType<{ children?: ReactNode | undefined }> | false | null | undefined,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ContentProps extends object = any
+    ComponentType<{ children?: ReactNode | undefined }> | false | null | undefined
 >(
   ContainerComponent: ContainerComponentType | false | null | undefined,
-  initialProps?: undefined | Record<number | string | symbol, never>
-  // @types/react did not put a restrictions on what can be props.
+  how?: undefined | Record<number | string | symbol, never>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): <ContentComponentType extends ComponentType<ContentProps>, Ref = RefOf<PropsOf<ContentComponentType>>>(
+): <ContentComponentType extends ComponentType<any>, Ref = RefOf<PropsOf<ContentComponentType>>>(
   ContentComponent: ContentComponentType | false | null | undefined
 ) => ComponentType<PropsWithoutRef<PropsOf<ContentComponentType>> & RefAttributes<Ref>>;
 
 export default function wrapWith<
-  // ContainerComponentType extends ComponentType<PropsWithChildren<Record<ExtractPropKey, any> & { spy: ContentProps }>>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof Omit<PropsOf<ContainerComponentType>, 'children'> = never,
-  SpyPropKey extends keyof Omit<PropsOf<ContainerComponentType>, 'children'> = never
->(
-  ContainerComponent: ContainerComponentType | false | null | undefined,
-  initialProps?: Omit<PropsOf<ContainerComponentType> & { children?: never }, ExtractPropKey | SpyPropKey>,
-  extractPropKeys: ExtractPropKey[] = [] as never[],
-  spyPropKeys: SpyPropKey[] = [] as never[]
-) {
+  ContainerProps extends PropsOf<ContainerComponentType> = PropsOf<ContainerComponentType>,
+  How extends {
+    [K in keyof ContainerProps]: typeof ExtractProp | typeof SpyProp | ContainerProps[K];
+  } = {
+    [K in keyof ContainerProps]: typeof ExtractProp | typeof SpyProp | ContainerProps[K];
+  },
+  ExtractPropsKeys extends keyof How = keyof {
+    [K in keyof How as How[K] extends typeof ExtractProp ? K : never]: How[K];
+  },
+  SpyPropsKeys extends keyof How = keyof {
+    [K in keyof How as How[K] extends typeof SpyProp ? K : never]: How[K];
+  },
+  InitialPropsKeys extends keyof How = keyof {
+    [K in keyof How as How[K] extends typeof ExtractProp ? never : How[K] extends typeof SpyProp ? never : K]: How[K];
+  }
+>(ContainerComponent: ContainerComponentType | false | null | undefined, how: How) {
+  type ExtractProps = Pick<ContainerProps, ExtractPropsKeys>;
+  type SpyProps = Pick<ContainerProps, SpyPropsKeys>;
+  type InitialProps = Omit<ContainerProps, ExtractPropsKeys | SpyPropsKeys>;
+
+  const extractPropsKeys: ExtractPropsKeys[] = Object.entries(how)
+    .filter(([_, value]) => value === ExtractProp)
+    .map(([key]) => key as keyof How) as ExtractPropsKeys[];
+
+  const spyPropsKeys: SpyPropsKeys[] = Object.entries(how)
+    .filter(([_, value]) => value === SpyProp)
+    .map(([key]) => key as keyof How) as SpyPropsKeys[];
+
+  const initialPropsKeys: InitialPropsKeys[] = Object.entries(how)
+    .filter(([_, value]) => value !== ExtractProp && value !== SpyProp)
+    .map(([key]) => key as keyof How) as InitialPropsKeys[];
+
+  // Try fix this.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [initialProps] = pickAndOmit<InitialProps, ExtractProps | SpyProps>(how as any, initialPropsKeys as any);
+
   return function wrap<
+    ContentComponentType extends ComponentType<ContentProps>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ContentComponentType extends ComponentType<Pick<PropsOf<ContainerComponentType>, SpyPropKey>>,
-    Ref = RefOf<PropsOf<ContentComponentType>>
+    ContentProps extends Pick<ContainerProps, SpyPropsKeys> = Pick<ContainerProps, SpyPropsKeys>,
+    Ref = RefOf<ContentProps>
   >(
     ContentComponent: ContentComponentType | false | null | undefined
-  ): ComponentType<
-    PropsWithoutRef<Pick<PropsOf<ContainerComponentType>, ExtractPropKey> & PropsOf<ContentComponentType>> &
-      RefAttributes<Ref>
-  > {
-    type ExpectedContentComponentProps = Pick<PropsOf<ContainerComponentType>, ExtractPropKey> &
-      PropsOf<ContentComponentType>;
-
+  ): ComponentType<PropsWithoutRef<PropsOf<ContentComponentType> & ExtractProps> & RefAttributes<Ref>> {
     if (ContainerComponent) {
-      const WithContainer = forwardRef<Ref, ExpectedContentComponentProps>((props, ref) => {
-        const [extractedProps, contentProps] = pickAndOmit<
-          Pick<PropsOf<ContainerComponentType>, ExtractPropKey>,
-          PropsOf<ContentComponentType>
-        >(props, extractPropKeys);
-        const spyProps = pick<ExpectedContentComponentProps, SpyPropKey>(props, spyPropKeys);
+      const WithContainer = forwardRef<Ref, PropsOf<ContentComponentType> & ExtractProps>((props, ref) => {
+        const [extractedProps, contentProps] = pickAndOmit<ExtractProps, PropsOf<ContentComponentType>>(
+          props,
+          extractPropsKeys
+        );
+        const spyProps = pick(props, spyPropsKeys);
 
         return createElement(
           ContainerComponent,
@@ -162,12 +143,12 @@ export default function wrapWith<
     if (ContentComponent) {
       const WithContainer = forwardRef<
         Ref,
-        Pick<PropsOf<ContainerComponentType>, ExtractPropKey> & PropsOf<ContentComponentType>
+        Pick<PropsOf<ContainerComponentType>, ExtractPropsKeys> & PropsOf<ContentComponentType>
       >((props, ref) => {
         const [, contentProps] = pickAndOmit<
-          Pick<PropsOf<ContainerComponentType>, ExtractPropKey>,
+          Pick<PropsOf<ContainerComponentType>, ExtractPropsKeys>,
           PropsOf<ContentComponentType> & { ref?: Ref }
-        >(props, extractPropKeys);
+        >(props, extractPropsKeys);
 
         return createElement(ContentComponent, { ...contentProps, ref });
       });
