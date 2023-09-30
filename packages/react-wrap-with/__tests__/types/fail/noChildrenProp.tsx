@@ -8,4 +8,5 @@ const Header: FC<{ children?: ReactNode | undefined }> = () => <h1>Hello, World!
 
 // Initial props must not have "children".
 
+// @ts-expect-error Type 'string' is not assignable to type 'undefined'.
 wrapWith(Header, { children: '123' } satisfies HowOf<typeof Header>);

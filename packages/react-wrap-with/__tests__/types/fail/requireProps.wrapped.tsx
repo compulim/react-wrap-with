@@ -10,5 +10,5 @@ const Component = wrapWith(Header)(({ role }: { role: string }) => <div role={ro
 
 // "role" prop is required.
 
-// Property 'role' is missing in type '{}' but required in type '{ role: string; }'.
+// @ts-expect-error Property 'role' is missing in type '{}' but required in type '{ role: string; }'.
 <Component />;

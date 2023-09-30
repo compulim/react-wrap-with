@@ -12,5 +12,5 @@ const wrapper = wrapWith(Header, { value: SpyProp });
 
 // "xyz" is not a prop of <Header> and cannot be extracted.
 
-// Type 'string' is not assignable to type 'number'.
+// @ts-expect-error Type 'string' is not assignable to type 'number'.
 wrapper(Content);

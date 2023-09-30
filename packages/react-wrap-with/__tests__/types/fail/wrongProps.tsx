@@ -8,5 +8,5 @@ const Header = ({ children }: PropsWithChildren<{ className: string }>) => <h1>{
 
 // "level" is not a prop.
 
-// Property 'className' is missing in type '{ children?: ReactNode; }' but required in type '{ className: string; }'.
+// @ts-expect-error Object literal may only specify known properties, and 'level' does not exist in type 'HowOf<({ children }: PropsWithChildren<{ className: string; }>) => Element>'.
 wrapWith(Header, { level: 1 } satisfies HowOf<typeof Header>);

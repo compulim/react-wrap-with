@@ -8,5 +8,5 @@ const Header = ({ children }: PropsWithChildren<{ className: string }>) => <h1>{
 
 // "children" cannot be set in how.
 
-// Object literal may only specify known properties, and 'children' does not exist in type 'HowOf<({ children }: PropsWithChildren<{ className: string; }>) => Element>'.
+// @ts-expect-error Type 'number' is not assignable to type 'undefined'.
 wrapWith(Header, { children: 123, className: 'abc' } satisfies HowOf<typeof Header>);

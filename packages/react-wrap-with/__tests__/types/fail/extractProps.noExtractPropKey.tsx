@@ -8,5 +8,5 @@ const Header = ({ children }: PropsWithChildren<{ abc: number }>) => <h1>{childr
 
 // "xyz" is not a prop of <Header> and cannot be extracted.
 
-// Object literal may only specify known properties, and 'xyz' does not exist in type 'HowOf<({ children }: PropsWithChildren<{ abc: number; }>) => Element>'.
-wrapWith(Header, { abc: 123, xyz: ExtractProp, children: 123 } satisfies HowOf<typeof Header>);
+// @ts-expect-error Object literal may only specify known properties, and 'xyz' does not exist in type 'HowOf<({ children }: PropsWithChildren<{ abc: number; }>) => Element>'.
+wrapWith(Header, { abc: 123, xyz: ExtractProp } satisfies HowOf<typeof Header>);

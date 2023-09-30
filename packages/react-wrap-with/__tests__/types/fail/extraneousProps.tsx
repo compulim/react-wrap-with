@@ -8,5 +8,5 @@ const Header = ({ children }: { children?: ReactNode | undefined }) => <h1>{chil
 
 // "className" is not allowed in prop.
 
-// Object literal may only specify known properties, and 'className' does not exist in type 'HowOf<({ children }: { children?: ReactNode; }) => Element>'.
+// @ts-expect-error Object literal may only specify known properties, and 'className' does not exist in type 'HowOf<({ children }: { children?: ReactNode; }) => Element>'.
 wrapWith(Header, { className: '123' } satisfies HowOf<typeof Header>);

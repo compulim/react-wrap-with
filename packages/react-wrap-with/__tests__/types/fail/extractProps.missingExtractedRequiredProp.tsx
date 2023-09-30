@@ -12,5 +12,5 @@ const Container = wrapWith(Header, { className: ExtractProp })(() => <div />);
 
 // "className" prop is mapped and is required.
 
-// Property 'className' is missing in type '{}' but required in type 'Pick<{ className: string; } & { children?: ReactNode; }, "className">'.
+// @ts-expect-error Property 'className' is missing in type '{}' but required in type 'Pick<{ className: string; } & { children?: ReactNode; }, "className">'.
 <Container />;

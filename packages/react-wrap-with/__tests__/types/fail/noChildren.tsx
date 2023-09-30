@@ -10,5 +10,5 @@ const Header: FC<Props> = () => <h1>Hello, World!</h1>;
 
 // All containers must allow "children" prop.
 
-// Type 'FunctionComponent<Props>' is not assignable to type 'FunctionComponent<{ children?: ReactNode; }>'.
+// @ts-expect-error Type 'FunctionComponent<Props>' is not assignable to type 'FunctionComponent<{ children?: ReactNode; }>'.
 wrapWith(Header);
