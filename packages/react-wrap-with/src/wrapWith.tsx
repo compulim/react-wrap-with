@@ -13,49 +13,45 @@ const EmptyComponent = () => <Fragment />;
 const ExtractProp = Symbol('ExtractProp');
 const SpyProp = Symbol('SpyProp');
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type HowOf<T extends ComponentType<any>> = {
+  [K in keyof PropsOf<T> as Exclude<K, 'children'>]: PropsOf<T>[K] | typeof ExtractProp | typeof SpyProp;
+};
+
 export { ExtractProp, SpyProp };
 
 // Everything.
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // ContainerProps extends Record<string, any> = object,
   ContainerProps extends PropsOf<ContainerComponentType> = PropsOf<ContainerComponentType>,
-  How extends {
-    [K in keyof ContainerProps]: K extends 'children'
-      ? never
-      :
-          | typeof ExtractProp
-          | typeof SpyProp
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          | (ContainerProps[K] extends any ? any : never);
-  } = {
-    [K in keyof ContainerProps]: K extends 'children'
-      ? never
-      :
-          | typeof ExtractProp
-          | typeof SpyProp
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          | (ContainerProps[K] extends any ? any : never);
-  },
-  ExtractPropsKeys extends keyof How = keyof {
-    [K in keyof How as How[K] extends typeof ExtractProp ? K : never]: How[K];
-  },
-  SpyPropsKeys extends keyof How = keyof {
-    [K in keyof How as How[K] extends typeof SpyProp ? K : never]: How[K];
-  }
+  const How extends HowOf<ContainerComponentType> = HowOf<ContainerComponentType>
 >(
   ContainerComponent: ContainerComponentType | false | null | undefined,
   how: How
 ): <
-  ContentComponentType extends ComponentType<ContentProps>,
-  ContentProps extends Pick<ContainerProps, SpyPropsKeys> = Pick<ContainerProps, SpyPropsKeys>,
-  Ref = RefOf<ContentProps>
+  ContentComponentType extends ComponentType<
+    Pick<
+      ContainerProps,
+      keyof {
+        [K in keyof typeof how as (typeof how)[K] extends typeof SpyProp ? K : never]: (typeof how)[K];
+      }
+    >
+  >,
+  Ref = RefOf<PropsOf<ContentComponentType>>
 >(
   ContentComponent: ContentComponentType | false | null | undefined
 ) => ComponentType<
-  PropsWithoutRef<PropsOf<ContentComponentType> & Pick<ContainerProps, ExtractPropsKeys>> & RefAttributes<Ref>
+  PropsWithoutRef<
+    PropsOf<ContentComponentType> &
+      Pick<
+        ContainerProps,
+        keyof {
+          [K in keyof typeof how as (typeof how)[K] extends typeof ExtractProp ? K : never]: (typeof how)[K];
+        }
+      >
+  > &
+    RefAttributes<Ref>
 >;
 
 // If <Container> need no props other than children, initialProps is optional.
@@ -73,35 +69,33 @@ export default function wrapWith<
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ContainerProps extends PropsOf<ContainerComponentType> = PropsOf<ContainerComponentType>,
-  How extends {
-    [K in keyof ContainerProps]: typeof ExtractProp | typeof SpyProp | ContainerProps[K];
-  } = {
-    [K in keyof ContainerProps]: typeof ExtractProp | typeof SpyProp | ContainerProps[K];
-  },
-  ExtractPropsKeys extends keyof How = keyof {
-    [K in keyof How as How[K] extends typeof ExtractProp ? K : never]: How[K];
-  },
-  SpyPropsKeys extends keyof How = keyof {
-    [K in keyof How as How[K] extends typeof SpyProp ? K : never]: How[K];
-  },
-  InitialPropsKeys extends keyof How = keyof {
-    [K in keyof How as How[K] extends typeof ExtractProp ? never : How[K] extends typeof SpyProp ? never : K]: How[K];
-  }
+  const How extends HowOf<ContainerComponentType> = HowOf<ContainerComponentType>
 >(ContainerComponent: ContainerComponentType | false | null | undefined, how: How) {
+  type ContainerProps = PropsOf<ContainerComponentType>;
+
+  type ExtractPropsKeys = keyof {
+    [K in keyof How as How[K] extends typeof ExtractProp ? K : never]: How[K];
+  };
+  type SpyPropsKeys = keyof {
+    [K in keyof How as How[K] extends typeof SpyProp ? K : never]: How[K];
+  };
+  type InitialPropsKeys = keyof {
+    [K in keyof How as How[K] extends typeof ExtractProp ? never : How[K] extends typeof SpyProp ? never : K]: How[K];
+  };
+
   type ExtractProps = Pick<ContainerProps, ExtractPropsKeys>;
   type SpyProps = Pick<ContainerProps, SpyPropsKeys>;
   type InitialProps = Omit<ContainerProps, ExtractPropsKeys | SpyPropsKeys>;
 
-  const extractPropsKeys: ExtractPropsKeys[] = Object.entries(how)
+  const extractPropsKeys: ExtractPropsKeys[] = Object.entries(how || {})
     .filter(([_, value]) => value === ExtractProp)
     .map(([key]) => key as keyof How) as ExtractPropsKeys[];
 
-  const spyPropsKeys: SpyPropsKeys[] = Object.entries(how)
+  const spyPropsKeys: SpyPropsKeys[] = Object.entries(how || {})
     .filter(([_, value]) => value === SpyProp)
     .map(([key]) => key as keyof How) as SpyPropsKeys[];
 
-  const initialPropsKeys: InitialPropsKeys[] = Object.entries(how)
+  const initialPropsKeys: InitialPropsKeys[] = Object.entries(how || {})
     .filter(([_, value]) => value !== ExtractProp && value !== SpyProp)
     .map(([key]) => key as keyof How) as InitialPropsKeys[];
 
@@ -115,7 +109,8 @@ export default function wrapWith<
     ContentProps extends Pick<ContainerProps, SpyPropsKeys> = Pick<ContainerProps, SpyPropsKeys>,
     Ref = RefOf<ContentProps>
   >(
-    ContentComponent: ContentComponentType | false | null | undefined
+    ContentComponent: // | { how: How; extract: ExtractPropsKeys; spy: SpyPropsKeys; initial: InitialPropsKeys }
+    ContentComponentType | false | null | undefined
   ): ComponentType<PropsWithoutRef<PropsOf<ContentComponentType> & ExtractProps> & RefAttributes<Ref>> {
     if (ContainerComponent) {
       const WithContainer = forwardRef<Ref, PropsOf<ContentComponentType> & ExtractProps>((props, ref) => {

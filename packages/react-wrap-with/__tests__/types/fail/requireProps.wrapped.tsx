@@ -9,4 +9,6 @@ const Header = ({ children }: { children?: ReactNode | undefined }) => <h1>{chil
 const Component = wrapWith(Header)(({ role }: { role: string }) => <div role={role} />);
 
 // "role" prop is required.
+
+// Property 'role' is missing in type '{}' but required in type '{ role: string; }'.
 <Component />;

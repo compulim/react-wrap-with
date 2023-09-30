@@ -13,4 +13,6 @@ const Bold = forwardRef<HTMLDivElement, { children?: ReactNode | undefined }>(({
 const Wrapped = wrapWith(Header)(Bold);
 
 // THEN: It should throw "Type 'HTMLDivElement' is not assignable to type 'string'."
+
+// Type '(instance: string | null) => void' is not assignable to type '(instance: HTMLDivElement | null) => void'.
 <Wrapped ref={(() => {}) as Ref<string>} />;

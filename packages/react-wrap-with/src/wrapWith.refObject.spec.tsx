@@ -24,7 +24,7 @@ Hello.displayName = 'Effect';
 
 test('ref of RefObject should be passed', () => {
   // GIVEN: Wrapping <Hello> with <Effect effect="blink">.
-  const BlinkingHello = wrapWith(Effect, { containerRef: ExtractProp, effect: 'blink' } as const)(Hello);
+  const BlinkingHello = wrapWith(Effect, { containerRef: ExtractProp, effect: 'blink' })(Hello);
 
   const App = ({ onRef }: { onRef: (refs: [HTMLDivElement | null, HTMLHeadingElement | null]) => void }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);

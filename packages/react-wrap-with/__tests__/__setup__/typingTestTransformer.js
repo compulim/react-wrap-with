@@ -20,7 +20,15 @@ const run = ({ filename }) => {
         const { line, character } = file.getLineAndCharacterOfPosition(start);
         const message = typeScript.flattenDiagnosticMessageText(messageText, '\n');
 
-        throw new Error(`Failed to compile ${file.fileName} (${line + 1},${character + 1}): ${message}`);
+        const error = new Error(`Failed to compile ${file.fileName} (${line + 1},${character + 1}): ${message}`);
+
+        const expectedError = file.getFullText().split('\n')[line - 1];
+
+        if (expectedError.startsWith('// ')) {
+          error.expectedError = expectedError.substring(3);
+        }
+
+        throw error;
       } else {
         throw new Error(typeScript.flattenDiagnosticMessageText(messageText, '\n'));
       }
@@ -28,7 +36,17 @@ const run = ({ filename }) => {
   }
 
   if (filename.includes('fail')) {
-    test(`Compile ${filename} should fail`, () => expect(() => compile(filename)).toThrow());
+    test(`Compile ${filename} should fail`, () => {
+      try {
+        compile(filename);
+
+        expect(() => {}).toThrow();
+      } catch (error) {
+        expect(() => {
+          throw error;
+        }).toThrow(error.expectedError);
+      }
+    });
   } else {
     test(`Compile ${filename} should succeed`, () => compile(filename));
   }
