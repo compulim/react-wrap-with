@@ -47,7 +47,11 @@ export default function wrapWith<
       Pick<
         ContainerProps,
         keyof {
-          [K in keyof typeof how as (typeof how)[K] extends typeof ExtractProp ? K : never]: (typeof how)[K];
+          [K in keyof typeof how as (typeof how)[K] extends typeof ExtractProp
+            ? K
+            : (typeof how)[K] extends typeof SpyProp
+            ? K
+            : never]: (typeof how)[K];
         }
       >
   > &
@@ -111,7 +115,7 @@ export default function wrapWith<
   >(
     ContentComponent: // | { how: How; extract: ExtractPropsKeys; spy: SpyPropsKeys; initial: InitialPropsKeys }
     ContentComponentType | false | null | undefined
-  ): ComponentType<PropsWithoutRef<PropsOf<ContentComponentType> & ExtractProps> & RefAttributes<Ref>> {
+  ): ComponentType<PropsWithoutRef<PropsOf<ContentComponentType> & ExtractProps & SpyProps> & RefAttributes<Ref>> {
     if (ContainerComponent) {
       const WithContainer = forwardRef<Ref, PropsOf<ContentComponentType> & ExtractProps>((props, ref) => {
         const [extractedProps, contentProps] = pickAndOmit<ExtractProps, PropsOf<ContentComponentType>>(

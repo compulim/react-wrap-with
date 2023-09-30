@@ -1,6 +1,6 @@
 import React from 'react';
 
-import wrapWith, { ExtractProp } from '../../../src/wrapWith';
+import wrapWith, { ExtractProp, type HowOf } from '../../src/wrapWith';
 
 import type { PropsWithChildren } from 'react';
 
@@ -8,7 +8,7 @@ const Header = ({ children, className }: PropsWithChildren<{ className: string }
   <h1 className={className}>{children}</h1>
 );
 
-const Container = wrapWith(Header, { className: ExtractProp })(() => <div />);
+const Container = wrapWith(Header, { className: ExtractProp } satisfies HowOf<typeof Header>)(() => <div />);
 
 // "className" prop is mapped and is required.
 
