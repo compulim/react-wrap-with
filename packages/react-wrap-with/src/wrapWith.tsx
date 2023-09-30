@@ -15,7 +15,7 @@ const SpyProp = Symbol('SpyProp');
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type HowOf<T extends ComponentType<any>> = {
-  [K in keyof PropsOf<T> as Exclude<K, 'children'>]: PropsOf<T>[K] | typeof ExtractProp | typeof SpyProp;
+  [K in keyof PropsOf<T>]: K extends 'children' ? never : PropsOf<T>[K] | typeof ExtractProp | typeof SpyProp;
 };
 
 export { ExtractProp, SpyProp };
