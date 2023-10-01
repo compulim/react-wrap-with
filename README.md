@@ -1,6 +1,6 @@
 # `react-wrap-with`
 
-Creates higher-order component for wrapping component in another component.
+Creates higher-order component (HOC) for wrapping component in another component.
 
 ## Background
 
@@ -10,66 +10,153 @@ This function will wrap as an intermediate component and reduce code complexity.
 
 ## How to use
 
+### Basic scenario
+
 ```tsx
-import { createRoot } from 'react-render';
 import { wrapWith } from 'react-wrap-with';
 
-const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
-const withEffect = wrapWith(Effect, { effect: 'blink' });
+const Effect = ({ children }) => <span className="effect effect--blink">{children}</span>;
+const withEffect = wrapWith(Effect);
+const HelloWithEffect = withEffect(({ value }) => <h1>{value}</h1>);
 
-const Hello = withEffect(() => <h1>Hello</h1>);
-
-createRoot(document.getElementById('root')).render(<Hello />);
+render(<HelloWithEffect value="Hello, World!" />);
 ```
 
 Will produce the HTML:
 
 ```html
 <span class="effect effect--blink">
-  <h1>Hello</h1>
+  <h1>Hello, World!</h1>
+</span>
+```
+
+### Initializing props
+
+Initial props per higher-order component (HOC) function.
+
+In the following sample, the `effect` will be initialized with `blink` during the lifetime of the HOC function.
+
+```diff
+  import { wrapWith } from 'react-wrap-with';
+
+- const Effect = ({ children }) => <span className="effect effect--blink">{children}</span>;
++ const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
+- const withEffect = wrapWith(Effect);
++ const withEffect = wrapWith(Effect, { effect: 'blink' });
+
+  const HelloWithEffect = withEffect(({ value } ) => <h1>{value}</h1>);
+
+  render(<HelloWithEffect value="Hello, World!" />);
+```
+
+Will produce the HTML:
+
+```html
+<span class="effect effect--blink">
+  <h1>Hello, World!</h1>
 </span>
 ```
 
 ### Extracting props
 
-Sometimes, instead of initializing props during setup, you can extract and pass specific props into the container component during render.
+Extract and pass props into the container component during render. Props marked for extraction will not pass to the content component.
+
+In the following sample, the `effect` prop can be passed when rendering the component.
 
 ```diff
-  import { createRoot } from 'react-render';
-  import { wrapWith } from 'react-wrap-with';
+- import { wrapWith } from 'react-wrap-with';
++ import { ExtractProp, wrapWith } from 'react-wrap-with';
 
   const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
-- const withEffect = wrapWith(Effect, { effect: 'blink' });
-+ const withEffect = wrapWith(Effect, {}, ['effect']); // "effect" prop will be extracted during render and passed to the container component <Effect>.
+- const withEffect = wrapWith(Effect, { className: 'blink' });
++ const withEffect = wrapWith(Effect, { className: ExtractProp });
 
-  const Hello = withEffect(() => <h1>Hello</h1>);
+  const HelloWithEffect = withEffect(({ value } ) => <h1>{value}</h1>);
 
-- createRoot(document.getElementById('root')).render(<Hello />);
-+ createRoot(document.getElementById('root')).render(<Hello effect="blink" />); // Specifying "effect" prop during render.
+- render(<HelloWithEffect value="Hello, World!" />);
++ render(<HelloWithEffect effect="blink" value="Hello, World!" />);
+```
+
+Will produce the HTML:
+
+```html
+<span class="effect effect--blink">
+  <h1>Hello, World!</h1>
+</span>
+```
+
+### Spying props
+
+Props marked as spying will be passed to both inner component and outer component.
+
+In the following sample, when the `value` props is longer than 10 characters, CSS class `effect--long` will be applied.
+
+```diff
+- import { ExtractProp, wrapWith } from 'react-wrap-with';
++ import { ExtractProp, SpyProp, wrapWith } from 'react-wrap-with';
++ import classNames from 'classnames';
+
+- const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
++ const Effect = ({ children, effect, value }) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
+- const withEffect = wrapWith(Effect, { className: ExtractProp });
++ const withEffect = wrapWith(Effect, { className: ExtractProp, value: SpyProp });
+
+  const HelloWithEffect = withEffect(({ value } ) => <h1>{value}</h1>);
+
+  render(<HelloWithEffect value="Hello, World!" />);
+```
+
+Will produce the HTML:
+
+```html
+<span class="effect effect--blink effect--long">
+  <h1 className="hello hello--blink">Hello, World!</h1>
+</span>
 ```
 
 ### Referencing
 
 Refs are automatically forwarded to the inner component.
 
-## API
+### TypeScript helpers
 
-```ts
-import { ComponentType } from 'react';
+#### Define generic type explicitly
 
-type ContainerProps = {};
-type ContainerComponentType = ComponentType<ContainerProps>;
+To clearly define types, generic types can be set explicitly.
 
-type ContentProps = {};
-type ContentComponentType = ComponentType<ContentProps>;
+```tsx
+  import { ExtractProp, SpyProp, wrapWith } from 'react-wrap-with';
 
-function wrapWith(
-  ContainerComponent: ContainerComponentType | false | null | undefined,
-  initialProps?: Omit<ContainerProps, ExtractPropKey>,
-  extractPropKeys: ExtractPropKey[] = []
-): (
-  ContentComponent: ContentComponentType | false | null | undefined
-) => ComponentType<Pick<ContainerProps, ExtractPropKey> & ContentProps & { ref?: Ref }>;
++ type Props = PropsWithChildren<{
++   effect: 'blink' | 'marquee';
++   value: string;
++ }>
+
+- const Effect = ({ children, effect, value }) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
++ const Effect = ({ children, effect, value }: Props) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
+
+- const withEffect = wrapWith(Effect, { effect: ExtractProp, value: SpyProp });
++ const withEffect = wrapWith<typeof Effect, 'effect', 'value'>(Effect, { effect: ExtractProp, value: SpyProp });
+```
+
+#### Using `satisfies`
+
+You can use `satisfies` operator to type the second argument (`how`).
+
+```tsx
+- import { ExtractProp, SpyProp, wrapWith } from 'react-wrap-with';
++ import { ExtractProp, SpyProp, wrapWith, type HowOf } from 'react-wrap-with';
+
++ type Props = PropsWithChildren<{
++   className: 'blink' | 'marquee';
++   value: string;
++ }>
+
+- const Effect = ({ children, effect, value }) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
++ const Effect = ({ children, className, value }: Props) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
+
+- const withEffect = wrapWith(Effect, { effect: ExtractProp, value: SpyProp });
++ const withEffect = wrapWith(Effect, { effect: ExtractProp, value: SpyProp } satisfies HowOf<typeof Effect>);
 ```
 
 ## Behaviors
