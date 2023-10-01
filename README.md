@@ -4,20 +4,29 @@ Creates higher-order component (HOC) for wrapping component in another component
 
 ## Background
 
+> This package is for React developers who build reusable components.
+
 When using React Context, sometimes it is inevitable to create an intermediate component to consume the context.
 
 This function will wrap as an intermediate component and reduce code complexity.
 
 ## How to use
 
-### Basic scenario
+### Before using `react-wrap-with`
 
 ```tsx
 import { wrapWith } from 'react-wrap-with';
 
 const Effect = ({ children }) => <span className="effect effect--blink">{children}</span>;
-const withEffect = wrapWith(Effect);
-const HelloWithEffect = withEffect(({ value }) => <h1>{value}</h1>);
+const Hello = ({ value }) => <h1>{value}</h1>;
+
+const withEffect = componentType => props =>
+  <Effect>
+    {createElement(componentType, props)}
+  </Effect>
+};
+
+const HelloWithEffect = withEffect(Hello);
 
 render(<HelloWithEffect value="Hello, World!" />);
 ```
@@ -28,6 +37,26 @@ Will produce the HTML:
 <span class="effect effect--blink">
   <h1>Hello, World!</h1>
 </span>
+```
+
+### After using `react-wrap-with`
+
+```diff
+  import { wrapWith } from 'react-wrap-with';
+
+  const Effect = ({ children }) => <span className="effect effect--blink">{children}</span>;
+  const Hello = ({ value }) => <h1>{value}</h1>;
+
+- const withEffect = componentType => props =>
+-   <Effect>
+-     {createElement(componentType, props)}
+-   </Effect>
+- };
++ const withEffect = wrapWith(Effect);
+
+  const HelloWithEffect = withEffect(Hello);
+
+  render(<HelloWithEffect value="Hello, World!" />);
 ```
 
 ### Initializing props
@@ -41,6 +70,8 @@ In the following sample, the `effect` will be initialized with `blink` during th
 
 - const Effect = ({ children }) => <span className="effect effect--blink">{children}</span>;
 + const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
+  const Hello = ({ value }) => <h1>{value}</h1>;
+
 - const withEffect = wrapWith(Effect);
 + const withEffect = wrapWith(Effect, { effect: 'blink' });
 
@@ -68,6 +99,8 @@ In the following sample, the `effect` prop can be passed when rendering the comp
 + import { ExtractProp, wrapWith } from 'react-wrap-with';
 
   const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
+  const Hello = ({ value }) => <h1>{value}</h1>;
+
 - const withEffect = wrapWith(Effect, { className: 'blink' });
 + const withEffect = wrapWith(Effect, { className: ExtractProp });
 
@@ -98,6 +131,8 @@ In the following sample, when the `value` props is longer than 10 characters, CS
 
 - const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
 + const Effect = ({ children, effect, value }) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
+  const Hello = ({ value }) => <h1>{value}</h1>;
+
 - const withEffect = wrapWith(Effect, { className: ExtractProp });
 + const withEffect = wrapWith(Effect, { className: ExtractProp, value: SpyProp });
 
