@@ -16,6 +16,34 @@
         "default": "./lib/commonjs/index.js"
       }
     },
+    "./ExtractProp": {
+      "import": {
+        "types": "./lib/esmodules-types/ExtractProp.d.ts",
+        "default": "./lib/esmodules/ExtractProp.js"
+      },
+      "require": {
+        "types": "./lib/commonjs-types/ExtractProp.d.ts",
+        "default": "./lib/commonjs/ExtractProp.js"
+      }
+    },
+    "./HowOf": {
+      "import": {
+        "types": "./lib/esmodules-types/HowOf.d.ts"
+      },
+      "require": {
+        "types": "./lib/commonjs-types/HowOf.d.ts"
+      }
+    },
+    "./SpyProp": {
+      "import": {
+        "types": "./lib/esmodules-types/SpyProp.d.ts",
+        "default": "./lib/esmodules/SpyProp.js"
+      },
+      "require": {
+        "types": "./lib/commonjs-types/SpyProp.d.ts",
+        "default": "./lib/commonjs/SpyProp.js"
+      }
+    },
     "./wrapWith": {
       "import": {
         "types": "./lib/esmodules-types/wrapWith.d.ts",

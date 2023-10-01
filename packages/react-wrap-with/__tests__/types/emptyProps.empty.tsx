@@ -1,6 +1,6 @@
 import React from 'react';
 
-import wrapWith, { type HowOf } from '../../src/wrapWith';
+import { type HowOf, wrapWith } from '../../src/index';
 
 import type { ReactNode } from 'react';
 

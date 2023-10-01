@@ -5,7 +5,8 @@ import { render } from '@testing-library/react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import wrapWith, { ExtractProp } from './wrapWith';
+import ExtractProp from '../ExtractProp';
+import wrapWith from './wrapWith';
 
 const Hello = ({ className }: { className?: string }) => <h1 className={className}>Hello, World!</h1>;
 

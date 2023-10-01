@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { type HowOf, SpyProp } from '../../src/wrapWith';
+import { type HowOf, SpyProp } from '../../src/index';
 
 import type { PropsWithChildren } from 'react';
 

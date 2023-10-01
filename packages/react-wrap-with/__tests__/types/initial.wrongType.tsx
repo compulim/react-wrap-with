@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { type HowOf } from '../../src/wrapWith';
+import { type HowOf } from '../../src/index';
 
 import type { PropsWithChildren } from 'react';
 

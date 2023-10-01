@@ -1,6 +1,6 @@
 import React from 'react';
 
-import wrapWith from '../../src/wrapWith';
+import { wrapWith } from '../../src/index';
 
 import type { PropsWithChildren } from 'react';
 

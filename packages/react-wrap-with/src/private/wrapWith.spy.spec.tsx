@@ -4,7 +4,9 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import wrapWith, { ExtractProp, SpyProp } from './wrapWith';
+import ExtractProp from '../ExtractProp';
+import SpyProp from '../SpyProp';
+import wrapWith from './wrapWith';
 
 import type { PropsWithChildren } from 'react';
 

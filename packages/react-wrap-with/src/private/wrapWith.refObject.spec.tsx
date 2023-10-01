@@ -4,7 +4,8 @@
 import { render } from '@testing-library/react';
 import React, { forwardRef, useEffect, useRef } from 'react';
 
-import wrapWith, { ExtractProp } from './wrapWith';
+import ExtractProp from '../ExtractProp';
+import wrapWith from './wrapWith';
 
 import type { PropsWithChildren, Ref } from 'react';
 

@@ -1,30 +1,16 @@
 import React, { createElement, forwardRef, Fragment } from 'react';
 
+import ExtractProp from '../ExtractProp';
 import pick from './util/pick';
 import pickAndOmit from './util/pickAndOmit';
+import SpyProp from '../SpyProp';
 
 import type { ComponentType, PropsWithChildren, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
-
-type PropsOf<T> = T extends ComponentType<infer P> ? P : never;
-type RefOf<T> = T extends RefAttributes<infer R> ? R : never;
+import type { HowOf } from '../HowOf';
+import type { PropsOf } from './type/PropsOf';
+import type { RefOf } from './type/RefOf';
 
 const EmptyComponent = () => <Fragment />;
-
-const ExtractProp = Symbol('ExtractProp');
-const SpyProp = Symbol('SpyProp');
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type HowOf<T extends ComponentType<any>, E = never, S = never> = {
-  [K in keyof PropsOf<T>]: K extends 'children'
-    ? never
-    : K extends E
-    ? typeof ExtractProp
-    : K extends S
-    ? typeof SpyProp
-    : PropsOf<T>[K] | typeof ExtractProp | typeof SpyProp;
-};
-
-export { ExtractProp, SpyProp };
 
 // Everything.
 export default function wrapWith<

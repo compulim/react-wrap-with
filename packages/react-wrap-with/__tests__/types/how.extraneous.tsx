@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ExtractProp, type HowOf } from '../../src/wrapWith';
+import { ExtractProp, type HowOf } from '../../src/index';
 
 import type { PropsWithChildren } from 'react';
 
