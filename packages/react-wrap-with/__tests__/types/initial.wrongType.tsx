@@ -9,4 +9,4 @@ const Header = ({ children, className }: PropsWithChildren<{ className: string }
 );
 
 // @ts-expect-error Type 'true' is not assignable to type 'string | unique symbol | unique symbol'.
-console.log({ className: true } satisfies HowOf<typeof Header>);
+({ className: true }) satisfies HowOf<typeof Header>;

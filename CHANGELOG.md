@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking changes
+
+- Extract prop signature changed:
+   - Was: `wrapWith(Container, {}, 'effect')`
+   - Now: `wrapWith(Container, { effect: ExtractProp })`
+
+### Added
+
+- Added option to pipe props passed to content components, by [@compulim](https://github.com/compulim), in PR [#XXX](https://github.com/compulim/react-wrap-with/pull/XXX)
+
 ### Changed
 
 - Added type-checking for test, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
