@@ -96,13 +96,13 @@ In the following sample, the `effect` prop can be passed when rendering the comp
 
 ```diff
 - import { wrapWith } from 'react-wrap-with';
-+ import { ExtractProp, wrapWith } from 'react-wrap-with';
++ import { Extract, wrapWith } from 'react-wrap-with';
 
   const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
   const Hello = ({ value }) => <h1>{value}</h1>;
 
 - const withEffect = wrapWith(Effect, { className: 'blink' });
-+ const withEffect = wrapWith(Effect, { className: ExtractProp });
++ const withEffect = wrapWith(Effect, { className: Extract });
 
   const HelloWithEffect = withEffect(({ value } ) => <h1>{value}</h1>);
 
@@ -125,16 +125,16 @@ Props marked as spying will be passed to both inner component and outer componen
 In the following sample, when the `value` props is longer than 10 characters, CSS class `effect--long` will be applied.
 
 ```diff
-- import { ExtractProp, wrapWith } from 'react-wrap-with';
-+ import { ExtractProp, SpyProp, wrapWith } from 'react-wrap-with';
+- import { Extract, wrapWith } from 'react-wrap-with';
++ import { Extract, Spy, wrapWith } from 'react-wrap-with';
 + import classNames from 'classnames';
 
 - const Effect = ({ children, effect }) => <span className={`effect effect--${effect}`}>{children}</span>;
 + const Effect = ({ children, effect, value }) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
   const Hello = ({ value }) => <h1>{value}</h1>;
 
-- const withEffect = wrapWith(Effect, { className: ExtractProp });
-+ const withEffect = wrapWith(Effect, { className: ExtractProp, value: SpyProp });
+- const withEffect = wrapWith(Effect, { className: Extract });
++ const withEffect = wrapWith(Effect, { className: Extract, value: Spy });
 
   const HelloWithEffect = withEffect(({ value } ) => <h1>{value}</h1>);
 
@@ -160,7 +160,7 @@ Refs are automatically forwarded to the inner component.
 To clearly define types, generic types can be set explicitly.
 
 ```tsx
-  import { ExtractProp, SpyProp, wrapWith } from 'react-wrap-with';
+  import { Extract, Spy, wrapWith } from 'react-wrap-with';
 
 + type Props = PropsWithChildren<{
 +   effect: 'blink' | 'marquee';
@@ -170,8 +170,8 @@ To clearly define types, generic types can be set explicitly.
 - const Effect = ({ children, effect, value }) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
 + const Effect = ({ children, effect, value }: Props) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
 
-- const withEffect = wrapWith(Effect, { effect: ExtractProp, value: SpyProp });
-+ const withEffect = wrapWith<typeof Effect, 'effect', 'value'>(Effect, { effect: ExtractProp, value: SpyProp });
+- const withEffect = wrapWith(Effect, { effect: Extract, value: Spy });
++ const withEffect = wrapWith<typeof Effect, 'effect', 'value'>(Effect, { effect: Extract, value: Spy });
 ```
 
 #### Using `satisfies`
@@ -179,8 +179,8 @@ To clearly define types, generic types can be set explicitly.
 You can use `satisfies` operator to type the second argument (`how`).
 
 ```tsx
-- import { ExtractProp, SpyProp, wrapWith } from 'react-wrap-with';
-+ import { ExtractProp, SpyProp, wrapWith, type HowOf } from 'react-wrap-with';
+- import { Extract, Spy, wrapWith } from 'react-wrap-with';
++ import { Extract, Spy, wrapWith, type HowOf } from 'react-wrap-with';
 
 + type Props = PropsWithChildren<{
 +   className: 'blink' | 'marquee';
@@ -190,8 +190,8 @@ You can use `satisfies` operator to type the second argument (`how`).
 - const Effect = ({ children, effect, value }) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
 + const Effect = ({ children, className, value }: Props) => <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>;
 
-- const withEffect = wrapWith(Effect, { effect: ExtractProp, value: SpyProp });
-+ const withEffect = wrapWith(Effect, { effect: ExtractProp, value: SpyProp } satisfies HowOf<typeof Effect>);
+- const withEffect = wrapWith(Effect, { effect: Extract, value: Spy });
++ const withEffect = wrapWith(Effect, { effect: Extract, value: Spy } satisfies HowOf<typeof Effect>);
 ```
 
 ## Behaviors

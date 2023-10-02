@@ -4,8 +4,8 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import ExtractProp from '../ExtractProp';
-import SpyProp from '../SpyProp';
+import Extract from '../Extract';
+import Spy from '../Spy';
 import wrapWith from './wrapWith';
 
 import type { PropsWithChildren } from 'react';
@@ -25,8 +25,8 @@ const Hello = ({ emphasis }: HelloProps) => <h1 className={emphasis ? 'hello--em
 test('simple scenario', () => {
   // GIVEN: Wrapping <Hello> with <Effect effect="blink">.
   const BlinkingHello = wrapWith(Effect, {
-    effect: ExtractProp,
-    emphasis: SpyProp
+    effect: Extract,
+    emphasis: Spy
   })(Hello);
 
   // WHEN: Render.

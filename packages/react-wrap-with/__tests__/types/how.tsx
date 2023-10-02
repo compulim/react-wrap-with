@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ExtractProp, type HowOf, SpyProp } from '../../src/index';
+import { Extract, type HowOf, Spy } from '../../src/index';
 
 import type { PropsWithChildren } from 'react';
 
@@ -9,9 +9,9 @@ const Header = ({ children, className }: PropsWithChildren<{ className: string; 
 );
 
 const how: HowOf<typeof Header, 'className', 'value'> = {
-  className: ExtractProp,
+  className: Extract,
   role: 'main',
-  value: SpyProp
+  value: Spy
 };
 
 console.log(how);

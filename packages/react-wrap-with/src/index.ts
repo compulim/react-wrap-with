@@ -1,7 +1,7 @@
 import { HowOf } from './HowOf';
-import ExtractProp from './ExtractProp';
-import SpyProp from './SpyProp';
+import Extract from './Extract';
+import Spy from './Spy';
 import wrapWith from './private/wrapWith';
 
-export { ExtractProp, SpyProp, wrapWith };
+export { Extract, Spy, wrapWith };
 export { type HowOf };

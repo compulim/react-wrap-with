@@ -4,10 +4,11 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import ExtractProp from '../ExtractProp';
+import Extract from '../Extract';
 import wrapWith from './wrapWith';
 
 import type { PropsWithChildren } from 'react';
+import { HowOf } from '../HowOf';
 
 type FormProps = PropsWithChildren<{ action?: string; className?: string; method?: string }>;
 
@@ -22,7 +23,7 @@ type TextBoxProps = { className?: string };
 const TextBox = ({ className }: TextBoxProps) => <input className={className} data-testid="input" type="text" />;
 
 describe('Wrapping <TextBox> with <Form method="post"> and extract "action" props', () => {
-  const SingleFormInput = wrapWith(Form, { action: ExtractProp, method: 'post' })(TextBox);
+  const SingleFormInput = wrapWith(Form, { action: Extract, method: 'post' } satisfies HowOf<typeof Form>)(TextBox);
 
   test('should render', () => {
     // WHEN: Rendering the wrapped component.
@@ -50,7 +51,7 @@ describe('Wrapping <TextBox> with <Form method="post"> and extract "action" prop
 });
 
 describe('Wrapping <TextBox> with <Form> and extract "classname" props', () => {
-  const Wrapped = wrapWith(Form, { className: ExtractProp })(TextBox);
+  const Wrapped = wrapWith(Form, { className: Extract })(TextBox);
 
   test('should extract "className"', () => {
     // WHEN: Rendering the wrapped component.

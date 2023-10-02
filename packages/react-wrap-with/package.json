@@ -16,14 +16,14 @@
         "default": "./lib/commonjs/index.js"
       }
     },
-    "./ExtractProp": {
+    "./Extract": {
       "import": {
-        "types": "./lib/esmodules-types/ExtractProp.d.ts",
-        "default": "./lib/esmodules/ExtractProp.js"
+        "types": "./lib/esmodules-types/Extract.d.ts",
+        "default": "./lib/esmodules/Extract.js"
       },
       "require": {
-        "types": "./lib/commonjs-types/ExtractProp.d.ts",
-        "default": "./lib/commonjs/ExtractProp.js"
+        "types": "./lib/commonjs-types/Extract.d.ts",
+        "default": "./lib/commonjs/Extract.js"
       }
     },
     "./HowOf": {
@@ -34,14 +34,14 @@
         "types": "./lib/commonjs-types/HowOf.d.ts"
       }
     },
-    "./SpyProp": {
+    "./Spy": {
       "import": {
-        "types": "./lib/esmodules-types/SpyProp.d.ts",
-        "default": "./lib/esmodules/SpyProp.js"
+        "types": "./lib/esmodules-types/Spy.d.ts",
+        "default": "./lib/esmodules/Spy.js"
       },
       "require": {
-        "types": "./lib/commonjs-types/SpyProp.d.ts",
-        "default": "./lib/commonjs/SpyProp.js"
+        "types": "./lib/commonjs-types/Spy.d.ts",
+        "default": "./lib/commonjs/Spy.js"
       }
     },
     "./wrapWith": {

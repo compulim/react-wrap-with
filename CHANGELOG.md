@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Extract prop signature changed:
    - Was: `wrapWith(Container, {}, 'effect')`
-   - Now: `wrapWith(Container, { effect: ExtractProp })`
+   - Now: `wrapWith(Container, { effect: Extract })`
 
 ### Added
 

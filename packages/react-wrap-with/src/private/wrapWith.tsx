@@ -1,9 +1,9 @@
 import React, { createElement, forwardRef, Fragment } from 'react';
 
-import Extract from '../ExtractProp';
+import Extract from '../Extract';
 import pick from './util/pick';
 import pickAndOmit from './util/pickAndOmit';
-import Spy from '../SpyProp';
+import Spy from '../Spy';
 
 import type { ComponentType, PropsWithChildren, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 import type { HowOf } from '../HowOf';
@@ -16,12 +16,12 @@ const EmptyComponent = () => <Fragment />;
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKeys extends keyof ContainerComponentType,
-  SpyPropKeys extends keyof ContainerComponentType,
-  const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropKeys, SpyPropKeys> = HowOf<
+  ExtractPropKey extends keyof ContainerComponentType,
+  SpyPropKey extends keyof ContainerComponentType,
+  const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropKey, SpyPropKey> = HowOf<
     ContainerComponentType,
-    ExtractPropKeys,
-    SpyPropKeys
+    ExtractPropKey,
+    SpyPropKey
   >
 >(
   ContainerComponent: ContainerComponentType | false | null | undefined,
@@ -30,9 +30,15 @@ export default function wrapWith<
   MinimalContentProps extends Pick<
     PropsOf<ContainerComponentType>,
     keyof {
-      [K in keyof How as How[K] extends typeof Extract ? K : How[K] extends typeof Spy ? K : never]: How[K];
+      [K in keyof How as How[K] extends typeof Extract ? K : never]: How[K];
     }
-  >,
+  > &
+    Pick<
+      PropsOf<ContainerComponentType>,
+      keyof {
+        [K in keyof How as How[K] extends typeof Spy ? K : never]: How[K];
+      }
+    >,
   Ref = RefOf<MinimalContentProps>
 >(
   contentComponent: ComponentType<MinimalContentProps> | false | null | undefined
@@ -63,12 +69,12 @@ export default function wrapWith<
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKeys extends keyof ContainerComponentType,
-  SpyPropKeys extends keyof ContainerComponentType,
-  const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropKeys, SpyPropKeys> = HowOf<
+  ExtractPropKey extends keyof ContainerComponentType,
+  SpyPropKey extends keyof ContainerComponentType,
+  const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropKey, SpyPropKey> = HowOf<
     ContainerComponentType,
-    ExtractPropKeys,
-    SpyPropKeys
+    ExtractPropKey,
+    SpyPropKey
   >
 >(ContainerComponent: ContainerComponentType | false | null | undefined, how: How) {
   type ContainerProps = PropsOf<ContainerComponentType>;

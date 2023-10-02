@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ExtractProp, type HowOf } from '../../src/index';
+import { Extract, type HowOf } from '../../src/index';
 
 import type { PropsWithChildren } from 'react';
 
@@ -9,6 +9,6 @@ const Header = ({ children, className }: PropsWithChildren<{ className: string }
 );
 
 ({
-  // @ts-expect-error Type 'typeof ExtractProp' is not assignable to type 'typeof SpyProp'.
-  className: ExtractProp
+  // @ts-expect-error Type 'typeof Extract' is not assignable to type 'typeof Spy'.
+  className: Extract
 }) satisfies HowOf<typeof Header, never, 'className'>;
