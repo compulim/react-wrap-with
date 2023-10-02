@@ -106,9 +106,11 @@ export default function wrapWith<
     .filter(([_, value]) => value !== Extract && value !== Spy)
     .map(([key]) => key as keyof How) as InitialPropsKeys[];
 
-  // Try fix this.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [initialProps] = pickAndOmit<InitialProps, ExtractProps | SpyProps>(how as any, initialPropsKeys as any);
+  const [initialProps] = pickAndOmit<InitialProps, ExtractProps | SpyProps>(
+    // Try fix this.
+    how as InitialProps & ExtractProps & SpyProps,
+    initialPropsKeys
+  );
 
   return function wrap<MinimalContentProps extends SpyProps & ExtractProps, Ref = RefOf<MinimalContentProps>>(
     contentComponent: ComponentType<MinimalContentProps> | false | null | undefined
