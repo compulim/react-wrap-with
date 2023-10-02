@@ -84,17 +84,15 @@ export default function wrapWith<
   type SpyPropsKeys = keyof {
     [K in keyof How as How[K] extends typeof Spy ? K : never]: How[K];
   };
-  type InitialPropsKeys = keyof {
-    [K in keyof How as How[K] extends typeof Extract ? never : How[K] extends typeof Spy ? never : K]: How[K];
-  };
 
-  type ExtractProps = Pick<ContainerProps, ExtractPropsKeys>;
-  type SpyProps = Pick<ContainerProps, SpyPropsKeys>;
-  type InitialProps = Omit<ContainerProps, ExtractPropsKeys | SpyPropsKeys>;
   // Could we simplified?
   // type ExtractProps = { [K in keyof How as How[K] extends typeof Extract ? K : never]: ContainerProps[K] };
   // type SpyProps = { [K in keyof How as How[K] extends typeof Spy ? K : never]: ContainerProps[K] };
-  // type InitialProps = Omit<ContainerProps, keyof ExtractProps | keyof SpyProps>;
+  type ExtractProps = Pick<ContainerProps, ExtractPropsKeys>;
+  type SpyProps = Pick<ContainerProps, SpyPropsKeys>;
+  type InitialProps = Omit<ContainerProps, ExtractPropsKeys | SpyPropsKeys>;
+
+  type InitialPropsKeys = keyof InitialProps;
 
   const extractPropsKeys: ExtractPropsKeys[] = Object.entries(how || {})
     .filter(([_, value]) => value === Extract)
