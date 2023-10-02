@@ -2,13 +2,12 @@
 /// <reference types="@types/jest" />
 
 import { render } from '@testing-library/react';
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 
 import Extract from '../Extract';
 import wrapWith from './wrapWith';
 
-import type { PropsWithChildren } from 'react';
-import { HowOf } from '../HowOf';
+import type { HowOf } from '../HowOf';
 
 type FormProps = PropsWithChildren<{ action?: string; className?: string; method?: string }>;
 
@@ -51,7 +50,7 @@ describe('Wrapping <TextBox> with <Form method="post"> and extract "action" prop
 });
 
 describe('Wrapping <TextBox> with <Form> and extract "classname" props', () => {
-  const Wrapped = wrapWith(Form, { className: Extract })(TextBox);
+  const Wrapped = wrapWith(Form, { className: Extract } satisfies HowOf<typeof Form>)(TextBox);
 
   test('should extract "className"', () => {
     // WHEN: Rendering the wrapped component.

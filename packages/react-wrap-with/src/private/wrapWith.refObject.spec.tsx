@@ -2,12 +2,12 @@
 /// <reference types="@types/jest" />
 
 import { render } from '@testing-library/react';
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, type PropsWithChildren, type Ref, useEffect, useRef } from 'react';
 
 import Extract from '../Extract';
 import wrapWith from './wrapWith';
 
-import type { PropsWithChildren, Ref } from 'react';
+import type { HowOf } from '../HowOf';
 
 type EffectProps = PropsWithChildren<{ containerRef?: Ref<HTMLSpanElement>; effect: 'blink' }>;
 
@@ -25,7 +25,9 @@ Hello.displayName = 'Effect';
 
 test('ref of RefObject should be passed', () => {
   // GIVEN: Wrapping <Hello> with <Effect effect="blink">.
-  const BlinkingHello = wrapWith(Effect, { containerRef: Extract, effect: 'blink' })(Hello);
+  const BlinkingHello = wrapWith(Effect, { containerRef: Extract, effect: 'blink' } satisfies HowOf<typeof Effect>)(
+    Hello
+  );
 
   const App = ({ onRef }: { onRef: (refs: [HTMLDivElement | null, HTMLHeadingElement | null]) => void }) => {
     const containerRef = useRef<HTMLDivElement | null>(null);

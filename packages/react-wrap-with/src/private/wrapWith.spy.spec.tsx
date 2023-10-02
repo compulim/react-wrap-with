@@ -2,12 +2,12 @@
 /// <reference types="@types/jest" />
 
 import { render } from '@testing-library/react';
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 
 import Spy from '../Spy';
 import wrapWith from './wrapWith';
 
-import type { PropsWithChildren } from 'react';
+import type { HowOf } from '../HowOf';
 
 type EffectProps = PropsWithChildren<{ emphasis: boolean }>;
 
@@ -22,7 +22,7 @@ type HelloProps = { emphasis?: boolean };
 const Hello = ({ emphasis }: HelloProps) => <h1 className={emphasis ? 'hello--emphasis' : ''}>Hello, World!</h1>;
 
 test('simple scenario', () => {
-  const BlinkingHello = wrapWith(Effect, { emphasis: Spy })(Hello);
+  const BlinkingHello = wrapWith(Effect, { emphasis: Spy } satisfies HowOf<typeof Effect>)(Hello);
 
   const result = render(<BlinkingHello emphasis={true} />);
 

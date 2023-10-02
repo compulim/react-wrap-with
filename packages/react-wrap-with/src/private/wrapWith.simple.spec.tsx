@@ -2,11 +2,11 @@
 /// <reference types="@types/jest" />
 
 import { render } from '@testing-library/react';
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 
 import wrapWith from './wrapWith';
 
-import type { PropsWithChildren } from 'react';
+import type { HowOf } from '../HowOf';
 
 type EffectProps = PropsWithChildren<{ effect: 'blink' }>;
 
@@ -16,7 +16,7 @@ const Hello = () => <h1>Hello, World!</h1>;
 
 test('simple scenario', () => {
   // GIVEN: Wrapping <Hello> with <Effect effect="blink">.
-  const BlinkingHello = wrapWith(Effect, { effect: 'blink' })(Hello);
+  const BlinkingHello = wrapWith(Effect, { effect: 'blink' } satisfies HowOf<typeof Effect>)(Hello);
 
   // WHEN: Render.
   const result = render(<BlinkingHello />);

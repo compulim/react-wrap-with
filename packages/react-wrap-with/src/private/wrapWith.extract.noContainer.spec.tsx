@@ -8,13 +8,15 @@ import React from 'react';
 import Extract from '../Extract';
 import wrapWith from './wrapWith';
 
+import type { HowOf } from '../HowOf';
+
 const Hello = ({ className }: { className?: string }) => <h1 className={className}>Hello, World!</h1>;
 
 Hello.propTypes = { className: PropTypes.string };
 
 test('extract props without a container', () => {
   // GIVEN: Wrapping <Hello> with false and extract "className" prop.
-  const BlinkingHello = wrapWith(false, { className: Extract })(Hello);
+  const BlinkingHello = wrapWith(false, { className: Extract } satisfies HowOf<false>)(Hello);
 
   // WHEN: Render.
   const result = render(<BlinkingHello className="blink" />);

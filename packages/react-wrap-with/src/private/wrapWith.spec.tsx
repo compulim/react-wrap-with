@@ -2,11 +2,11 @@
 /// <reference types="@types/jest" />
 
 import { render } from '@testing-library/react';
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 
 import wrapWith from './wrapWith';
 
-import type { PropsWithChildren } from 'react';
+import type { HowOf } from '../HowOf';
 
 type ListItemProps = PropsWithChildren<{ className?: string }>;
 
@@ -26,7 +26,7 @@ const OrderedList = ({ children, className }: OrderedListProps) => (
 
 describe('Wrapping <ListItem> with <OrderedList>', () => {
   // GIVEN: Wrapping <ListItem> with <OrderedList>.
-  const SingleListItem = wrapWith(OrderedList, { className: 'list' })(ListItem);
+  const SingleListItem = wrapWith(OrderedList, { className: 'list' } as HowOf<typeof OrderedList>)(ListItem);
 
   test('should render', () => {
     // WHEN: When rendering the wrapped component.
@@ -53,7 +53,7 @@ describe('Wrapping <ListItem> with <OrderedList>', () => {
 
 test.each([false, null, undefined] as [false, null, undefined])('wrapping <ListItem> with `%s`', ContainerComponent => {
   // GIVEN: Wrapping <ListItem> with false/null/undefined.
-  const Wrapped = wrapWith(ContainerComponent, {})(ListItem);
+  const Wrapped = wrapWith(ContainerComponent, {} satisfies HowOf<typeof ContainerComponent>)(ListItem);
 
   // WHEN: When rendering the wrapped component.
   const result = render(<Wrapped>Hello, World!</Wrapped>);
@@ -70,7 +70,7 @@ test.each([false, null, undefined] as [false, null, undefined])('wrapping <ListI
 
 test.each([false, null, undefined] as [false, null, undefined])('wrapping `%s` with <OrderedList>', wrapping => {
   // GIVEN: Wrapping false/null/undefined with <OrderedList>.
-  const Wrapped = wrapWith(OrderedList, {})(wrapping);
+  const Wrapped = wrapWith(OrderedList, {} satisfies HowOf<typeof OrderedList>)(wrapping);
 
   // WHEN: Rendering the wrapped component.
   const result = render(<Wrapped>Hello, World!</Wrapped>);
@@ -90,7 +90,7 @@ test.each([false, null, undefined] as [false, null, undefined])(
   'wrapping `%s` with the same type of component',
   ComponentComponent => {
     // GIVEN: Wrapping false/null/undefined with false/null/undefined.
-    const Wrapped = wrapWith(ComponentComponent, {})(ComponentComponent);
+    const Wrapped = wrapWith(ComponentComponent, {} satisfies HowOf<typeof ComponentComponent>)(ComponentComponent);
 
     // WHEN: Rendering the wrapped component.
     const result = render(<Wrapped>Hello, World!</Wrapped>);
