@@ -108,7 +108,7 @@ export default function wrapWith<
 
   const [initialProps] = pickAndOmit<InitialProps, ExtractProps | SpyProps>(
     // Try fix this.
-    how as InitialProps & ExtractProps & SpyProps,
+    (how || {}) as InitialProps & ExtractProps & SpyProps,
     initialPropsKeys
   );
 
