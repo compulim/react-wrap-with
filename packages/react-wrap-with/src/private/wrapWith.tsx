@@ -124,8 +124,6 @@ export default function wrapWith<
           ContainerComponent,
           { ...initialProps, ...extractedProps, ...spyProps },
           // If there are "ContentComponentType" is falsy, don't override children. It will override the `props.children`.
-          // False positive: we are unpacking the array rightaway.
-          // eslint-disable-next-line react/jsx-key
           ...(contentComponent ? [createElement(contentComponent, { ...contentProps, ref })] : [])
         );
       });
