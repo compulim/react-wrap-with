@@ -30,16 +30,10 @@ export default function wrapWith<
   MinimalContentProps extends Pick<
     PropsOf<ContainerComponentType>,
     keyof {
-      [K in keyof How as How[K] extends typeof Extract ? K : never]: How[K];
+      [K in keyof How as How[K] extends typeof Spy ? K : never]: How[K];
     }
-  > &
-    Pick<
-      PropsOf<ContainerComponentType>,
-      keyof {
-        [K in keyof How as How[K] extends typeof Spy ? K : never]: How[K];
-      }
-    >,
-  Ref = RefOf<MinimalContentProps>
+  >,
+  Ref extends RefOf<MinimalContentProps>
 >(
   contentComponent: ComponentType<MinimalContentProps> | false | null | undefined
 ) => ComponentType<
@@ -112,11 +106,12 @@ export default function wrapWith<
     initialPropsKeys
   );
 
-  return function wrap<MinimalContentProps extends SpyProps & ExtractProps, Ref = RefOf<MinimalContentProps>>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return function wrap<MinimalContentProps extends SpyProps, Ref extends RefOf<MinimalContentProps>>(
     contentComponent: ComponentType<MinimalContentProps> | false | null | undefined
   ): ComponentType<PropsWithoutRef<PropsOf<typeof contentComponent> & ExtractProps> & RefAttributes<Ref>> {
     if (ContainerComponent) {
-      const WithContainer = forwardRef<Ref, MinimalContentProps>((props, ref) => {
+      const WithContainer = forwardRef<Ref, ExtractProps & MinimalContentProps>((props, ref) => {
         const [extractedProps, contentProps] = pickAndOmit<ExtractProps, MinimalContentProps>(props, extractPropsKeys);
         const spyProps = pick<MinimalContentProps, SpyPropsKeys>(props, spyPropsKeys);
 
@@ -134,7 +129,7 @@ export default function wrapWith<
     }
 
     if (contentComponent) {
-      const WithContainer = forwardRef<Ref, MinimalContentProps>((props, ref) => {
+      const WithContainer = forwardRef<Ref, ExtractProps & MinimalContentProps>((props, ref) => {
         const [, contentProps] = pickAndOmit<
           Pick<PropsOf<ContainerComponentType>, ExtractPropsKeys>,
           MinimalContentProps
