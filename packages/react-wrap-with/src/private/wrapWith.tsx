@@ -33,7 +33,7 @@ export default function wrapWith<
       [K in keyof How as How[K] extends typeof Spy ? K : never]: How[K];
     }
   >,
-  Ref extends RefOf<MinimalContentProps>
+  Ref extends RefOf<(typeof how)['ref'] extends typeof Extract ? PropsOf<ContainerComponentType> : MinimalContentProps>
 >(
   contentComponent: ComponentType<MinimalContentProps> | false | null | undefined
 ) => ComponentType<
@@ -106,8 +106,13 @@ export default function wrapWith<
     initialPropsKeys
   );
 
+  const isRefExtracted = how.ref === Extract;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return function wrap<MinimalContentProps extends SpyProps, Ref extends RefOf<MinimalContentProps>>(
+  return function wrap<
+    MinimalContentProps extends SpyProps,
+    Ref extends RefOf<(typeof how)['ref'] extends typeof Extract ? ContainerProps : MinimalContentProps>
+  >(
     contentComponent: ComponentType<MinimalContentProps> | false | null | undefined
   ): ComponentType<PropsWithoutRef<PropsOf<typeof contentComponent> & ExtractProps> & RefAttributes<Ref>> {
     if (ContainerComponent) {
@@ -117,9 +122,11 @@ export default function wrapWith<
 
         return createElement(
           ContainerComponent,
-          { ...initialProps, ...extractedProps, ...spyProps },
+          { ...initialProps, ...extractedProps, ...spyProps, ...(isRefExtracted ? { ref } : {}) },
           // If there are "ContentComponentType" is falsy, don't override children. It will override the `props.children`.
-          ...(contentComponent ? [createElement(contentComponent, { ...contentProps, ref })] : [])
+          ...(contentComponent
+            ? [createElement(contentComponent, { ...contentProps, ...(isRefExtracted ? {} : { ref }) })]
+            : [])
         );
       });
 
@@ -135,7 +142,7 @@ export default function wrapWith<
           MinimalContentProps
         >(props, extractPropsKeys);
 
-        return createElement(contentComponent, { ...contentProps, ref });
+        return createElement(contentComponent, { ...contentProps, ...(isRefExtracted ? {} : { ref }) });
       });
 
       WithContainer.displayName = contentComponent.displayName;

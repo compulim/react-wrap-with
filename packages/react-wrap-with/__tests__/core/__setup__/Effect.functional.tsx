@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { type EffectProps } from './Effect.props';
 
-const Effect = (props: EffectProps) => (
-  <span className={`effect effect--${props.effect}${props.emphasis ? ' effect--emphasis' : ''}`}>{props.children}</span>
-);
+const Effect = forwardRef<HTMLSpanElement, EffectProps>((props: EffectProps, ref) => (
+  <span className={`effect effect--${props.effect}${props.emphasis ? ' effect--emphasis' : ''}`} ref={ref}>
+    {props.children}
+  </span>
+));
 
 Effect.displayName = 'Effect';
 

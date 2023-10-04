@@ -1,0 +1,32 @@
+.auto-resize-text-area {
+  border: solid 1px black;
+  display: inline-flex;
+  max-height: calc(10em + 2px);
+  position: relative;
+  width: 200px;
+
+  --auto-resize-text-area__font-family: unset;
+  --auto-resize-text-area__font-size: unset;
+}
+
+.auto-resize-text-area__doppelganger {
+  color: rgba(255, 0, 0, 0.5);
+  font-family: var(--auto-resize-text-area__font-family);
+  font-size: var(--auto-resize-text-area__font-size);
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.auto-resize-text-area__text-area {
+  background: transparent;
+  border: 0;
+  color: rgba(0, 0, 255, 0.5);
+  font-family: var(--auto-resize-text-area__font-family);
+  font-size: var(--auto-resize-text-area__font-size);
+  height: 100%;
+  padding: 0;
+  position: absolute;
+  resize: none;
+  width: 100%;
+}
