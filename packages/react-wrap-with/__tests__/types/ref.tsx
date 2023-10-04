@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import wrapWith from '../../src/wrapWith';
+import { wrapWith } from '../../src/index';
 
 import type { ReactNode, Ref } from 'react';
 

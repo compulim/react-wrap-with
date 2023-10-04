@@ -1,16 +1,21 @@
 // Notes: to test changes in this file, run "jest" with "--no-cache" argument.
 
 const run = ({ filename }) => {
+  const fs = require('fs/promises');
+  const { extname } = require('path');
   const typeScript = require('typescript');
 
-  function compile(...filenames) {
-    const program = typeScript.createProgram(filenames, {
-      allowSyntheticDefaultImports: true,
-      jsx: typeScript.JsxEmit.React,
-      noEmit: true,
-      skipLibCheck: true,
-      strict: true
-    });
+  const TS_EXPECT_ERROR = /(\/\/\s+)(@ts-expect-error)[\s+(.*)]/gu;
+  const TSCONFIG = {
+    allowSyntheticDefaultImports: true,
+    jsx: typeScript.JsxEmit.React,
+    noEmit: true,
+    skipLibCheck: true,
+    strict: true
+  };
+
+  async function compile(filename) {
+    const program = typeScript.createProgram([filename], TSCONFIG);
 
     const emitResult = program.emit();
     const allDiagnostics = typeScript.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
@@ -27,11 +32,43 @@ const run = ({ filename }) => {
     });
   }
 
-  if (filename.includes('fail')) {
-    test(`Compile ${filename} should fail`, () => expect(() => compile(filename)).toThrow());
-  } else {
-    test(`Compile ${filename} should succeed`, () => compile(filename));
+  async function checkExpectError(filename) {
+    const sourceText = await fs.readFile(filename, 'utf-8');
+    const sourceTextWithoutExpectError = sourceText.replace(TS_EXPECT_ERROR, '$1');
+
+    const extension = extname(filename);
+    const tempFilename = filename.substring(0, filename.length - extension.length) + `.tmp${extension}`;
+
+    await fs.writeFile(tempFilename, sourceTextWithoutExpectError);
+
+    try {
+      const program = typeScript.createProgram([tempFilename], TSCONFIG);
+
+      const emitResult = program.emit();
+      const allDiagnostics = typeScript.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
+
+      allDiagnostics.forEach(({ file, messageText, start }) => {
+        if (file && start) {
+          const { line } = file.getLineAndCharacterOfPosition(start);
+          const message = typeScript.flattenDiagnosticMessageText(messageText, '\n');
+
+          const expectedErrorLine = file.getFullText().split('\n')[line - 1];
+          const expectedError = expectedErrorLine?.replace(/\s*\/\/\s+/u, '').trim();
+
+          expect(message).toEqual(expect.stringContaining(expectedError));
+        } else {
+          throw new Error(typeScript.flattenDiagnosticMessageText(messageText, '\n'));
+        }
+      });
+    } finally {
+      fs.unlink(tempFilename);
+    }
   }
+
+  describe(filename, () => {
+    test('should succeed', () => compile(filename));
+    test('should have @ts-expect-error describing compile errors correctly', () => checkExpectError(filename));
+  });
 };
 
 module.exports = {

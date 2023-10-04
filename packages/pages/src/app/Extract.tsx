@@ -1,20 +1,20 @@
-import { wrapWith } from 'react-wrap-with';
+import { Extract, wrapWith } from 'react-wrap-with';
 import React from 'react';
 
 import Effect from './Effect';
 import Hello from './Hello';
 
-const withBlink = wrapWith(Effect, {}, ['effect']);
+const withBlink = wrapWith(Effect, { effect: Extract });
 
 const BlinkingHello = withBlink(Hello);
 
-const Extract = () => {
+const ExtractSection = () => {
   return (
     <section>
       <BlinkingHello effect="blink" />
-      <pre>{`const Component = wrapWith(Effect, {}, ['effect'])(Hello);\n\nrender(<Component effect="blink" />);`}</pre>
+      <pre>{`const Component = wrapWith(Effect, { effect: Extract })(Hello);\n\nrender(<Component effect="blink" />);`}</pre>
     </section>
   );
 };
 
-export default Extract;
+export default ExtractSection;
