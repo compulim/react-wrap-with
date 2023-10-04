@@ -42,7 +42,9 @@ describe.each([
   });
 
   test('should render as expected', () =>
-    expect(result.container.innerHTML).toMatchInlineSnapshot(Aloha ? `"<h1>Hello, World!</h1>"` : '""'));
+    expect(result.container.innerHTML).toMatchInlineSnapshot(
+      Aloha ? `"<h1 class="effect effect--blink">Hello, World!</h1>"` : '""'
+    ));
 
   test(`should have 'displayName'`, () => expect(BlinkingAloha.displayName).toBe('WrappedWithComponent'));
 });
