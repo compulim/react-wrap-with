@@ -10,31 +10,35 @@ const Context = createContext<string>('');
 
 Context.displayName = 'Context';
 
-const FunctionalAloha = () => {
+type Props = { effect?: string };
+
+const FunctionalAloha = ({ effect }: Props) => {
   const value = useContext(Context);
 
-  return <h1>{value}</h1>;
+  return <h1 className={`effect effect--${effect}`}>{value}</h1>;
 };
 
-class AlohaClass extends Component {
+class AlohaClass extends Component<Props> {
   render() {
-    return <Context.Consumer>{value => <h1>{value}</h1>}</Context.Consumer>;
+    return <h1 className={`effect effect--${this.props.effect}`}>{this.context as string}</h1>;
   }
 }
+
+AlohaClass.contextType = Context;
 
 describe.each([
   ['functional component', FunctionalAloha],
   ['component class', AlohaClass],
   ['functional component without content', false as const],
   ['component class without content', false as const]
-])('with a %s', (_, Aloha: ComponentType | false) => {
-  let BlinkingAloha: ComponentType<{ value: string }>;
+])('with a %s', (_, Aloha: ComponentType<Props> | false) => {
+  let BlinkingAloha: ComponentType<{ effect?: string; value: string }>;
   let result: RenderResult;
 
   beforeEach(() => {
     BlinkingAloha = wrapWith(Context.Provider, { value: Extract } satisfies HowOf<typeof Context.Provider>)(Aloha);
 
-    result = render(<BlinkingAloha value="Hello, World!" />);
+    result = render(<BlinkingAloha effect="blink" value="Hello, World!" />);
   });
 
   test('should render as expected', () =>
