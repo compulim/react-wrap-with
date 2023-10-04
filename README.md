@@ -71,6 +71,7 @@ const ThemeProvider = ({ accent, children }) => (
 const withTheme =
   Component =>
   ({ accent, ...props }) => (
+    // "accent" props is extracted and passed to <ThemeProvider> only.
     <ThemeProvider accent={accent}>
       <Component {...props} />
     </ThemeProvider>
@@ -86,6 +87,7 @@ const ThemeProvider = ({ accent, children }) => (
   <ThemeContext.Provider value={{ accent }}>{children}</ThemeContext.Provider>
 );
 
+// Mark "accent" prop for extraction.
 const withTheme = wrapWith(ThemeProvider, { accent: Extract });
 ```
 
@@ -103,6 +105,7 @@ const ThemeProvider = ({ accent, children }) => (
 );
 
 const withTheme = Component => props => (
+  // Pass "blue" to "accent" prop.
   <ThemeProvider accent="blue">
     <Component {...props} />
   </ThemeProvider>
@@ -118,6 +121,7 @@ const ThemeProvider = ({ accent, children }) => (
   <ThemeContext.Provider value={{ accent }}>{children}</ThemeContext.Provider>
 );
 
+// Pass "blue" to "accent" prop.
 const withTheme = wrapWith(ThemeProvider, { accent: 'blue' });
 ```
 
@@ -133,6 +137,7 @@ const ThemeProvider = ({ accent, children }) => (
 );
 
 const withTheme = Component => props => (
+  // Pass "accent" prop to <ThemeProvider> without extracting it.
   <ThemeProvider accent={props.accent}>
     <Component {...props} />
   </ThemeProvider>
@@ -148,6 +153,7 @@ const ThemeProvider = ({ accent, children }) => (
   <ThemeContext.Provider value={{ accent }}>{children}</ThemeContext.Provider>
 );
 
+// Mark "accent" prop for spying.
 const withTheme = wrapWith(ThemeProvider, { accent: Spy });
 ```
 
@@ -166,8 +172,6 @@ const Button = forwardRef<HTMLButtonElement, Props>(({ text }, ref) => <button r
 
 Button.displayName = 'Button';
 ```
-
-In the future, we may support `{ ref: Spy }` for passing the reference of content component to the container component.
 
 ### TypeScript helpers
 
