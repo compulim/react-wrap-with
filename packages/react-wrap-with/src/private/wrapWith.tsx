@@ -16,8 +16,8 @@ const EmptyComponent = () => <Fragment />;
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof ContainerComponentType,
-  SpyPropKey extends keyof ContainerComponentType,
+  ExtractPropKey extends keyof PropsOf<ContainerComponentType>,
+  SpyPropKey extends keyof PropsOf<ContainerComponentType>,
   const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropKey, SpyPropKey> = HowOf<
     ContainerComponentType,
     ExtractPropKey,
@@ -63,8 +63,8 @@ export default function wrapWith<
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof ContainerComponentType,
-  SpyPropKey extends keyof ContainerComponentType,
+  ExtractPropKey extends keyof PropsOf<ContainerComponentType>,
+  SpyPropKey extends keyof PropsOf<ContainerComponentType>,
   const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropKey, SpyPropKey> = HowOf<
     ContainerComponentType,
     ExtractPropKey,
