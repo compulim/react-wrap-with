@@ -8,5 +8,5 @@ const Header = ({ children }: { children?: ReactNode | undefined }) => <h1>{chil
 
 // "children" cannot be set in how.
 
-// @ts-expect-error Type 'Element' is not assignable to type 'undefined'.
+// @ts-expect-error Type '{ children: React.JSX.Element; }' does not satisfy the expected type 'HowOf<({ children }: { children?: ReactNode; }) => Element>'.
 ({ children: <Fragment /> }) satisfies HowOf<typeof Header>;
