@@ -7,8 +7,8 @@ import Spy from '../Spy';
 
 import type { ComponentType, PropsWithChildren, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 import type { HowOf } from '../HowOf';
-import type { PropsOf } from './type/PropsOf';
-import type { RefOf } from './type/RefOf';
+import type { PropsOf } from '../PropsOf';
+import type { RefOf } from '../RefOf';
 
 const EmptyComponent = () => <Fragment />;
 
@@ -86,8 +86,6 @@ export default function wrapWith<
   type SpyProps = Pick<ContainerProps, SpyPropsKeys>;
   type InitialProps = Omit<ContainerProps, ExtractPropsKeys | SpyPropsKeys>;
 
-  type InitialPropsKeys = keyof InitialProps;
-
   const extractPropsKeys: ExtractPropsKeys[] = Object.entries(how || {})
     .filter(([_, value]) => value === Extract)
     .map(([key]) => key as keyof How) as ExtractPropsKeys[];
@@ -96,15 +94,9 @@ export default function wrapWith<
     .filter(([_, value]) => value === Spy)
     .map(([key]) => key as keyof How) as SpyPropsKeys[];
 
-  const initialPropsKeys: InitialPropsKeys[] = Object.entries(how || {})
-    .filter(([_, value]) => value !== Extract && value !== Spy)
-    .map(([key]) => key as keyof How) as InitialPropsKeys[];
-
-  const [initialProps] = pickAndOmit<InitialProps, ExtractProps | SpyProps>(
-    // Try fix this.
-    (how || {}) as InitialProps & ExtractProps & SpyProps,
-    initialPropsKeys
-  );
+  const initialProps: InitialProps = Object.fromEntries(
+    Object.entries(how || {}).filter(([_, value]) => value !== Extract && value !== Spy)
+  ) as InitialProps;
 
   const isRefExtracted = how.ref === Extract;
 
