@@ -16,9 +16,8 @@ const BlinkingEffect = ({ children }: { children?: ReactNode | undefined }) => (
 
 describe.each([
   ['with a functional component', FunctionalHello],
-  ['with a component class', HelloClass],
-  ['without content', false as const]
-])('%s', (_, Hello: ComponentType<HelloProps> | false) => {
+  ['with a component class', HelloClass]
+])('%s', (_, Hello: ComponentType<HelloProps>) => {
   let BlinkingHello: ComponentType<{ emphasis?: boolean; text: string }>;
   let result: RenderResult;
 

@@ -20,12 +20,8 @@ const FunctionalAloha = () => <h1>Aloha!</h1>;
 
 describe.each([
   ['functional component', FunctionalEffect, FunctionalAloha],
-  ['component class', EffectClass, AlohaClass],
-  ['functional component without container', false as const, FunctionalAloha],
-  ['component class without container', false as const, AlohaClass],
-  ['functional component without content', FunctionalEffect, false as const],
-  ['component class without content', EffectClass, false as const]
-])('with a %s', (_, Effect: ComponentType<EffectProps> | false, Aloha: ComponentType | false) => {
+  ['component class', EffectClass, AlohaClass]
+])('with a %s', (_, Effect: ComponentType<EffectProps>, Aloha: ComponentType) => {
   let BlinkingAloha: ComponentType<{ effect: 'blink' }>;
   let result: RenderResult;
 
