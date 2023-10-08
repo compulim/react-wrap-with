@@ -10,7 +10,10 @@ import type { HowOf } from '../HowOf';
 import type { PropsOf } from '../PropsOf';
 import type { RefOf } from '../RefOf';
 
-const EmptyComponent = () => <Fragment />;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EmptyComponent: ComponentType<any> = () => <Fragment />;
+
+EmptyComponent.displayName = 'wrapWith(never)(never)';
 
 // Everything.
 export default function wrapWith<
