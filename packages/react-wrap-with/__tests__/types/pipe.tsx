@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { wrapWith } from '../../src/index';
+import { Extract, wrapWith } from '../../src/index';
 
 import type { ComponentType, PropsWithChildren } from 'react';
 
@@ -10,6 +10,6 @@ const Effect = ({ children, effect }: PropsWithChildren<{ effect: string }>) => 
 
 const Hello: ComponentType<{ value: string }> = ({ value }: { value: string }) => <div>{value}</div>;
 
-const HelloWithEffect = wrapWith(Effect, { effect: 'blink' })(Hello);
+const HelloWithEffect = wrapWith(Effect, { effect: Extract })(Hello);
 
-<HelloWithEffect value="Hello, World!" />;
+<HelloWithEffect effect="blink" value="Hello, World!" />;

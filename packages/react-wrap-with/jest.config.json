@@ -7,7 +7,12 @@
       {
         "presets": [
           "@babel/preset-react",
-          "@babel/preset-typescript",
+          [
+            "@babel/preset-typescript",
+            {
+              "allowDeclareFields": true
+            }
+          ],
           [
             "@babel/preset-env",
             {

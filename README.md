@@ -93,38 +93,6 @@ const withTheme = wrapWith(ThemeProvider, { accent: Extract });
 
 Props marked with `Extract` will not be passed to content component. To pass the prop to both the container component and the content component. Please use `Spy`.
 
-### Initializing props
-
-Instead of extracting props, values can be passed to the `wrapWith()` function when we build the HOC function.
-
-#### Before using `react-wrap-with`
-
-```tsx
-const ThemeProvider = ({ accent, children }) => (
-  <ThemeContext.Provider value={{ accent }}>{children}</ThemeContext.Provider>
-);
-
-const withTheme = Component => props => (
-  // Pass "blue" to "accent" prop.
-  <ThemeProvider accent="blue">
-    <Component {...props} />
-  </ThemeProvider>
-);
-```
-
-#### After using `react-wrap-with`
-
-```tsx
-import { Extract, wrapWith } from 'react-wrap-with';
-
-const ThemeProvider = ({ accent, children }) => (
-  <ThemeContext.Provider value={{ accent }}>{children}</ThemeContext.Provider>
-);
-
-// Pass "blue" to "accent" prop.
-const withTheme = wrapWith(ThemeProvider, { accent: 'blue' });
-```
-
 ### Spying props
 
 Spying is a useful technique to pass the prop to both the container component and the content component.
@@ -158,6 +126,21 @@ const withTheme = wrapWith(ThemeProvider, { accent: Spy });
 ```
 
 Both the `<ThemeProvider>` and the content component will receive the prop `accent`.
+
+### Initializing props
+
+If not every props on the container component need to be extracted or spied, the `withProps` HOC can help setting some of the props to a fixed value.
+
+```tsx
+import { withProps, wrapWith } from 'react-wrap-with';
+
+const ThemeProvider = ({ accent, children }) => (
+  <ThemeContext.Provider value={{ accent }}>{children}</ThemeContext.Provider>
+);
+
+const BlueThemeProvider = withProps(Theme, { accent: 'blue' });
+const withBlueTheme = wrapWith(BlueThemeProvider);
+```
 
 ### Referencing
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { wrapWith } from '../../src/index';
+import { Extract, wrapWith } from '../../src/index';
 
 import type { PropsWithChildren } from 'react';
 
@@ -10,7 +10,7 @@ const Effect = ({ children, effect }: PropsWithChildren<{ effect: string }>) => 
 
 const Hello = () => <div>Hello, World!</div>;
 
-const HelloWithEffect = wrapWith(Effect, { effect: 'blink' })(Hello);
+const HelloWithEffect = wrapWith(Effect, { effect: Extract })(Hello);
 
-// @ts-expect-error Property 'value' does not exist on type 'IntrinsicAttributes & Pick<{ effect: string; } & { children?: ReactNode; }, never> & RefAttributes<unknown>'.
-<HelloWithEffect value="Hello, World!" />;
+// @ts-expect-error Property 'value' does not exist on type 'IntrinsicAttributes & Pick<{ effect: string; } & { children?: ReactNode; }, never> & Pick<{ effect: string; } & { children?: ReactNode; }, "effect"> & RefAttributes<...>'
+<HelloWithEffect effect="blink" value="Hello, World!" />;

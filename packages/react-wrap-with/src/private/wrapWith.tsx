@@ -10,7 +10,10 @@ import type { HowOf } from '../HowOf';
 import type { PropsOf } from '../PropsOf';
 import type { RefOf } from '../RefOf';
 
-const EmptyComponent = () => <Fragment />;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EmptyComponent: ComponentType<any> = () => <Fragment />;
+
+EmptyComponent.displayName = 'wrapWith(never)(never)';
 
 // Everything.
 export default function wrapWith<
@@ -29,9 +32,7 @@ export default function wrapWith<
 ): <
   MinimalContentProps extends Pick<
     PropsOf<ContainerComponentType>,
-    keyof {
-      [K in keyof How as How[K] extends typeof Spy ? K : never]: How[K];
-    }
+    keyof { [K in keyof How as How[K] extends typeof Spy ? K : never]: K }
   >,
   Ref extends RefOf<(typeof how)['ref'] extends typeof Extract ? PropsOf<ContainerComponentType> : MinimalContentProps>
 >(
@@ -63,42 +64,31 @@ export default function wrapWith<
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropKey extends keyof PropsOf<ContainerComponentType>,
-  SpyPropKey extends keyof PropsOf<ContainerComponentType>,
-  const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropKey, SpyPropKey> = HowOf<
+  ExtractPropsKey extends keyof PropsOf<ContainerComponentType>,
+  SpyPropsKey extends keyof PropsOf<ContainerComponentType>,
+  const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropsKey, SpyPropsKey> = HowOf<
     ContainerComponentType,
-    ExtractPropKey,
-    SpyPropKey
+    ExtractPropsKey,
+    SpyPropsKey
   >
 >(ContainerComponent: ContainerComponentType | false | null | undefined, how: How) {
   type ContainerProps = PropsOf<ContainerComponentType>;
-  type ExtractPropsKeys = keyof {
-    [K in keyof How as How[K] extends typeof Extract ? K : never]: How[K];
-  };
-  type SpyPropsKeys = keyof {
-    [K in keyof How as How[K] extends typeof Spy ? K : never]: How[K];
-  };
 
-  // Could we simplified?
-  // type ExtractProps = { [K in keyof How as How[K] extends typeof Extract ? K : never]: ContainerProps[K] };
-  // type SpyProps = { [K in keyof How as How[K] extends typeof Spy ? K : never]: ContainerProps[K] };
-  type ExtractProps = Pick<ContainerProps, ExtractPropsKeys>;
-  type SpyProps = Pick<ContainerProps, SpyPropsKeys>;
-  type InitialProps = Omit<ContainerProps, ExtractPropsKeys | SpyPropsKeys>;
+  type ExtractProps = { [K in keyof How as How[K] extends typeof Extract ? K : never]: ContainerProps[K] };
+  type ExtractPropsKeys = keyof ExtractProps;
+
+  type SpyProps = { [K in keyof How as How[K] extends typeof Spy ? K : never]: ContainerProps[K] };
+  type SpyPropsKeys = keyof SpyProps;
 
   const extractPropsKeys: ExtractPropsKeys[] = Object.entries(how || {})
     .filter(([_, value]) => value === Extract)
     .map(([key]) => key as keyof How) as ExtractPropsKeys[];
 
-  const spyPropsKeys: SpyPropsKeys[] = Object.entries(how || {})
+  const spyPropsKeys: SpyPropsKeys[] = Object.entries<typeof Extract | typeof Spy>(how || {})
     .filter(([_, value]) => value === Spy)
     .map(([key]) => key as keyof How) as SpyPropsKeys[];
 
-  const initialProps: InitialProps = Object.fromEntries(
-    Object.entries(how || {}).filter(([_, value]) => value !== Extract && value !== Spy)
-  ) as InitialProps;
-
-  const isRefExtracted = how.ref === Extract;
+  const isRefExtracted = how && how.ref === Extract;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function wrap<
@@ -114,7 +104,7 @@ export default function wrapWith<
 
         return createElement(
           ContainerComponent,
-          { ...initialProps, ...extractedProps, ...spyProps, ...(isRefExtracted ? { ref } : {}) },
+          { ...extractedProps, ...spyProps, ...(isRefExtracted ? { ref } : {}) },
           // If there are "ContentComponentType" is falsy, don't override children. It will override the `props.children`.
           ...(contentComponent
             ? [createElement(contentComponent, { ...contentProps, ...(isRefExtracted ? {} : { ref }) })]
@@ -122,22 +112,21 @@ export default function wrapWith<
         );
       });
 
-      WithContainer.displayName = `WrappedWith${ContainerComponent.displayName || 'Component'}`;
+      WithContainer.displayName = `wrapWith(${ContainerComponent.displayName || 'Component'})(${
+        (contentComponent || {}).displayName || 'Component'
+      })`;
 
       return WithContainer;
     }
 
     if (contentComponent) {
       const WithContainer = forwardRef<Ref, ExtractProps & MinimalContentProps>((props, ref) => {
-        const [, contentProps] = pickAndOmit<
-          Pick<PropsOf<ContainerComponentType>, ExtractPropsKeys>,
-          MinimalContentProps
-        >(props, extractPropsKeys);
+        const [, contentProps] = pickAndOmit<ExtractProps, MinimalContentProps>(props, extractPropsKeys);
 
         return createElement(contentComponent, { ...contentProps, ...(isRefExtracted ? {} : { ref }) });
       });
 
-      WithContainer.displayName = contentComponent.displayName;
+      WithContainer.displayName = `wrapWith(never)(${(contentComponent || {}).displayName || 'Component'})`;
 
       return WithContainer;
     }

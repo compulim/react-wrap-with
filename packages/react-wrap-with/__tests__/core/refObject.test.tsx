@@ -4,14 +4,14 @@
 import { render, RenderResult } from '@testing-library/react';
 import React, { createRef, type ComponentType, type Ref, RefAttributes } from 'react';
 
-import { type HowOf, wrapWith } from '../../src/index';
-import EffectClass from './__setup__/Effect.class';
-import FunctionalEffect from './__setup__/Effect.functional';
-import FunctionalHello from './__setup__/Hello.functional';
-import HelloClass from './__setup__/Hello.class';
+import { Extract, type HowOf, Spy, wrapWith } from '../../src/index';
+import EffectClass from '../__setup__/Effect.class';
+import FunctionalEffect from '../__setup__/Effect.functional';
+import FunctionalHello from '../__setup__/Hello.functional';
+import HelloClass from '../__setup__/Hello.class';
 
-import type { EffectProps } from './__setup__/Effect.props';
-import type { HelloProps } from './__setup__/Hello.props';
+import type { EffectProps } from '../__setup__/Effect.props';
+import type { HelloProps } from '../__setup__/Hello.props';
 
 describe.each([
   ['functional component', FunctionalEffect, FunctionalHello],
@@ -27,16 +27,18 @@ describe.each([
     Effect: ComponentType<EffectProps> | false,
     Hello: ComponentType<HelloProps & RefAttributes<HTMLHeadingElement>> | false
   ) => {
-    let BlinkingHello: ComponentType<{ emphasis?: boolean; text: string } & RefAttributes<HTMLHeadingElement>>;
+    let BlinkingHello: ComponentType<
+      { effect: 'blink'; emphasis?: boolean; text: string } & RefAttributes<HTMLHeadingElement>
+    >;
     let result: RenderResult;
     let ref: Ref<HTMLHeadingElement>;
 
     beforeEach(() => {
       ref = createRef<HTMLHeadingElement>();
 
-      BlinkingHello = wrapWith(Effect, { effect: 'blink' } satisfies HowOf<typeof Effect>)(Hello);
+      BlinkingHello = wrapWith(Effect, { effect: Extract, emphasis: Spy } satisfies HowOf<typeof Effect>)(Hello);
 
-      result = render(<BlinkingHello ref={ref} text="Hello, World!" />);
+      result = render(<BlinkingHello effect="blink" ref={ref} text="Hello, World!" />);
     });
 
     test('should render as expected', () =>

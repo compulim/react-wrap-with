@@ -2,16 +2,16 @@
 /// <reference types="@types/jest" />
 
 import { render } from '@testing-library/react';
-import React, { type ComponentType, RefAttributes } from 'react';
+import React, { type ComponentType } from 'react';
 
 import { Extract, type HowOf, wrapWith } from '../../src/index';
-import EffectClass from './__setup__/Effect.class';
-import FunctionalEffect from './__setup__/Effect.functional';
-import FunctionalHello from './__setup__/Hello.functional';
-import HelloClass from './__setup__/Hello.class';
+import EffectClass from '../__setup__/Effect.class';
+import FunctionalEffect from '../__setup__/Effect.functional';
+import FunctionalHello from '../__setup__/Hello.functional';
+import HelloClass from '../__setup__/Hello.class';
 
-import type { EffectProps } from './__setup__/Effect.props';
-import type { HelloProps } from './__setup__/Hello.props';
+import type { EffectProps } from '../__setup__/Effect.props';
+import type { HelloProps } from '../__setup__/Hello.props';
 
 describe.each([
   ['functional component', FunctionalEffect, FunctionalHello],
@@ -21,15 +21,17 @@ describe.each([
   ['functional component without content', FunctionalEffect, false as const],
   ['component class without content', EffectClass, false as const]
 ])('with a %s', (_, Effect: ComponentType<EffectProps> | false, Hello: ComponentType<HelloProps> | false) => {
-  let BlinkingHello: ComponentType<{ emphasis?: boolean; text: string } & RefAttributes<HTMLSpanElement>>;
   let refCallback = jest.fn<void, [HTMLHeadingElement]>();
 
   beforeEach(() => {
     refCallback = jest.fn();
 
-    BlinkingHello = wrapWith(Effect, { effect: 'blink', ref: Extract } satisfies HowOf<typeof Effect>)(Hello);
+    // "ref" is extracted, so it is pointing to <Effect> instead of <Hello>.
+    const BlinkingHello = wrapWith(Effect, { effect: Extract, emphasis: Extract, ref: Extract } satisfies HowOf<
+      typeof Effect
+    >)(Hello);
 
-    render(<BlinkingHello ref={refCallback} text="Hello, World!" />);
+    render(<BlinkingHello effect="blink" ref={refCallback} text="Hello, World!" />);
   });
 
   if (Effect) {
