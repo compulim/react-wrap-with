@@ -12,7 +12,7 @@ When using React Context or building reusable components, an intermediate compon
 
 The following samples assumes a theme is set for the whole component via React Context with corresponding provider component and a HOC function.
 
-### Before using `react-wrap-with`
+### Before
 
 ```tsx
 import { createContext } from 'react';
@@ -30,24 +30,19 @@ const withTheme = Component => props => (
 export { ThemeProvider, withTheme };
 ```
 
-### After using `react-wrap-with`
+### After
 
-```diff
-  import { createContext } from 'react';
-+ import { wrapWith } from 'react-wrap-with';
+```tsx
+import { createContext } from 'react';
+import { wrapWith } from 'react-wrap-with';
 
-  const ThemeContext = createContext();
+const ThemeContext = createContext();
 
-  const ThemeProvider = ({ children }) => <ThemeContext.Provider>{children}</ThemeContext.Provider>;
+const ThemeProvider = ({ children }) => <ThemeContext.Provider>{children}</ThemeContext.Provider>;
 
-- const withTheme = Component => props => (
--   <ThemeProvider>
--     <Component {...props} />
--   </ThemeProvider>
-- );
-+ const withTheme = wrapWith(ThemeProvider);
+const withTheme = wrapWith(ThemeProvider);
 
-  export { ThemeProvider, withTheme };
+export { ThemeProvider, withTheme };
 ```
 
 ### Extracting props
@@ -61,7 +56,7 @@ const ButtonWithTheme = withTheme(Button);
 render(<ButtonWithTheme accent="blue" text="Submit" />);
 ```
 
-#### Before using `react-wrap-with`
+#### Before
 
 ```tsx
 const ThemeProvider = ({ accent, children }) => (
@@ -78,7 +73,7 @@ const withTheme =
   );
 ```
 
-#### After using `react-wrap-with`
+#### After
 
 ```tsx
 import { Extract, wrapWith } from 'react-wrap-with';
@@ -97,7 +92,7 @@ Props marked with `Extract` will not be passed to content component. To pass the
 
 Spying is a useful technique to pass the prop to both the container component and the content component.
 
-#### Before using `react-wrap-with`
+#### Before
 
 ```tsx
 const ThemeProvider = ({ accent, children }) => (
@@ -112,7 +107,7 @@ const withTheme = Component => props => (
 );
 ```
 
-#### After using `react-wrap-with`
+#### After
 
 ```tsx
 import { Spy, wrapWith } from 'react-wrap-with';
@@ -175,25 +170,6 @@ const Effect = ({ children, effect, value }: Props) => (
 );
 
 const withEffect = wrapWith<typeof Effect, 'effect', 'value'>(Effect, { effect: Extract, value: Spy });
-```
-
-#### Using `satisfies`
-
-You can use `satisfies` operator to type the second argument (`how`).
-
-```tsx
-import { Extract, Spy, wrapWith, type HowOf } from 'react-wrap-with';
-
-type Props = PropsWithChildren<{
-  className: 'blink' | 'marquee';
-  value: string;
-}>;
-
-const Effect = ({ children, className, value }: Props) => (
-  <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>
-);
-
-const withEffect = wrapWith(Effect, { effect: Extract, value: Spy } satisfies HowOf<typeof Effect>);
 ```
 
 ## Behaviors

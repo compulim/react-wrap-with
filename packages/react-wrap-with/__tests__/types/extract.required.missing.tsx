@@ -12,5 +12,5 @@ const Component = wrapWith(Header, { className: Extract } satisfies HowOf<typeof
 
 // "className" prop is mapped and is required.
 
-// @ts-expect-error Property 'className' is missing in type '{}' but required in type 'Pick<{ className: string; } & { children?: ReactNode; }, "className">'.
+// @ts-expect-error Property 'className' is missing in type '{}' but required in type '{ className: string; ref?: Ref<unknown> | undefined; key?: Key | null | undefined; }'.
 <Component />;

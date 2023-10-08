@@ -1,11 +1,9 @@
 import { Extract, Spy, wrapWith } from 'react-wrap-with';
-import React, { type CSSProperties, type PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   containerClassName?: string;
-  containerStyle?: CSSProperties;
   doppelgangerClassName?: string;
-  doppelgangerStyle?: CSSProperties;
   prefix?: string;
   suffix?: string;
   value?: string;

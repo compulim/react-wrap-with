@@ -26,14 +26,6 @@
         "default": "./lib/commonjs/Extract.js"
       }
     },
-    "./HowOf": {
-      "import": {
-        "types": "./lib/esmodules-types/HowOf.d.ts"
-      },
-      "require": {
-        "types": "./lib/commonjs-types/HowOf.d.ts"
-      }
-    },
     "./Spy": {
       "import": {
         "types": "./lib/esmodules-types/Spy.d.ts",

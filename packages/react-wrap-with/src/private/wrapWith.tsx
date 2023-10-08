@@ -6,7 +6,7 @@ import pickAndOmit from './util/pickAndOmit';
 import Spy from '../Spy';
 
 import type { ComponentType, PropsWithChildren, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
-import type { EmptyObject } from 'type-fest';
+import type { ConditionalKeys, Simplify } from 'type-fest';
 import type { HowOf } from '../HowOf';
 import type { PropsOf } from '../PropsOf';
 import type { RefOf } from '../RefOf';
@@ -15,57 +15,38 @@ import type { RefOf } from '../RefOf';
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropsKey extends keyof PropsOf<ContainerComponentType>,
-  SpyPropsKey extends keyof PropsOf<ContainerComponentType>,
-  const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropsKey, SpyPropsKey> = HowOf<
-    ContainerComponentType,
-    ExtractPropsKey,
-    SpyPropsKey
-  >
+  const How extends HowOf<ContainerComponentType>
 >(
   containerComponent: ContainerComponentType,
   how: How
 ): <
-  ContentProps extends Pick<
-    PropsOf<ContainerComponentType>,
-    keyof { [K in keyof How as How[K] extends typeof Spy ? K : never]: K }
-  >,
+  ContentProps extends Pick<PropsOf<ContainerComponentType>, ConditionalKeys<How, typeof Spy>>,
   Ref extends RefOf<(typeof how)['ref'] extends typeof Extract ? PropsOf<ContainerComponentType> : ContentProps>
 >(
   contentComponent: ComponentType<ContentProps>
 ) => ComponentType<
-  PropsWithoutRef<
-    PropsOf<typeof contentComponent> &
-      Pick<
-        PropsOf<ContainerComponentType>,
-        keyof {
-          [K in keyof How as How[K] extends typeof Extract ? K : never]: How[K];
-        }
-      >
-  > &
-    RefAttributes<Ref>
+  Simplify<
+    PropsWithoutRef<
+      PropsOf<typeof contentComponent> & Pick<PropsOf<ContainerComponentType>, ConditionalKeys<How, typeof Extract>>
+    > &
+      RefAttributes<Ref>
+  >
 >;
 
 // If <Container> need no props other than children, initialProps is optional.
 export default function wrapWith<ContainerComponentType extends ComponentType<{ children?: ReactNode | undefined }>>(
   containerComponent: ContainerComponentType,
-  how?: EmptyObject | undefined
+  how?: undefined
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): <ContentComponentType extends ComponentType<any>, Ref = RefOf<PropsOf<ContentComponentType>>>(
   contentComponent: ContentComponentType
-) => ComponentType<PropsWithoutRef<PropsOf<typeof contentComponent>> & RefAttributes<Ref>>;
+) => ComponentType<Simplify<PropsWithoutRef<PropsOf<typeof contentComponent>> & RefAttributes<Ref>>>;
 
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropsKey extends keyof PropsOf<ContainerComponentType>,
-  SpyPropsKey extends keyof PropsOf<ContainerComponentType>,
-  const How extends HowOf<ContainerComponentType, ExtractPropsKey, SpyPropsKey> = HowOf<
-    ContainerComponentType,
-    ExtractPropsKey,
-    SpyPropsKey
-  >
->(containerComponent: ContainerComponentType, how: How) {
+  How extends HowOf<ContainerComponentType>
+>(containerComponent: ContainerComponentType, how?: How | undefined) {
   type ContainerProps = PropsOf<ContainerComponentType>;
 
   type ExtractProps = { [K in keyof How as How[K] extends typeof Extract ? K : never]: ContainerProps[K] };
@@ -84,10 +65,10 @@ export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function wrap<
     ContentProps extends SpyProps,
-    Ref extends RefOf<(typeof how)['ref'] extends typeof Extract ? ContainerProps : ContentProps>
+    Ref extends RefOf<Exclude<typeof how, undefined>['ref'] extends typeof Extract ? ContainerProps : ContentProps>
   >(
     contentComponent: ComponentType<ContentProps>
-  ): ComponentType<PropsWithoutRef<PropsOf<typeof contentComponent> & ExtractProps> & RefAttributes<Ref>> {
+  ): ComponentType<Simplify<PropsWithoutRef<PropsOf<typeof contentComponent> & ExtractProps> & RefAttributes<Ref>>> {
     const WithContainer = forwardRef<Ref, ExtractProps & ContentProps>((props, ref) => {
       const [extractedProps, contentProps] = pickAndOmit<ExtractProps, ContentProps>(props, extractPropsKeys);
       const spyProps = pick<ContentProps, keyof PropsOf<typeof contentComponent>>(props, spyPropsKeys);
@@ -106,6 +87,9 @@ export default function wrapWith<
       (contentComponent || {}).displayName || 'Component'
     })`;
 
-    return WithContainer;
+    // Simplify<> don't play nice, we need to force cast here.
+    return WithContainer as unknown as ComponentType<
+      Simplify<PropsWithoutRef<PropsOf<typeof contentComponent> & ExtractProps> & RefAttributes<Ref>>
+    >;
   };
 }
