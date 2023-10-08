@@ -15,13 +15,7 @@ import type { RefOf } from '../RefOf';
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropsKey extends keyof PropsOf<ContainerComponentType>,
-  SpyPropsKey extends keyof PropsOf<ContainerComponentType>,
-  const How extends HowOf<PropsOf<ContainerComponentType>, ExtractPropsKey, SpyPropsKey> = HowOf<
-    ContainerComponentType,
-    ExtractPropsKey,
-    SpyPropsKey
-  >
+  const How extends HowOf<ContainerComponentType> = HowOf<ContainerComponentType>
 >(
   containerComponent: ContainerComponentType,
   how: How
@@ -58,13 +52,7 @@ export default function wrapWith<ContainerComponentType extends ComponentType<{ 
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  ExtractPropsKey extends keyof PropsOf<ContainerComponentType>,
-  SpyPropsKey extends keyof PropsOf<ContainerComponentType>,
-  const How extends HowOf<ContainerComponentType, ExtractPropsKey, SpyPropsKey> = HowOf<
-    ContainerComponentType,
-    ExtractPropsKey,
-    SpyPropsKey
-  >
+  const How extends HowOf<ContainerComponentType> = HowOf<ContainerComponentType>
 >(containerComponent: ContainerComponentType, how: How) {
   type ContainerProps = PropsOf<ContainerComponentType>;
 
