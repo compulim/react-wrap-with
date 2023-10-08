@@ -12,10 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extract props signature changed:
    - Was: `wrapWith(Container, {}, 'effect')`
    - Now: `wrapWith(Container, { effect: Extract })`
+- Initial props is removed and replaced by `withProps` HOC:
+   - Was: `wrapWith(Container, { effect: 'blink', emphasis: Spy })`
+   - Now: `wrapWith(withProps(Container, { effect: 'blink' }), { emphasis: Spy })`
 
 ### Added
 
 - Added option to spy props of content component and pass it to container component, by [@compulim](https://github.com/compulim), in PR [#30](https://github.com/compulim/react-wrap-with/pull/30), PR [#31](https://github.com/compulim/react-wrap-with/pull/31) and PR [#34](https://github.com/compulim/react-wrap-with/pull/34)
+- Added `withProps` higher-order component to replace initial props, by [@compulim](https://github.com/compulim), in PR [#35](https://github.com/compulim/react-wrap-with/pull/35)
 
 ### Fixed
 
