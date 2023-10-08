@@ -123,6 +123,7 @@
     "react": ">=16.9.0"
   },
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.22.15"
+    "@babel/runtime-corejs3": "^7.22.15",
+    "type-fest": "^4.4.0"
   }
 }

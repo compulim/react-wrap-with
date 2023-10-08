@@ -4,11 +4,11 @@
 import { render, RenderResult } from '@testing-library/react';
 import React, { Component, type ComponentType } from 'react';
 
-import { Extract, type HowOf, wrapWith } from '../../src/index';
-import EffectClass from './__setup__/Effect.class';
-import FunctionalEffect from './__setup__/Effect.functional';
+import { Extract, type HowOf, Spy, wrapWith } from '../../src/index';
+import EffectClass from '../__setup__/Effect.class';
+import FunctionalEffect from '../__setup__/Effect.functional';
 
-import type { EffectProps } from './__setup__/Effect.props';
+import type { EffectProps } from '../__setup__/Effect.props';
 
 class AlohaClass extends Component {
   render() {
@@ -30,7 +30,7 @@ describe.each([
   let result: RenderResult;
 
   beforeEach(() => {
-    BlinkingAloha = wrapWith(Effect, { effect: Extract } satisfies HowOf<typeof Effect>)(Aloha);
+    BlinkingAloha = wrapWith(Effect, { effect: Extract, emphasis: Spy } satisfies HowOf<typeof Effect>)(Aloha);
 
     result = render(<BlinkingAloha effect="blink" />);
   });
