@@ -73,11 +73,6 @@ export default function wrapWith<
   >
 >(ContainerComponent: ContainerComponentType | false | null | undefined, how: How) {
   type ContainerProps = PropsOf<ContainerComponentType>;
-  // type ExtractPropsKeys = keyof { [K in keyof How as How[K] extends typeof Extract ? K : never]: K };
-  // type SpyPropsKeys = keyof { [K in keyof How as How[K] extends typeof Spy ? K : never]: K };
-
-  // type ExtractProps = Pick<ContainerProps, ExtractPropsKeys>;
-  // type SpyProps = Pick<ContainerProps, SpyPropsKeys>;
 
   type ExtractProps = { [K in keyof How as How[K] extends typeof Extract ? K : never]: ContainerProps[K] };
   type ExtractPropsKeys = keyof ExtractProps;
