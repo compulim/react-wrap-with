@@ -8,9 +8,7 @@ export type HowOf<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends ComponentType<any>
 > = {
-  [K in keyof Required<Omit<PropsOf<T>, 'key' | 'ref'>> as K extends 'children' ? never : K]:
-    | typeof Extract
-    | typeof Spy;
+  [K in keyof Required<Omit<PropsOf<T>, 'children' | 'key' | 'ref'>>]: typeof Extract | typeof Spy;
 } & {
   children?: never;
   key?: never;
