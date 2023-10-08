@@ -52,8 +52,8 @@ export default function wrapWith<ContainerComponentType extends ComponentType<{ 
 export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ContainerComponentType extends ComponentType<PropsWithChildren<any>>,
-  const How extends HowOf<ContainerComponentType> = HowOf<ContainerComponentType>
->(containerComponent: ContainerComponentType, how: How) {
+  How extends HowOf<ContainerComponentType> = HowOf<ContainerComponentType>
+>(containerComponent: ContainerComponentType, how?: How | undefined) {
   type ContainerProps = PropsOf<ContainerComponentType>;
 
   type ExtractProps = { [K in keyof How as How[K] extends typeof Extract ? K : never]: ContainerProps[K] };
@@ -72,7 +72,7 @@ export default function wrapWith<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function wrap<
     ContentProps extends SpyProps,
-    Ref extends RefOf<(typeof how)['ref'] extends typeof Extract ? ContainerProps : ContentProps>
+    Ref extends RefOf<Exclude<typeof how, undefined>['ref'] extends typeof Extract ? ContainerProps : ContentProps>
   >(
     contentComponent: ComponentType<ContentProps>
   ): ComponentType<PropsWithoutRef<PropsOf<typeof contentComponent> & ExtractProps> & RefAttributes<Ref>> {
