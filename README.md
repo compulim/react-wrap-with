@@ -151,27 +151,6 @@ const Button = forwardRef<HTMLButtonElement, Props>(({ text }, ref) => <button r
 Button.displayName = 'Button';
 ```
 
-### TypeScript helpers
-
-#### Define generic type explicitly
-
-To clearly define types, generic types can be set explicitly.
-
-```tsx
-import { Extract, Spy, wrapWith } from 'react-wrap-with';
-
-type Props = PropsWithChildren<{
-  effect: 'blink' | 'marquee';
-  value: string;
-}>;
-
-const Effect = ({ children, effect, value }: Props) => (
-  <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>
-);
-
-const withEffect = wrapWith<typeof Effect, 'effect', 'value'>(Effect, { effect: Extract, value: Spy });
-```
-
 ## Behaviors
 
 ### TypeScript: All containers must have props of `children`
