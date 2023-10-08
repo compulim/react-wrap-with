@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial props is removed and replaced by `withProps` HOC:
    - Was: `wrapWith(Container, { effect: 'blink', emphasis: Spy })`
    - Now: `wrapWith(withProps(Container, { effect: 'blink' }), { emphasis: Spy })`
+- No longer accept falsy component type, if falsy is expected, coalesce to `<Fragment>` instead:
+   - Was: `wrapWith(undefined)`
+   - Now: `wrapWith(undefined || Fragment)`
 
 ### Added
 
@@ -24,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed portable type, by [@compulim](https://github.com/compulim), in PR [#34](https://github.com/compulim/react-wrap-with/pull/34)
+
+### Removed
+
+- Removed support of falsy component type, by [@compulim](https://github.com/compulim), in PR [#36](https://github.com/compulim/react-wrap-with/pull/36)
 
 ### Changed
 
