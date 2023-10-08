@@ -172,25 +172,6 @@ const Effect = ({ children, effect, value }: Props) => (
 const withEffect = wrapWith<typeof Effect, 'effect', 'value'>(Effect, { effect: Extract, value: Spy });
 ```
 
-#### Using `satisfies`
-
-You can use `satisfies` operator to type the second argument (`how`).
-
-```tsx
-import { Extract, Spy, wrapWith, type HowOf } from 'react-wrap-with';
-
-type Props = PropsWithChildren<{
-  className: 'blink' | 'marquee';
-  value: string;
-}>;
-
-const Effect = ({ children, className, value }: Props) => (
-  <span className={classNames(`effect effect--${effect}`, { 'effect--long': value.length > 10 })}>{children}</span>
-);
-
-const withEffect = wrapWith(Effect, { effect: Extract, value: Spy } satisfies HowOf<typeof Effect>);
-```
-
 ## Behaviors
 
 ### TypeScript: All containers must have props of `children`

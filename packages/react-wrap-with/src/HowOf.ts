@@ -10,7 +10,7 @@ export type HowOf<
   T extends ComponentType<any>
 > = Simplify<
   {
-    [K in keyof Required<Omit<PropsOf<T>, 'children' | 'key' | 'ref'>>]: typeof Extract | typeof Spy;
+    [K in keyof Omit<Required<PropsOf<T>>, 'children' | 'key' | 'ref'>]: typeof Extract | typeof Spy;
   } & {
     children?: never;
     key?: never;
