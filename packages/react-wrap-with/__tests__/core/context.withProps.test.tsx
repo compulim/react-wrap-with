@@ -41,7 +41,7 @@ AlohaClass.contextType = ThemeContext;
 describe.each([
   ['functional component', FunctionalAloha],
   ['component class', AlohaClass]
-])('with a %s', (_, Aloha: ComponentType<Props> | false) => {
+])('with a %s', (_, Aloha: ComponentType<Props>) => {
   let BlueThemedAloha: ComponentType<Props>;
   let result: RenderResult;
 

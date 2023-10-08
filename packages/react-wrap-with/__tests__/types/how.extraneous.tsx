@@ -9,6 +9,6 @@ const Header = ({ children, className }: PropsWithChildren<{ className: string }
 );
 
 ({
-  // @ts-expect-error Object literal may only specify known properties, and 'value' does not exist in type 'HowOf<({ children, className }: PropsWithChildren<{ className: string; }>) => Element, never, "className">'.
+  // @ts-expect-error Type '{ value: symbol; }' does not satisfy the expected type 'HowOf<({ children, className }: PropsWithChildren<{ className: string; }>) => Element, never, "className">'.
   value: Extract
 }) satisfies HowOf<typeof Header, never, 'className'>;

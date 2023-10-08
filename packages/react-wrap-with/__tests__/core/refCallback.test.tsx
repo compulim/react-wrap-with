@@ -15,18 +15,10 @@ import type { HelloProps } from '../__setup__/Hello.props';
 
 describe.each([
   ['functional component', FunctionalEffect, FunctionalHello],
-  ['component class', EffectClass, HelloClass],
-  ['functional component without container', false as const, FunctionalHello],
-  ['component class without container', false as const, HelloClass],
-  ['functional component without content', FunctionalEffect, false as const],
-  ['component class without content', EffectClass, false as const]
+  ['component class', EffectClass, HelloClass]
 ])(
   'with a %s',
-  (
-    _,
-    Effect: ComponentType<EffectProps> | false,
-    Hello: ComponentType<HelloProps & RefAttributes<HTMLHeadingElement>> | false
-  ) => {
+  (_, Effect: ComponentType<EffectProps>, Hello: ComponentType<HelloProps & RefAttributes<HTMLHeadingElement>>) => {
     let BlinkingHello: ComponentType<
       { effect: 'blink'; emphasis?: boolean; text: string } & RefAttributes<HTMLHeadingElement>
     >;

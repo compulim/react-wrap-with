@@ -12,9 +12,8 @@ import type { EffectProps } from '../__setup__/Effect.props';
 
 describe.each([
   ['with a functional component', FunctionalEffect, 'wrapWith(Effect)(Hello)'],
-  ['with a component class', EffectClass, 'wrapWith(Effect)(Hello)'],
-  ['without container', false as const, 'wrapWith(never)(Hello)']
-])('%s', (_, Effect: ComponentType<EffectProps> | false, displayName) => {
+  ['with a component class', EffectClass, 'wrapWith(Effect)(Hello)']
+])('%s', (_, Effect: ComponentType<EffectProps>, displayName) => {
   const wrappedComponent = wrapWith(Effect, { effect: Extract, emphasis: Spy } satisfies HowOf<typeof Effect>)(
     FunctionalHello
   );

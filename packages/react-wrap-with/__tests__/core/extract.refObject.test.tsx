@@ -15,12 +15,8 @@ import type { HelloProps } from '../__setup__/Hello.props';
 
 describe.each([
   ['functional component', FunctionalEffect, FunctionalHello],
-  ['component class', EffectClass, HelloClass],
-  ['functional component without container', false as const, FunctionalHello],
-  ['component class without container', false as const, HelloClass],
-  ['functional component without content', FunctionalEffect, false as const],
-  ['component class without content', EffectClass, false as const]
-])('with a %s', (_, Effect: ComponentType<EffectProps> | false, Hello: ComponentType<HelloProps> | false) => {
+  ['component class', EffectClass, HelloClass]
+])('with a %s', (_, Effect: ComponentType<EffectProps>, Hello: ComponentType<HelloProps>) => {
   let ref: Ref<HTMLSpanElement>;
 
   beforeEach(() => {

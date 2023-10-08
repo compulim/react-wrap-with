@@ -31,10 +31,8 @@ AlohaClass.contextType = Context;
 
 describe.each([
   ['functional component', FunctionalAloha, 'wrapWith(Component)(Aloha)'],
-  ['component class', AlohaClass, 'wrapWith(Component)(Aloha)'],
-  ['functional component without content', false as const, 'wrapWith(Component)(Component)'],
-  ['component class without content', false as const, 'wrapWith(Component)(Component)']
-])('with a %s', (_, Aloha: ComponentType<Props> | false, displayName) => {
+  ['component class', AlohaClass, 'wrapWith(Component)(Aloha)']
+])('with a %s', (_, Aloha: ComponentType<Props>, displayName) => {
   let BlinkingAloha: ComponentType<{ effect?: string; value: string }>;
   let result: RenderResult;
 
