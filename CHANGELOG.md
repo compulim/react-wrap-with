@@ -7,17 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Breaking changes
+### Removed
 
-- Extract props signature changed:
-   - Was: `wrapWith(Container, {}, 'effect')`
-   - Now: `wrapWith(Container, { effect: Extract })`
-- Initial props is removed and replaced by `withProps` HOC:
-   - Was: `wrapWith(Container, { effect: 'blink', emphasis: Spy })`
-   - Now: `wrapWith(withProps(Container, { effect: 'blink' }), { emphasis: Spy })`
-- No longer accept falsy component type, if falsy is expected, coalesce to `<Fragment>` instead:
-   - Was: `wrapWith(undefined)`
-   - Now: `wrapWith(undefined || Fragment)`
+- Extract props signature changed, by [@compulim](https://github.com/compulim), in PR [#30](https://github.com/compulim/react-wrap-with/pull/30)
+  - Was: `wrapWith(Container, {}, 'effect')`
+  - Now: `wrapWith(Container, { effect: Extract })`
+- Initial props is removed and replaced by `withProps` HOC, by [@compulim](https://github.com/compulim), in PR [#35](https://github.com/compulim/react-wrap-with/pull/35)
+  - Was: `wrapWith(Container, { effect: 'blink', emphasis: Spy })`
+  - Now: `wrapWith(withProps(Container, { effect: 'blink' }), { emphasis: Spy })`
+- No longer accept falsy component type, if falsy is expected, coalesce to `<Fragment>` instead, by [@compulim](https://github.com/compulim), in PR [#36](https://github.com/compulim/react-wrap-with/pull/36)
+  - Was: `wrapWith(undefined)`
+  - Now: `wrapWith(undefined || Fragment)`
 
 ### Added
 
@@ -28,10 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed portable type, by [@compulim](https://github.com/compulim), in PR [#34](https://github.com/compulim/react-wrap-with/pull/34)
 
-### Removed
-
-- Removed support of falsy component type, by [@compulim](https://github.com/compulim), in PR [#36](https://github.com/compulim/react-wrap-with/pull/36)
-
 ### Changed
 
 - Added type-checking for test, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
@@ -39,33 +35,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cleaned up types, by [@compulim](https://github.com/compulim), in PR [#37](https://github.com/compulim/react-wrap-with/pull/37)
 - Converged type outputs folder to `/lib/commonjs/` and `/lib/esmodules/`, by [@compulim](https://github.com/compulim), in PR [#38](https://github.com/compulim/react-wrap-with/pull/38)
 - Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20), PR [#22](https://github.com/compulim/react-wrap-with/pull/22), and PR [#23](https://github.com/compulim/react-wrap-with/pull/23)
-   - Production dependencies
-      - [`@babel/runtime-corejs3@7.22.15`](https://npmjs.com/package/@babel/runtime-corejs3)
-   - Development dependencies
-      - [`@babel/cli@7.22.15`](https://npmjs.com/package/@babel/cli)
-      - [`@babel/core@7.22.17`](https://npmjs.com/package/@babel/core)
-      - [`@babel/plugin-transform-runtime@7.22.15`](https://npmjs.com/package/@babel/plugin-transform-runtime)
-      - [`@babel/preset-env@7.22.15`](https://npmjs.com/package/@babel/preset-env)
-      - [`@babel/preset-react@7.22.15`](https://npmjs.com/package/@babel/preset-react)
-      - [`@babel/preset-typescript@7.22.15`](https://npmjs.com/package/@babel/preset-typescript)
-      - [`@testing-library/react@14.0.0`](https://npmjs.com/package/@testing-library/react)
-      - [`@types/jest@29.5.4`](https://npmjs.com/package/@types/jest)
-      - [`@types/node@20.6.0`](https://npmjs.com/package/@types/node)
-      - [`@types/react-dom@18.2.7`](https://npmjs.com/package/@types/react-dom)
-      - [`@types/react@18.2.21`](https://npmjs.com/package/@types/react)
-      - [`@typescript-eslint/eslint-plugin@6.6.0`](https://npmjs.com/package/@typescript-eslint/eslint-plugin)
-      - [`@typescript-eslint/parser@6.6.0`](https://npmjs.com/package/@typescript-eslint/parser)
-      - [`esbuild@0.19.2`](https://npmjs.com/package/esbuild)
-      - [`eslint-plugin-prettier@5.0.0`](https://npmjs.com/package/eslint-plugin-prettier)
-      - [`eslint-plugin-react@7.33.2`](https://npmjs.com/package/eslint-plugin-react)
-      - [`eslint@8.49.0`](https://npmjs.com/package/eslint)
-      - [`jest-environment-jsdom@29.6.4`](https://npmjs.com/package/jest-environment-jsdom)
-      - [`jest@29.6.4`](https://npmjs.com/package/jest)
-      - [`prettier@3.0.3`](https://npmjs.com/package/prettier)
-      - [`react-dom@18.2.0`](https://npmjs.com/package/react-dom)
-      - [`react-test-renderer@18.2.0`](https://npmjs.com/package/react-test-renderer)
-      - [`react@18.2.0`](https://npmjs.com/package/react)
-      - [`typescript@5.2.2`](https://npmjs.com/package/typescript)
+  - Production dependencies
+    - [`@babel/runtime-corejs3@7.22.15`](https://npmjs.com/package/@babel/runtime-corejs3)
+  - Development dependencies
+    - [`@babel/cli@7.22.15`](https://npmjs.com/package/@babel/cli)
+    - [`@babel/core@7.22.17`](https://npmjs.com/package/@babel/core)
+    - [`@babel/plugin-transform-runtime@7.22.15`](https://npmjs.com/package/@babel/plugin-transform-runtime)
+    - [`@babel/preset-env@7.22.15`](https://npmjs.com/package/@babel/preset-env)
+    - [`@babel/preset-react@7.22.15`](https://npmjs.com/package/@babel/preset-react)
+    - [`@babel/preset-typescript@7.22.15`](https://npmjs.com/package/@babel/preset-typescript)
+    - [`@testing-library/react@14.0.0`](https://npmjs.com/package/@testing-library/react)
+    - [`@types/jest@29.5.4`](https://npmjs.com/package/@types/jest)
+    - [`@types/node@20.6.0`](https://npmjs.com/package/@types/node)
+    - [`@types/react-dom@18.2.7`](https://npmjs.com/package/@types/react-dom)
+    - [`@types/react@18.2.21`](https://npmjs.com/package/@types/react)
+    - [`@typescript-eslint/eslint-plugin@6.6.0`](https://npmjs.com/package/@typescript-eslint/eslint-plugin)
+    - [`@typescript-eslint/parser@6.6.0`](https://npmjs.com/package/@typescript-eslint/parser)
+    - [`esbuild@0.19.2`](https://npmjs.com/package/esbuild)
+    - [`eslint-plugin-prettier@5.0.0`](https://npmjs.com/package/eslint-plugin-prettier)
+    - [`eslint-plugin-react@7.33.2`](https://npmjs.com/package/eslint-plugin-react)
+    - [`eslint@8.49.0`](https://npmjs.com/package/eslint)
+    - [`jest-environment-jsdom@29.6.4`](https://npmjs.com/package/jest-environment-jsdom)
+    - [`jest@29.6.4`](https://npmjs.com/package/jest)
+    - [`prettier@3.0.3`](https://npmjs.com/package/prettier)
+    - [`react-dom@18.2.0`](https://npmjs.com/package/react-dom)
+    - [`react-test-renderer@18.2.0`](https://npmjs.com/package/react-test-renderer)
+    - [`react@18.2.0`](https://npmjs.com/package/react)
+    - [`typescript@5.2.2`](https://npmjs.com/package/typescript)
 
 ### Fixed
 
@@ -88,24 +84,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Terminology changed from "wrapper"/"wrapped" to "container"/"content", by [@compulim](https://github.com/compulim), in PR [#10](https://github.com/compulim/react-wrap-with/pull/10)
 - Will no longer publish `*.spec.*` and `*.test.*` to NPM, by [@compulim](https://github.com/compulim), in PR [#6](https://github.com/compulim/react-wrap-with/pull/6) and PR [#7](https://github.com/compulim/react-wrap-with/pull/7)
 - Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#3](https://github.com/compulim/react-wrap-with/pull/3)
-   -  Production dependencies
-      -  [`@babel/runtime-corejs3@7.21.0`](https://npmjs.com/package/@babel/runtime-corejs3)
-   -  Development dependencies
-      -  [`@babel/cli@7.21.0`](https://npmjs.com/package/@babel/cli)
-      -  [`@babel/core@7.21.0`](https://npmjs.com/package/@babel/core)
-      -  [`@babel/plugin-transform-runtime@7.21.0`](https://npmjs.com/package/@babel/plugin-transform-runtime)
-      -  [`@babel/preset-typescript@7.21.0`](https://npmjs.com/package/@babel/preset-typescript)
-      -  [`@types/node@18.14.0`](https://npmjs.com/package/@types/node)
-      -  [`@types/react@17.0.53`](https://npmjs.com/package/@types/react)
-      -  [`@typescript-eslint/eslint-plugin@5.53.0`](https://npmjs.com/package/@typescript-eslint/eslint-plugin)
-      -  [`@typescript-eslint/parser@5.53.0`](https://npmjs.com/package/@typescript-eslint/parser)
-      -  [`esbuild@0.17.10`](https://npmjs.com/package/esbuild)
-      -  [`eslint-plugin-react@7.32.2`](https://npmjs.com/package/eslint-plugin-react)
-      -  [`eslint@8.34.0`](https://npmjs.com/package/eslint)
-      -  [`jest-environment-jsdom@29.4.3`](https://npmjs.com/package/jest-environment-jsdom)
-      -  [`jest@29.4.3`](https://npmjs.com/package/jest)
-      -  [`prettier@2.8.4`](https://npmjs.com/package/prettier)
-      -  [`typescript@4.9.5`](https://npmjs.com/package/typescript)
+  - Production dependencies
+    - [`@babel/runtime-corejs3@7.21.0`](https://npmjs.com/package/@babel/runtime-corejs3)
+  - Development dependencies
+    - [`@babel/cli@7.21.0`](https://npmjs.com/package/@babel/cli)
+    - [`@babel/core@7.21.0`](https://npmjs.com/package/@babel/core)
+    - [`@babel/plugin-transform-runtime@7.21.0`](https://npmjs.com/package/@babel/plugin-transform-runtime)
+    - [`@babel/preset-typescript@7.21.0`](https://npmjs.com/package/@babel/preset-typescript)
+    - [`@types/node@18.14.0`](https://npmjs.com/package/@types/node)
+    - [`@types/react@17.0.53`](https://npmjs.com/package/@types/react)
+    - [`@typescript-eslint/eslint-plugin@5.53.0`](https://npmjs.com/package/@typescript-eslint/eslint-plugin)
+    - [`@typescript-eslint/parser@5.53.0`](https://npmjs.com/package/@typescript-eslint/parser)
+    - [`esbuild@0.17.10`](https://npmjs.com/package/esbuild)
+    - [`eslint-plugin-react@7.32.2`](https://npmjs.com/package/eslint-plugin-react)
+    - [`eslint@8.34.0`](https://npmjs.com/package/eslint)
+    - [`jest-environment-jsdom@29.4.3`](https://npmjs.com/package/jest-environment-jsdom)
+    - [`jest@29.4.3`](https://npmjs.com/package/jest)
+    - [`prettier@2.8.4`](https://npmjs.com/package/prettier)
+    - [`typescript@4.9.5`](https://npmjs.com/package/typescript)
 
 ## [0.0.1] - 2023-02-12
 
