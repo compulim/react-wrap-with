@@ -6,6 +6,6 @@
     "jsx": "react",
     "noEmit": false
   },
-  "exclude": ["**/*.spec.*", "**/*.test.*", "__test__/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.test.*", "__tests__/**/*"],
   "extends": "@tsconfig/strictest/tsconfig.json"
 }
