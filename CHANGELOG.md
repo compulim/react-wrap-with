@@ -1,35 +1,15 @@
 # Changelog
-
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Removed
-
-- Extract props signature changed, by [@compulim](https://github.com/compulim), in PR [#30](https://github.com/compulim/react-wrap-with/pull/30)
-  - Was: `wrapWith(Container, {}, 'effect')`
-  - Now: `wrapWith(Container, { effect: Extract })`
-- Initial props is removed and replaced by `withProps` HOC, by [@compulim](https://github.com/compulim), in PR [#35](https://github.com/compulim/react-wrap-with/pull/35)
-  - Was: `wrapWith(Container, { effect: 'blink', emphasis: Spy })`
-  - Now: `wrapWith(withProps(Container, { effect: 'blink' }), { emphasis: Spy })`
-- No longer accept falsy component type, if falsy is expected, coalesce to `<Fragment>` instead, by [@compulim](https://github.com/compulim), in PR [#36](https://github.com/compulim/react-wrap-with/pull/36)
-  - Was: `wrapWith(undefined)`
-  - Now: `wrapWith(undefined || Fragment)`
-
+## [0.0.3] - 2023-10-09
 ### Added
-
 - Added option to spy props of content component and pass it to container component, by [@compulim](https://github.com/compulim), in PR [#30](https://github.com/compulim/react-wrap-with/pull/30), PR [#31](https://github.com/compulim/react-wrap-with/pull/31) and PR [#34](https://github.com/compulim/react-wrap-with/pull/34)
 - Added `withProps` higher-order component to replace initial props, by [@compulim](https://github.com/compulim), in PR [#35](https://github.com/compulim/react-wrap-with/pull/35)
 
-### Fixed
-
-- Fixed portable type, by [@compulim](https://github.com/compulim), in PR [#34](https://github.com/compulim/react-wrap-with/pull/34)
-
 ### Changed
-
 - Added type-checking for test, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
 - Updated `tsconfig.json` to extend from [`@tsconfig/strictest`](https://npmjs.com/package/@tsconfig/strictest), by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
 - Cleaned up types, by [@compulim](https://github.com/compulim), in PR [#37](https://github.com/compulim/react-wrap-with/pull/37)
@@ -63,24 +43,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - [`react@18.2.0`](https://npmjs.com/package/react)
     - [`typescript@5.2.2`](https://npmjs.com/package/typescript)
 
-### Fixed
+### Removed
+- Extract props signature changed, by [@compulim](https://github.com/compulim), in PR [#30](https://github.com/compulim/react-wrap-with/pull/30)
+  - Was: `wrapWith(Container, {}, 'effect')`
+  - Now: `wrapWith(Container, { effect: Extract })`
+- Initial props is removed and replaced by `withProps` HOC, by [@compulim](https://github.com/compulim), in PR [#35](https://github.com/compulim/react-wrap-with/pull/35)
+  - Was: `wrapWith(Container, { effect: 'blink', emphasis: Spy })`
+  - Now: `wrapWith(withProps(Container, { effect: 'blink' }), { emphasis: Spy })`
+- No longer accept falsy component type, if falsy is expected, coalesce to `<Fragment>` instead, by [@compulim](https://github.com/compulim), in PR [#36](https://github.com/compulim/react-wrap-with/pull/36)
+  - Was: `wrapWith(undefined)`
+  - Now: `wrapWith(undefined || Fragment)`
 
+### Fixed
+- Fixed portable type, by [@compulim](https://github.com/compulim), in PR [#34](https://github.com/compulim/react-wrap-with/pull/34)
 - Updated `exports` field to workaround [TypeScript resolution bug](https://github.com/microsoft/TypeScript/issues/50762), by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
 
 ## [0.0.2] - 2023-03-21
-
 ### Added
-
 - Extracts props during render and pass to the wrapper component, by [@compulim](https://github.com/compulim), in PR [#4](https://github.com/compulim/react-wrap-with/pull/4) and [#5](https://github.com/compulim/react-wrap-with/pull/5)
 - Forwards ref to the inner component, by [@compulim](https://github.com/compulim), in PR [#8](https://github.com/compulim/react-wrap-with/pull/8)
 
-### Fixed
-
-- Fixes [#9](https://github.com/compulim/react-wrap-with/issues/9), props should be extracted even if container is falsy, by [@compulim](https://github.com/compulim), in PR [#11](https://github.com/compulim/react-wrap-with/pull/11)
-- Fixes [#12](https://github.com/compulim/react-wrap-with/issues/12), exports typings through conditional exports, by [@compulim](https://github.com/compulim), in PR [#13](https://github.com/compulim/react-wrap-with/pull/13)
-
 ### Changed
-
 - Terminology changed from "wrapper"/"wrapped" to "container"/"content", by [@compulim](https://github.com/compulim), in PR [#10](https://github.com/compulim/react-wrap-with/pull/10)
 - Will no longer publish `*.spec.*` and `*.test.*` to NPM, by [@compulim](https://github.com/compulim), in PR [#6](https://github.com/compulim/react-wrap-with/pull/6) and PR [#7](https://github.com/compulim/react-wrap-with/pull/7)
 - Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#3](https://github.com/compulim/react-wrap-with/pull/3)
@@ -103,8 +86,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - [`prettier@2.8.4`](https://npmjs.com/package/prettier)
     - [`typescript@4.9.5`](https://npmjs.com/package/typescript)
 
+### Fixed
+- Fixes [#9](https://github.com/compulim/react-wrap-with/issues/9), props should be extracted even if container is falsy, by [@compulim](https://github.com/compulim), in PR [#11](https://github.com/compulim/react-wrap-with/pull/11)
+- Fixes [#12](https://github.com/compulim/react-wrap-with/issues/12), exports typings through conditional exports, by [@compulim](https://github.com/compulim), in PR [#13](https://github.com/compulim/react-wrap-with/pull/13)
+
 ## [0.0.1] - 2023-02-12
-
 ### Added
-
 - First public release
+
+[0.0.3]: https://github.com/compulim/react-wrap-with/compare/v0.0.2...v0.0.3
+[0.0.2]: https://github.com/compulim/react-wrap-with/compare/v0.0.1...v0.0.2
+[0.0.1]: https://github.com/compulim/react-wrap-with/releases/tag/v0.0.1
