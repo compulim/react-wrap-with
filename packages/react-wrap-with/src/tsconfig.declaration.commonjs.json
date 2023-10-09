@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "declarationDir": "../lib/commonjs-types/",
+    "declarationDir": "../lib/commonjs/",
     "module": "CommonJS",
     "moduleResolution": "Node10"
   },
