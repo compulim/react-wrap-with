@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Changed
+- Exported some types from `type-fest` to workaround [a TypeScript bug with monorepo](https://github.com/microsoft/TypeScript/issues/47663), by [@compulim](https://github.com/compulim), in PR [#42](https://github.com/compulim/react-wrap-with/pull/42)
+
 ## [0.0.3] - 2023-10-09
 ### Added
 - Added option to spy props of content component and pass it to container component, by [@compulim](https://github.com/compulim), in PR [#30](https://github.com/compulim/react-wrap-with/pull/30), PR [#31](https://github.com/compulim/react-wrap-with/pull/31) and PR [#34](https://github.com/compulim/react-wrap-with/pull/34)
