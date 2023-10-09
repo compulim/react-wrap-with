@@ -1,5 +1,4 @@
 import { Extract, wrapWith } from 'react-wrap-with';
-import React from 'react';
 
 import Effect from './Effect';
 import Hello from './Hello';

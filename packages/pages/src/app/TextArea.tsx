@@ -1,5 +1,5 @@
+import { type FormEventHandler, useCallback } from 'react';
 import { useRefFrom } from 'use-ref-from';
-import React, { FormEventHandler, useCallback } from 'react';
 
 type Props = {
   className?: string;

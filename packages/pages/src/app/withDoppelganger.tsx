@@ -1,5 +1,5 @@
 import { Extract, Spy, wrapWith } from 'react-wrap-with';
-import React, { type PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   containerClassName?: string;
