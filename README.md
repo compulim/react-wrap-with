@@ -151,6 +151,38 @@ const Button = forwardRef<HTMLButtonElement, Props>(({ text }, ref) => <button r
 Button.displayName = 'Button';
 ```
 
+## Breaking changes
+
+### 0.0.3 - Extract props signature changed
+
+> Related to [pull request #30](https://github.com/compulim/react-wrap-with/pull/30).
+
+```diff
+- wrapWith(Container, {}, 'effect')
++ wrapWith(Container, { effect: Extract })
+```
+
+### 0.0.3 - Initial props is removed and replaced by `withProps` HOC
+
+> Related to [pull request #35](https://github.com/compulim/react-wrap-with/pull/35).
+
+```diff
+- wrapWith(Container, { effect: 'blink', emphasis: Spy })
++ wrapWith(
+    withProps(Container, { effect: 'blink' }),
+    { emphasis: Spy }
+  )
+```
+
+### 0.0.3 - No longer accept falsy component type, if falsy is expected, coalesce to `<Fragment>` instead
+
+> Related to [pull request #36](https://github.com/compulim/react-wrap-with/pull/36).
+
+```diff
+- wrapWith(undefined)
++ wrapWith(undefined || Fragment)
+```
+
 ## Behaviors
 
 ### TypeScript: All containers must have props of `children`
