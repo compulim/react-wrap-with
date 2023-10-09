@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "declarationDir": "../lib/esmodules-types/",
+    "declarationDir": "../lib/esmodules/",
     "module": "ESNext",
     "moduleResolution": "Bundler"
   },

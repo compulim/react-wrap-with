@@ -35,8 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Added type-checking for test, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
-- Updates `tsconfig.json` to extend from [`@tsconfig/strictest`](https://npmjs.com/package/@tsconfig/strictest), by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
+- Updated `tsconfig.json` to extend from [`@tsconfig/strictest`](https://npmjs.com/package/@tsconfig/strictest), by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20)
 - Cleaned up types, by [@compulim](https://github.com/compulim), in PR [#37](https://github.com/compulim/react-wrap-with/pull/37)
+- Converged type outputs folder to `/lib/commonjs/` and `/lib/esmodules/`, by [@compulim](https://github.com/compulim), in PR [#38](https://github.com/compulim/react-wrap-with/pull/38)
 - Bump dependencies, by [@compulim](https://github.com/compulim), in PR [#20](https://github.com/compulim/react-wrap-with/pull/20), PR [#22](https://github.com/compulim/react-wrap-with/pull/22), and PR [#23](https://github.com/compulim/react-wrap-with/pull/23)
    - Production dependencies
       - [`@babel/runtime-corejs3@7.22.15`](https://npmjs.com/package/@babel/runtime-corejs3)

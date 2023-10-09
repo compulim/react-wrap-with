@@ -8,57 +8,57 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./lib/esmodules-types/index.d.ts",
+        "types": "./lib/esmodules/index.d.ts",
         "default": "./lib/esmodules/index.js"
       },
       "require": {
-        "types": "./lib/commonjs-types/index.d.ts",
+        "types": "./lib/commonjs/index.d.ts",
         "default": "./lib/commonjs/index.js"
       }
     },
     "./Extract": {
       "import": {
-        "types": "./lib/esmodules-types/Extract.d.ts",
+        "types": "./lib/esmodules/Extract.d.ts",
         "default": "./lib/esmodules/Extract.js"
       },
       "require": {
-        "types": "./lib/commonjs-types/Extract.d.ts",
+        "types": "./lib/commonjs/Extract.d.ts",
         "default": "./lib/commonjs/Extract.js"
       }
     },
     "./Spy": {
       "import": {
-        "types": "./lib/esmodules-types/Spy.d.ts",
+        "types": "./lib/esmodules/Spy.d.ts",
         "default": "./lib/esmodules/Spy.js"
       },
       "require": {
-        "types": "./lib/commonjs-types/Spy.d.ts",
+        "types": "./lib/commonjs/Spy.d.ts",
         "default": "./lib/commonjs/Spy.js"
       }
     },
     "./withProps": {
       "import": {
-        "types": "./lib/esmodules-types/withProps.d.ts",
+        "types": "./lib/esmodules/withProps.d.ts",
         "default": "./lib/esmodules/withProps.js"
       },
       "require": {
-        "types": "./lib/commonjs-types/withProps.d.ts",
+        "types": "./lib/commonjs/withProps.d.ts",
         "default": "./lib/commonjs/withProps.js"
       }
     },
     "./wrapWith": {
       "import": {
-        "types": "./lib/esmodules-types/wrapWith.d.ts",
+        "types": "./lib/esmodules/wrapWith.d.ts",
         "default": "./lib/esmodules/wrapWith.js"
       },
       "require": {
-        "types": "./lib/commonjs-types/wrapWith.d.ts",
+        "types": "./lib/commonjs/wrapWith.d.ts",
         "default": "./lib/commonjs/wrapWith.js"
       }
     }
   },
   "main": "./lib/commonjs/index.js",
-  "typings": "./lib/commonjs-types/index.d.ts",
+  "typings": "./lib/commonjs/index.d.ts",
   "scripts": {
     "build": "npm run build:babel:commonjs && npm run build:babel:esmodules && npm run build:typescript:commonjs && npm run build:typescript:esmodules",
     "build:babel:commonjs": "babel src --config-file ./babel.commonjs.config.json --extensions .ts,.tsx --out-dir ./lib/commonjs/",
