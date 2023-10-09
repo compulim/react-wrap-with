@@ -1,6 +1,6 @@
 import './AutoResizeTextArea.css';
 
-import React, { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import Extract from './Extract';
 import Simple from './Simple';

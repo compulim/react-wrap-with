@@ -78,7 +78,6 @@
     "precommit:typescript:production": "tsc --noEmit --project ./src/tsconfig.precommit.production.json",
     "precommit:typescript:test": "tsc --noEmit --project ./src/tsconfig.precommit.test.json",
     "prepack": "cp ../../CHANGELOG.md . && cp ../../LICENSE . && cp ../../README.md .",
-    "start": "esbuild --bundle --outfile=./public/main.js --servedir=./public --sourcemap ./scenarios/index.jsx",
     "test": "jest"
   },
   "repository": {
