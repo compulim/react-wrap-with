@@ -105,7 +105,7 @@
     "@babel/plugin-transform-runtime": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
     "@babel/preset-react": "^7.22.15",
-    "@babel/presetcript": "^7.22.15",
+    "@babel/preset-typescript": "^7.22.15",
     "@testing-library/react": "^14.0.0",
     "@tsconfig/recommended": "^1.0.2",
     "@tsconfig/strictest": "^2.0.2",
