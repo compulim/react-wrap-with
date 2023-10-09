@@ -4,7 +4,6 @@ import { create } from 'react-test-renderer';
 import Extract from 'react-wrap-with/Extract';
 import Spy from 'react-wrap-with/Spy';
 import wrapWith from 'react-wrap-with/wrapWith';
-import React from 'react';
 
 test('simple scenario', () => {
   const HelloWorld = ({ value }) => <span>{value}</span>;

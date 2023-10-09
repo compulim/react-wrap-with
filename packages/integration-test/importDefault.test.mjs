@@ -2,7 +2,6 @@
 
 import { create } from 'react-test-renderer';
 import { Extract, Spy, wrapWith } from 'react-wrap-with';
-import React from 'react';
 
 test('simple scenario', () => {
   const HelloWorld = ({ value }) => <span>{value}</span>;

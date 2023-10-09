@@ -4,7 +4,6 @@ const { create } = require('react-test-renderer');
 const { default: Extract } = require('react-wrap-with/Extract');
 const { default: Spy } = require('react-wrap-with/Spy');
 const { default: wrapWith } = require('react-wrap-with/wrapWith');
-const React = require('react');
 
 test('simple scenario', () => {
   const HelloWorld = ({ value }) => <span>{value}</span>;
