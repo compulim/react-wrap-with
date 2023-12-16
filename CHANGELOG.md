@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Changed
+- Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#50](https://github.com/compulim/react-wrap-with/pull/50)
+   - Production dependencies
+      - [`@babel/runtime-corejs3@7.23.6`](http://npmjs.com/package/@babel/runtime-corejs3)
+      - [`type-fest@4.8.3`](http://npmjs.com/package/type-fest)
+   - Development dependencies
+      - [`@typescript-eslint/eslint-plugin@6.14.0`](http://npmjs.com/package/@typescript-eslint/eslint-plugin)
+      - [`@typescript-eslint/parser@6.14.0`](http://npmjs.com/package/@typescript-eslint/parser)
+      - [`eslint@8.56.0`](http://npmjs.com/package/eslint)
+      - [`eslint-plugin-prettier@5.0.1`](http://npmjs.com/package/eslint-plugin-prettier)
+      - [`eslint-plugin-react@7.33.2`](http://npmjs.com/package/eslint-plugin-react)
+      - [`prettier@3.1.1`](http://npmjs.com/package/prettier)
+      - [`@babel/cli@7.23.4`](http://npmjs.com/package/@babel/cli)
+      - [`@babel/core@7.23.6`](http://npmjs.com/package/@babel/core)
+      - [`@babel/plugin-transform-runtime@7.23.6`](http://npmjs.com/package/@babel/plugin-transform-runtime)
+      - [`@babel/preset-env@7.23.6`](http://npmjs.com/package/@babel/preset-env)
+      - [`@babel/preset-react@7.23.3`](http://npmjs.com/package/@babel/preset-react)
+      - [`@babel/preset-typescript@7.23.3`](http://npmjs.com/package/@babel/preset-typescript)
+      - [`@testing-library/react@14.1.2`](http://npmjs.com/package/@testing-library/react)
+      - [`@types/jest@29.5.11`](http://npmjs.com/package/@types/jest)
+      - [`@types/node@20.10.4`](http://npmjs.com/package/@types/node)
+      - [`@types/react@18.2.45`](http://npmjs.com/package/@types/react)
+      - [`esbuild@0.19.9`](http://npmjs.com/package/esbuild)
+      - [`prettier@3.1.1`](http://npmjs.com/package/prettier)
+      - [`typescript@5.3.3`](http://npmjs.com/package/typescript)
+
+
 ## [0.0.4] - 2023-10-09
 ### Changed
 - Exported some types from `type-fest` to workaround [a TypeScript bug with monorepo](https://github.com/microsoft/TypeScript/issues/47663), by [@compulim](https://github.com/compulim), in PR [#42](https://github.com/compulim/react-wrap-with/pull/42)
