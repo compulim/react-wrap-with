@@ -8,5 +8,5 @@ const Header = ({ children }: { children?: ReactNode | undefined }) => <h1>{chil
 
 // "xyz" is not a prop of <Header> and cannot be extracted.
 
-// @ts-expect-error Type '{ className: symbol; }' does not satisfy the expected type '{ children?: undefined; key?: undefined; ref?: unique symbol | undefined; }'.
+// @ts-expect-error Object literal may only specify known properties, and 'className' does not exist in type '{ children?: undefined; key?: undefined; ref?: unique symbol | undefined; }'.
 ({ className: Extract }) satisfies HowOf<typeof Header>;
