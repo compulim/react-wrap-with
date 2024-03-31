@@ -1,6 +1,4 @@
-import { Fragment } from 'react';
-
-import type { ComponentType, PropsWithChildren } from 'react';
+import React, { Fragment, type ComponentType, type PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{ effect?: 'blink' }>;
 

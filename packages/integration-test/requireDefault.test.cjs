@@ -1,5 +1,6 @@
 /** @jest-environment jsdom */
 
+const React = require('react');
 const { create } = require('react-test-renderer');
 const { Extract, Spy, wrapWith } = require('react-wrap-with');
 
