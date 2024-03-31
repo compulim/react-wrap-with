@@ -8,7 +8,7 @@
           [
             "@babel/preset-react",
             {
-              "runtime": "automatic"
+              "runtime": "classic"
             }
           ]
         ]
@@ -21,7 +21,7 @@
           [
             "@babel/preset-react",
             {
-              "runtime": "automatic"
+              "runtime": "classic"
             }
           ],
           [

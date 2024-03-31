@@ -3,7 +3,7 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "noEmit": false
   },
   "exclude": ["**/*.spec.*", "**/*.test.*", "__tests__/**/*"],

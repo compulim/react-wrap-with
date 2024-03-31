@@ -7,7 +7,11 @@ on:
 
 jobs:
   call-workflow:
+    strategy:
+      matrix:
+        react-version: [current, 16, 17, 18]
     uses: compulim/workflows/.github/workflows/pull-request-validation.yml@main
     with:
       package-name: react-wrap-with
+      react-version: ${{ matrix.react-version }}
       skip-integration-test: false
