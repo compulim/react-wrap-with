@@ -8,10 +8,34 @@
     "bump:dev": "PACKAGES_TO_BUMP=$(cat package.json | jq -r '(.localPeerDependencies // {}) as $L | (.devDependencies // {}) | to_entries | map(select(.key as $K | $L | has($K) | not)) | map(.key + \"@latest\") | join(\" \")') && [ ! -z \"$PACKAGES_TO_BUMP\" ] && npm install $PACKAGES_TO_BUMP || true",
     "bump:prod": "PACKAGES_TO_BUMP=$(cat package.json | jq -r '(.localPeerDependencies // {}) as $L | (.dependencies // {}) | to_entries | map(select(.key as $K | $L | has($K) | not)) | map(.key + \"@latest\") | join(\" \")') && [ ! -z \"$PACKAGES_TO_BUMP\" ] && npm install $PACKAGES_TO_BUMP || true",
     "precommit": "eslint --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts ./",
+    "switch": "cat package.json | jq --arg SWITCH_NAME $SWITCH_NAME -r '(.[\"switch:\" + $SWITCH_NAME] // {}) as $TEMPLATE | .devDependencies += ($TEMPLATE.devDependencies // {}) | .dependencies += ($TEMPLATE.dependencies // {})' | tee ./package.json.tmp && mv ./package.json.tmp ./package.json",
     "test": "jest"
   },
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
+  "switch:react:16": {
+    "devDependencies": {
+      "@testing-library/react": "^12",
+      "@types/react": "^16",
+      "react": "16.9.0",
+      "react-test-renderer": "16.9.0"
+    }
+  },
+  "switch:react:17": {
+    "devDependencies": {
+      "@testing-library/react": "^12",
+      "@types/react": "^17",
+      "react": "17.0.0",
+      "react-test-renderer": "17.0.0"
+    }
+  },
+  "switch:react:18": {
+    "devDependencies": {
+      "@types/react": "^18",
+      "react": "18.0.0",
+      "react-test-renderer": "18.0.0"
+    }
+  },
   "localPeerDependencies": {
     "react-wrap-with": "^0.0.0-0"
   },

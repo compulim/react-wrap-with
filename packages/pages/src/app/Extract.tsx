@@ -1,3 +1,4 @@
+import React from 'react';
 import { Extract, wrapWith } from 'react-wrap-with';
 
 import Effect from './Effect';

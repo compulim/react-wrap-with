@@ -1,6 +1,7 @@
 // Notes: to test changes in this file, run "jest" with "--no-cache" argument.
 
 const run = ({ filename }) => {
+  const escapeStringRegexp = require('escape-string-regexp');
   const fs = require('fs/promises');
   const { extname } = require('path');
   const typeScript = require('typescript');
@@ -54,8 +55,17 @@ const run = ({ filename }) => {
 
           const expectedErrorLine = file.getFullText().split('\n')[line - 1];
           const expectedError = expectedErrorLine?.replace(/\s*\/\/\s+/u, '').trim();
+          let expectedErrors = [expectedError];
 
-          expect(message).toEqual(expect.stringContaining(expectedError));
+          try {
+            const parsed = JSON.parse(expectedError);
+
+            if (Array.isArray(expectedErrors) && expectedErrors.every(value => typeof value === 'string')) {
+              expectedErrors = parsed;
+            }
+          } catch {}
+
+          expect(message).toEqual(expect.stringMatching(new RegExp(expectedErrors.map(escapeStringRegexp).join('|'))));
         } else {
           throw new Error(typeScript.flattenDiagnosticMessageText(messageText, '\n'));
         }

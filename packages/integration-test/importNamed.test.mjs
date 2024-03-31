@@ -1,5 +1,6 @@
 /** @jest-environment jsdom */
 
+import React from 'react';
 import { create } from 'react-test-renderer';
 import Extract from 'react-wrap-with/Extract';
 import Spy from 'react-wrap-with/Spy';

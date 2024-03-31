@@ -11,10 +11,35 @@
     "precommit": "npm run precommit:typescript",
     "precommit:typescript": "tsc --project ./src/tsconfig.json",
     "reinstall": "rm -r node_modules package-lock.json && npm install",
-    "start": "npm run build -- --servedir=./public"
+    "start": "npm run build -- --servedir=./public",
+    "switch": "cat package.json | jq --arg SWITCH_NAME $SWITCH_NAME -r '(.[\"switch:\" + $SWITCH_NAME] // {}) as $TEMPLATE | .devDependencies += ($TEMPLATE.devDependencies // {}) | .dependencies += ($TEMPLATE.dependencies // {})' | tee ./package.json.tmp && mv ./package.json.tmp ./package.json"
   },
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
+  "switch:react:16": {
+    "devDependencies": {
+      "@types/react": "^16",
+      "@types/react-dom": "^16",
+      "react": "16.9.0",
+      "react-dom": "16.9.0"
+    }
+  },
+  "switch:react:17": {
+    "devDependencies": {
+      "@types/react": "^17",
+      "@types/react-dom": "^17",
+      "react": "17.0.0",
+      "react-dom": "17.0.0"
+    }
+  },
+  "switch:react:18": {
+    "devDependencies": {
+      "@types/react": "^18",
+      "@types/react-dom": "^18",
+      "react": "18.0.0",
+      "react-dom": "18.0.0"
+    }
+  },
   "localPeerDependencies": {
     "react-wrap-with": "^0.0.0-0"
   },

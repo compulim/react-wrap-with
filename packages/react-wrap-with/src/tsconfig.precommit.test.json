@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "noEmit": true,
