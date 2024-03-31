@@ -13,6 +13,29 @@
   },
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
+  "switch:react:16": {
+    "devDependencies": {
+      "@testing-library/react": "^12",
+      "@types/react": "^16",
+      "react": "16.9.0",
+      "react-test-renderer": "16.9.0"
+    }
+  },
+  "switch:react:17": {
+    "devDependencies": {
+      "@testing-library/react": "^12",
+      "@types/react": "^17",
+      "react": "17.0.0",
+      "react-test-renderer": "17.0.0"
+    }
+  },
+  "switch:react:18": {
+    "devDependencies": {
+      "@types/react": "^18",
+      "react": "18.0.0",
+      "react-test-renderer": "18.0.0"
+    }
+  },
   "localPeerDependencies": {
     "react-wrap-with": "^0.0.0-0"
   },

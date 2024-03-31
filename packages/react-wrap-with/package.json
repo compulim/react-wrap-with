@@ -98,7 +98,32 @@
     "url": "https://github.com/compulim/react-wrap-with/issues"
   },
   "homepage": "https://github.com/compulim/react-wrap-with#readme",
-  "pinDependencies": {},
+  "switch:react:16": {
+    "devDependencies": {
+      "@testing-library/react": "^12",
+      "@types/react": "^16",
+      "react": "16.9.0",
+      "react-dom": "16.9.0",
+      "react-test-renderer": "16.9.0"
+    }
+  },
+  "switch:react:17": {
+    "devDependencies": {
+      "@testing-library/react": "^12",
+      "@types/react": "^17",
+      "react": "17.0.0",
+      "react-dom": "17.0.0",
+      "react-test-renderer": "17.0.0"
+    }
+  },
+  "switch:react:18": {
+    "devDependencies": {
+      "@types/react": "^18",
+      "react": "18.0.0",
+      "react-dom": "18.0.0",
+      "react-test-renderer": "18.0.0"
+    }
+  },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.3",
