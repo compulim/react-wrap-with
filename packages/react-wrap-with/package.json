@@ -102,9 +102,9 @@
     "devDependencies": {
       "@testing-library/react": "^12",
       "@types/react": "^16",
-      "react": "16.9.0",
-      "react-dom": "16.9.0",
-      "react-test-renderer": "16.9.0"
+      "react": "16.8.0",
+      "react-dom": "16.8.0",
+      "react-test-renderer": "16.8.0"
     }
   },
   "switch:react:17": {
@@ -147,7 +147,7 @@
     "typescript": "^5.4.3"
   },
   "peerDependencies": {
-    "react": ">=16.9.0"
+    "react": ">=16.8.0"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.24.1",
