@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#50](https://github.com/compulim/react-wrap-with/pull/50), [#52](https://github.com/compulim/react-wrap-with/pull/52) and [#54](https://github.com/compulim/react-wrap-with/pull/54)
+- Relaxed peer dependencies requirements to `react@>=16.8.0`, by [@compulim](https://github.com/compulim) in PR [#55](https://github.com/compulim/react-wrap-with/pull/55)
+- Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#50](https://github.com/compulim/react-wrap-with/pull/50), [#52](https://github.com/compulim/react-wrap-with/pull/52), [#54](https://github.com/compulim/react-wrap-with/pull/54), and [#55](https://github.com/compulim/react-wrap-with/pull/55)
    - Production dependencies
       - [`@babel/runtime-corejs3@7.24.1`](https://npmjs.com/package/@babel/runtime-corejs3)
       - [`type-fest@4.14.0`](https://npmjs.com/package/type-fest)
@@ -34,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - [`jest@29.7.0`](https://npmjs.com/package/jest)
       - [`prettier@3.2.5`](https://npmjs.com/package/prettier)
       - [`typescript@5.4.3`](https://npmjs.com/package/typescript)
-      - [`use-ref-from@0.0.3`](https://npmjs.com/package/use-ref-from)
+      - [`use-ref-from@0.1.0`](https://npmjs.com/package/use-ref-from)
 - Updated pull request validation to test against various React versions, in PR [#53](https://github.com/compulim/react-wrap-with/pull/53)
    - Moved from JSX Runtime to JSX Classic to support testing against React 16
 
