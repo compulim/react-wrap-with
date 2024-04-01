@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#50](https://github.com/compulim/react-wrap-with/pull/50) and [#52](https://github.com/compulim/react-wrap-with/pull/52)
+- Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#50](https://github.com/compulim/react-wrap-with/pull/50), [#52](https://github.com/compulim/react-wrap-with/pull/52) and [#54](https://github.com/compulim/react-wrap-with/pull/54)
    - Production dependencies
       - [`@babel/runtime-corejs3@7.24.1`](https://npmjs.com/package/@babel/runtime-corejs3)
       - [`type-fest@4.14.0`](https://npmjs.com/package/type-fest)
@@ -18,12 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - [`@babel/preset-react@7.24.1`](https://npmjs.com/package/@babel/preset-react)
       - [`@babel/preset-typescript@7.24.1`](https://npmjs.com/package/@babel/preset-typescript)
       - [`@testing-library/react@14.2.2`](https://npmjs.com/package/@testing-library/react)
-      - [`@tsconfig/recommended@1.0.4`](https://npmjs.com/package/@tsconfig/recommended)
-      - [`@tsconfig/strictest@2.0.4`](https://npmjs.com/package/@tsconfig/strictest)
+      - [`@tsconfig/recommended@1.0.5`](https://npmjs.com/package/@tsconfig/recommended)
+      - [`@tsconfig/strictest@2.0.5`](https://npmjs.com/package/@tsconfig/strictest)
       - [`@types/jest@29.5.12`](https://npmjs.com/package/@types/jest)
-      - [`@types/node@20.11.30`](https://npmjs.com/package/@types/node)
-      - [`@types/react-dom@18.2.22`](https://npmjs.com/package/@types/react-dom)
-      - [`@types/react@18.2.70`](https://npmjs.com/package/@types/react)
+      - [`@types/node@20.12.2`](https://npmjs.com/package/@types/node)
+      - [`@types/react-dom@18.2.23`](https://npmjs.com/package/@types/react-dom)
+      - [`@types/react@18.2.73`](https://npmjs.com/package/@types/react)
       - [`@typescript-eslint/eslint-plugin@7.4.0`](https://npmjs.com/package/@typescript-eslint/eslint-plugin)
       - [`@typescript-eslint/parser@7.4.0`](https://npmjs.com/package/@typescript-eslint/parser)
       - [`esbuild@0.20.2`](https://npmjs.com/package/esbuild)
