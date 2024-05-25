@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#58](https://github.com/compulim/react-wrap-with/pull/58)
+   - Production dependencies
+      - [`@babel/runtime-corejs3@7.24.6`](https://npmjs.com/package/@babel/runtime-corejs3)
+      - [`type-fest@4.18.2`](https://npmjs.com/package/type-fest)
+   - Development dependencies
+      - [`@babel/cli@7.24.6`](https://npmjs.com/package/@babel/cli)
+      - [`@babel/core@7.24.6`](https://npmjs.com/package/@babel/core)
+      - [`@babel/plugin-transform-runtime@7.24.6`](https://npmjs.com/package/@babel/plugin-transform-runtime)
+      - [`@babel/preset-env@7.24.6`](https://npmjs.com/package/@babel/preset-env)
+      - [`@babel/preset-react@7.24.6`](https://npmjs.com/package/@babel/preset-react)
+      - [`@babel/preset-typescript@7.24.6`](https://npmjs.com/package/@babel/preset-typescript)
+      - [`@testing-library/react@15.0.7`](https://npmjs.com/package/@testing-library/react)
+      - [`@tsconfig/recommended@1.0.6`](https://npmjs.com/package/@tsconfig/recommended)
+      - [`@types/node@20.12.12`](https://npmjs.com/package/@types/node)
+      - [`@types/react-dom@18.3.0`](https://npmjs.com/package/@types/react-dom)
+      - [`@types/react@18.3.3`](https://npmjs.com/package/@types/react)
+      - [`esbuild@0.21.3`](https://npmjs.com/package/esbuild)
+      - [`react-dom@18.3.1`](https://npmjs.com/package/react-dom)
+      - [`react-test-renderer@18.3.1`](https://npmjs.com/package/react-test-renderer)
+      - [`react@18.3.1`](https://npmjs.com/package/react)
+      - [`typescript@5.4.5`](https://npmjs.com/package/typescript)
+
 ## [0.1.0] - 2024-04-01
 
 ### Changed
