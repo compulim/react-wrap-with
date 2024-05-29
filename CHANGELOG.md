@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Breaking changes
 
 - Removed named exports, please import the defaults instead
-   - `import { Extract, Spy, wrapWith } from 'react-wrap-with';` is preferred over `import wrapWith from 'react-wrap-with/wrapWith';`
+   - Use `import { Extract, Spy, wrapWith } from 'react-wrap-with';` instead of `import wrapWith from 'react-wrap-with/wrapWith';`
 - Moved build tools from Babel to tsup/esbuild
 
 ### Changed
