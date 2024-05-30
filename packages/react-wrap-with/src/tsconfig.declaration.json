@@ -4,7 +4,8 @@
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "noEmit": false
+    "noEmit": false,
+    "target": "ESNext"
   },
   "exclude": ["**/*.spec.*", "**/*.test.*", "__tests__/**/*"],
   "extends": "@tsconfig/strictest/tsconfig.json"
