@@ -30,7 +30,7 @@
   "pinDependencies": {
     "eslint": [
       "^8",
-      "@typescript-eslint/parser@7.11.0 peer requires eslint@^8"
+      "@typescript-eslint/parser@7.11.0 peer depends on eslint@^8"
     ]
   },
   "devDependencies": {
