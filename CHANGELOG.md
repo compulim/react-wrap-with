@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking changes
+
+- Removed named exports, please import the defaults instead
+   - Use `import { Extract, Spy, wrapWith } from 'react-wrap-with'` instead
+- Moved build tools from Babel to tsup/esbuild
+
 ### Changed
 
 - Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#58](https://github.com/compulim/react-wrap-with/pull/58)

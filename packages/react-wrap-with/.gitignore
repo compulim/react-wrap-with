@@ -1,7 +1,7 @@
 /.env
 /*.tgz
 /CHANGELOG.md
-/lib/
+/dist/
 /LICENSE
 /node_modules/
 /README.md

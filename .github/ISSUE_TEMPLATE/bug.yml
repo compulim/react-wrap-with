@@ -31,9 +31,7 @@ body:
       multiple: true
       options:
         - 'ESM: import { wrapWith } from "react-wrap-with"'
-        - 'ESM: import wrapWith from "react-wrap-with/wrapWith"'
         - 'CommonJS: require("react-wrap-with")'
-        - 'CommonJS: require("react-wrap-with/wrapWith")'
         - Others or unrelated
     validations:
       required: true
