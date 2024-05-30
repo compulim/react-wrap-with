@@ -2,6 +2,7 @@
   "name": "react-wrap-with-integration-test",
   "version": "0.0.0-0",
   "description": "",
+  "private": true,
   "scripts": {
     "bump": "npm run bump:prod && npm run bump:dev && npm run bump:auditfix",
     "bump:auditfix": "npm audit fix || exit 0",
@@ -52,6 +53,5 @@
   },
   "dependencies": {
     "react-wrap-with": "^0.0.0-0"
-  },
-  "private": true
+  }
 }
