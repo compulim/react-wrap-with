@@ -52,5 +52,6 @@
   },
   "dependencies": {
     "react-wrap-with": "^0.0.0-0"
-  }
+  },
+  "private": true
 }
