@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "declarationDir": "../lib/esmodules/",
-    "module": "ESNext",
-    "moduleResolution": "Bundler"
-  },
-  "extends": "./tsconfig.declaration.json"
-}
