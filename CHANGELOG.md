@@ -15,30 +15,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#58](https://github.com/compulim/react-wrap-with/pull/58) and [#65](https://github.com/compulim/react-wrap-with/pull/65)
+- Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#58](https://github.com/compulim/react-wrap-with/pull/58), [#65](https://github.com/compulim/react-wrap-with/pull/65), and [#71](https://github.com/compulim/react-wrap-with/pull/71)
    - Production dependencies
       - [`@babel/runtime-corejs3@7.24.6`](https://npmjs.com/package/@babel/runtime-corejs3)
-      - [`type-fest@4.18.3`](https://npmjs.com/package/type-fest/v/4.18.3)
+      - [`type-fest@4.20.1`](https://npmjs.com/package/type-fest/v/4.20.1)
    - Development dependencies
       - [`@babel/cli@7.24.6`](https://npmjs.com/package/@babel/cli)
       - [`@babel/core@7.24.6`](https://npmjs.com/package/@babel/core)
       - [`@babel/plugin-transform-runtime@7.24.6`](https://npmjs.com/package/@babel/plugin-transform-runtime)
-      - [`@babel/preset-env@7.24.6`](https://npmjs.com/package/@babel/preset-env)
-      - [`@babel/preset-react@7.24.6`](https://npmjs.com/package/@babel/preset-react)
-      - [`@babel/preset-typescript@7.24.6`](https://npmjs.com/package/@babel/preset-typescript)
-      - [`@testing-library/react@15.0.7`](https://npmjs.com/package/@testing-library/react)
+      - [`@babel/preset-env@7.24.7`](https://npmjs.com/package/@babel/preset-env/v/7.24.7)
+      - [`@babel/preset-react@7.24.7`](https://npmjs.com/package/@babel/preset-react/v/7.24.7)
+      - [`@babel/preset-typescript@7.24.7`](https://npmjs.com/package/@babel/preset-typescript/v/7.24.7)
+      - [`@testing-library/react@16.0.0`](https://npmjs.com/package/@testing-library/react/v/16.0.0)
       - [`@tsconfig/recommended@1.0.6`](https://npmjs.com/package/@tsconfig/recommended)
-      - [`@types/node@20.12.13`](https://npmjs.com/package/@types/node/v/20.12.13)
+      - [`@types/node@20.14.9`](https://npmjs.com/package/@types/node/v/20.14.9)
       - [`@types/react-dom@18.3.0`](https://npmjs.com/package/@types/react-dom)
       - [`@types/react@18.3.3`](https://npmjs.com/package/@types/react)
-      - [`@typescript-eslint/eslint-plugin@7.11.0`](https://npmjs.com/package/@typescript-eslint/eslint-plugin/v/7.11.0)
-      - [`@typescript-eslint/parser@7.11.0`](https://npmjs.com/package/@typescript-eslint/parser/v/7.11.0)
-      - [`esbuild@0.21.4`](https://npmjs.com/package/esbuild/v/0.21.4)
-      - [`eslint-plugin-react@7.34.2`](https://npmjs.com/package/eslint-plugin-react/v/7.34.2)
+      - [`@typescript-eslint/eslint-plugin@7.14.1`](https://npmjs.com/package/@typescript-eslint/eslint-plugin/v/7.14.1)
+      - [`@typescript-eslint/parser@7.14.1`](https://npmjs.com/package/@typescript-eslint/parser/v/7.14.1)
+      - [`esbuild@0.21.5`](https://npmjs.com/package/esbuild/v/0.21.5)
+      - [`eslint-plugin-react@7.34.3`](https://npmjs.com/package/eslint-plugin-react/v/7.34.3)
+      - [`prettier@3.3.2`](https://npmjs.com/package/prettier/v/3.3.2)
       - [`react-dom@18.3.1`](https://npmjs.com/package/react-dom)
       - [`react-test-renderer@18.3.1`](https://npmjs.com/package/react-test-renderer)
       - [`react@18.3.1`](https://npmjs.com/package/react)
-      - [`typescript@5.4.5`](https://npmjs.com/package/typescript)
+      - [`tsup@8.1.0`](https://npmjs.com/package/tsup/v/8.1.0)
+      - [`typescript@5.5.2`](https://npmjs.com/package/typescript/v/5.5.2)
 
 ## [0.1.0] - 2024-04-01
 
