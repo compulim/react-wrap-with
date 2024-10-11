@@ -1,15 +1,24 @@
-import { createElement, forwardRef } from 'react';
+import {
+  createElement,
+  forwardRef,
+  type ComponentType,
+  type PropsWithChildren,
+  type PropsWithoutRef,
+  type ReactNode,
+  type RefAttributes
+} from 'react';
 
-import Extract from '../Extract';
-import pick from './util/pick';
-import pickAndOmit from './util/pickAndOmit';
-import Spy from '../Spy';
-
-import type { ComponentType, PropsWithChildren, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
+// Related to https://github.com/import-js/eslint-plugin-import/issues/2872.
+// eslint-disable-next-line import/consistent-type-specifier-style
 import type { ConditionalKeys, Simplify } from 'type-fest';
-import type { HowOf } from '../HowOf';
-import type { PropsOf } from '../PropsOf';
-import type { RefOf } from '../RefOf';
+
+import Extract from '../Extract.ts';
+import { type HowOf } from '../HowOf.ts';
+import { type PropsOf } from '../PropsOf.ts';
+import { type RefOf } from '../RefOf.ts';
+import Spy from '../Spy.ts';
+import pick from './util/pick.ts';
+import pickAndOmit from './util/pickAndOmit.ts';
 
 // Everything.
 export default function wrapWith<

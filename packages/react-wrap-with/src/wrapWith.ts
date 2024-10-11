@@ -1,3 +1,3 @@
-import wrapWith from './private/wrapWith';
+import wrapWith from './private/wrapWith.tsx';
 
 export default wrapWith;
