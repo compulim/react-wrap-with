@@ -41,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - [`react@18.3.1`](https://npmjs.com/package/react)
       - [`tsup@8.1.0`](https://npmjs.com/package/tsup/v/8.1.0)
       - [`typescript@5.5.2`](https://npmjs.com/package/typescript/v/5.5.2)
+- Added [ESLint import/export syntax](https://npmjs.com/package/eslint-plugin-import), in PR [#72](https://github.com/compulim/react-wrap-with/pull/72)
+- Added [`publint`](https://npmjs.com/package/publint), in PR [#72](https://github.com/compulim/react-wrap-with/pull/72)
 
 ## [0.1.0] - 2024-04-01
 
