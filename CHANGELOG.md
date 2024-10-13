@@ -7,14 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Breaking changes
+### Removed
 
-- Removed named exports, please import the defaults instead
+- 💢 Removed named exports, please import the defaults instead
    - Use `import { Extract, Spy, wrapWith } from 'react-wrap-with'` instead
-- Moved build tools from Babel to tsup/esbuild
 
 ### Changed
 
+- 💢 Moved build tools from Babel to tsup/esbuild
 - Bumped dependencies, by [@compulim](https://github.com/compulim), in PR [#58](https://github.com/compulim/react-wrap-with/pull/58), [#65](https://github.com/compulim/react-wrap-with/pull/65), and [#71](https://github.com/compulim/react-wrap-with/pull/71)
    - Production dependencies
       - [`@babel/runtime-corejs3@7.24.6`](https://npmjs.com/package/@babel/runtime-corejs3)
