@@ -2,16 +2,15 @@
 /// <reference types="@types/jest" />
 
 import { render, RenderResult } from '@testing-library/react';
-import React, { createRef, type ComponentType, type Ref, RefAttributes } from 'react';
+import React, { type ComponentType, createRef, type Ref, RefAttributes } from 'react';
 
-import { Extract, type HowOf, Spy, wrapWith } from '../../src/index';
-import EffectClass from '../__setup__/Effect.class';
-import FunctionalEffect from '../__setup__/Effect.functional';
-import FunctionalHello from '../__setup__/Hello.functional';
-import HelloClass from '../__setup__/Hello.class';
-
-import type { EffectProps } from '../__setup__/Effect.props';
-import type { HelloProps } from '../__setup__/Hello.props';
+import { Extract, type HowOf, Spy, wrapWith } from '../../src/index.ts';
+import EffectClass from '../__setup__/Effect.class.tsx';
+import FunctionalEffect from '../__setup__/Effect.functional.tsx';
+import { type EffectProps } from '../__setup__/Effect.props.ts';
+import HelloClass from '../__setup__/Hello.class.tsx';
+import FunctionalHello from '../__setup__/Hello.functional.tsx';
+import { type HelloProps } from '../__setup__/Hello.props.ts';
 
 describe.each([
   ['functional component', FunctionalEffect, FunctionalHello],

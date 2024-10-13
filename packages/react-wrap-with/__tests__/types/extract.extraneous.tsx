@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { type ReactNode } from 'react';
 
-import { Extract, type HowOf } from '../../src/index';
-
-import type { ReactNode } from 'react';
+import { Extract, type HowOf } from '../../src/index.ts';
 
 const Header = ({ children }: { children?: ReactNode | undefined }) => <h1>{children}</h1>;
 

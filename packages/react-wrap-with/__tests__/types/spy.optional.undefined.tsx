@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 
-import { type HowOf, Spy, wrapWith } from '../../src/index';
-
-import type { PropsWithChildren } from 'react';
+import { type HowOf, Spy, wrapWith } from '../../src/index.ts';
 
 const Header = ({ children, className }: PropsWithChildren<{ className?: string }>) => (
   <h1 className={className}>{children}</h1>

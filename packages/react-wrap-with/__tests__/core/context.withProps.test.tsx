@@ -11,7 +11,7 @@ import React, {
   useContext
 } from 'react';
 
-import { wrapWith, withProps } from '../../src/index';
+import { withProps, wrapWith } from '../../src/index.ts';
 
 const ThemeContext = createContext<{ accent: string }>({ accent: 'default' });
 

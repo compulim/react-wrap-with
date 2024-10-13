@@ -1,7 +1,7 @@
 import React from 'react';
-
-import { wrapWith } from '../../src/index';
 import { type EmptyObject } from 'type-fest';
+
+import { wrapWith } from '../../src/index.ts';
 
 const Header = (_: EmptyObject) => <h1>Hello, World!</h1>;
 

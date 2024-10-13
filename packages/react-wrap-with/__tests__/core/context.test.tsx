@@ -4,7 +4,7 @@
 import { render, RenderResult } from '@testing-library/react';
 import React, { Component, type ComponentClass, type ComponentType, createContext, useContext } from 'react';
 
-import { Extract, type HowOf, wrapWith } from '../../src/index';
+import { Extract, type HowOf, wrapWith } from '../../src/index.ts';
 
 const Context = createContext<string>('');
 
