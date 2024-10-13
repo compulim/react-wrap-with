@@ -8,7 +8,6 @@ const run = ({ filename }) => {
 
   const TS_EXPECT_ERROR = /(\/\/\s+)(@ts-expect-error)[\s+(.*)]/gu;
   const TSCONFIG = {
-    allowImportingTsExtensions: true,
     allowSyntheticDefaultImports: true,
     jsx: typeScript.JsxEmit.React,
     noEmit: true,
