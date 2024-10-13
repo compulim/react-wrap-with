@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - [`typescript@5.5.2`](https://npmjs.com/package/typescript/v/5.5.2)
 - Added [ESLint import/export syntax](https://npmjs.com/package/eslint-plugin-import), in PR [#72](https://github.com/compulim/react-wrap-with/pull/72)
 - Added [`publint`](https://npmjs.com/package/publint), in PR [#72](https://github.com/compulim/react-wrap-with/pull/72)
-- Bumped dependencies, in PR [#74](https://github.com/compulim/react-wrap-with/pull/74)
+- Bumped dependencies, in PR [#74](https://github.com/compulim/react-wrap-with/pull/74) and [#75](https://github.com/compulim/react-wrap-with/pull/75)
   - Production dependencies
     - [`type-fest@4.26.1`](https://npmjs.com/package/type-fest/v/4.26.1)
   - Development dependencies
