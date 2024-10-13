@@ -1,6 +1,6 @@
 import React, { Component, forwardRef, type ForwardedRef } from 'react';
 
-import { type EffectProps } from './Effect.props';
+import { type EffectProps } from './Effect.props.ts';
 
 class _Effect extends Component<EffectProps & { forwardedRef: ForwardedRef<HTMLSpanElement> }> {
   render() {

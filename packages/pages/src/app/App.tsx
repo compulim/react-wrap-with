@@ -2,10 +2,10 @@ import './AutoResizeTextArea.css';
 
 import React, { Fragment, useState } from 'react';
 
-import Extract from './Extract';
-import Simple from './Simple';
-import TextArea from './TextArea';
-import withDoppelganger from './withDoppelganger';
+import Extract from './Extract.tsx';
+import Simple from './Simple.tsx';
+import TextArea from './TextArea.tsx';
+import withDoppelganger from './withDoppelganger.tsx';
 
 const AutoResizeTextArea = withDoppelganger(TextArea);
 

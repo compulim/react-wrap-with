@@ -1,8 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, type ReactNode, type Ref } from 'react';
 
-import { wrapWith } from '../../src/index';
-
-import type { ReactNode, Ref } from 'react';
+import { wrapWith } from '../../src/index.ts';
 
 const Header = ({ children }: { children?: ReactNode | undefined }) => <h1>{children}</h1>;
 

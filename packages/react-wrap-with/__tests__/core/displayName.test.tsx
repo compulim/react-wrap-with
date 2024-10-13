@@ -3,12 +3,11 @@
 
 import { type ComponentType } from 'react';
 
-import { Extract, type HowOf, Spy, wrapWith } from '../../src/index';
-import EffectClass from '../__setup__/Effect.class';
-import FunctionalEffect from '../__setup__/Effect.functional';
-import FunctionalHello from '../__setup__/Hello.functional';
-
-import type { EffectProps } from '../__setup__/Effect.props';
+import { Extract, type HowOf, Spy, wrapWith } from '../../src/index.ts';
+import EffectClass from '../__setup__/Effect.class.tsx';
+import FunctionalEffect from '../__setup__/Effect.functional.tsx';
+import { type EffectProps } from '../__setup__/Effect.props.ts';
+import FunctionalHello from '../__setup__/Hello.functional.tsx';
 
 describe.each([
   ['with a functional component', FunctionalEffect, 'wrapWith(Effect)(Hello)'],

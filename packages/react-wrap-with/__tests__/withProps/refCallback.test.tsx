@@ -4,11 +4,10 @@
 import { render } from '@testing-library/react';
 import React, { type ComponentType } from 'react';
 
-import { withProps } from '../../src/index';
-import EffectClass from '../__setup__/Effect.class';
-import FunctionalEffect from '../__setup__/Effect.functional';
-
-import type { EffectProps } from '../__setup__/Effect.props';
+import { withProps } from '../../src/index.ts';
+import EffectClass from '../__setup__/Effect.class.tsx';
+import FunctionalEffect from '../__setup__/Effect.functional.tsx';
+import { type EffectProps } from '../__setup__/Effect.props.ts';
 
 describe.each([
   ['functional component', FunctionalEffect],

@@ -9,7 +9,7 @@ jobs:
   call-workflow:
     strategy:
       matrix:
-        switch: [current, node-16, node-17, node-18]
+        switch: [current, react-16, react-17, react-18]
     uses: compulim/workflows/.github/workflows/pull-request-validation.yml@main
     with:
       package-name: react-wrap-with

@@ -1,8 +1,8 @@
 import React from 'react';
 import { withProps, wrapWith } from 'react-wrap-with';
 
-import Effect from './Effect';
-import Hello from './Hello';
+import Effect from './Effect.tsx';
+import Hello from './Hello.tsx';
 
 const withBlink = wrapWith(withProps(Effect, { effect: 'blink' }));
 

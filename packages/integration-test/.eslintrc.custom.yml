@@ -1,11 +1,9 @@
 env:
-  commonjs: true
-  es2021: true
-  es2022: true
-  jest: true
+  browser: true
+extends:
+  - ../../.eslintrc.react.yml
 rules:
   # Disable for convenience
   react/display-name: off
   # Disable for convenience
   react/prop-types: off
-  '@typescript-eslint/no-require-imports': off

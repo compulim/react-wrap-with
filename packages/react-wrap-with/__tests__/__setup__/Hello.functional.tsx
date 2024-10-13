@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { type HelloProps } from './Hello.props';
+import { type HelloProps } from './Hello.props.ts';
 
 const Hello = forwardRef<HTMLHeadingElement, HelloProps>(({ emphasis, text }: HelloProps, ref) => (
   <h1 className={emphasis ? 'hello--emphasis' : undefined} ref={ref}>

@@ -10,8 +10,9 @@
     "strict": true,
     "target": "ESNext",
     "types": [
-      "jest"
+      "jest",
+      "node"
     ]
   },
-  "extends": "@tsconfig/strictest/tsconfig.json"
+  "extends": "./tsconfig.custom.json"
 }

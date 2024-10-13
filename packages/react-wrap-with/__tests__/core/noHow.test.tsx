@@ -4,11 +4,10 @@
 import { render, RenderResult } from '@testing-library/react';
 import React, { type ComponentType, type ReactNode } from 'react';
 
-import { wrapWith } from '../../src/index';
-import FunctionalHello from '../__setup__/Hello.functional';
-import HelloClass from '../__setup__/Hello.class';
-
-import type { HelloProps } from '../__setup__/Hello.props';
+import { wrapWith } from '../../src/index.ts';
+import HelloClass from '../__setup__/Hello.class.tsx';
+import FunctionalHello from '../__setup__/Hello.functional.tsx';
+import { type HelloProps } from '../__setup__/Hello.props.ts';
 
 const BlinkingEffect = ({ children }: { children?: ReactNode | undefined }) => (
   <span className="effect effect--blink">{children}</span>

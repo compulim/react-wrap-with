@@ -4,11 +4,10 @@
 import { render, RenderResult } from '@testing-library/react';
 import React, { Component, type ComponentType } from 'react';
 
-import { Extract, type HowOf, Spy, wrapWith } from '../../src/index';
-import EffectClass from '../__setup__/Effect.class';
-import FunctionalEffect from '../__setup__/Effect.functional';
-
-import type { EffectProps } from '../__setup__/Effect.props';
+import { Extract, type HowOf, Spy, wrapWith } from '../../src/index.ts';
+import EffectClass from '../__setup__/Effect.class.tsx';
+import FunctionalEffect from '../__setup__/Effect.functional.tsx';
+import { type EffectProps } from '../__setup__/Effect.props.ts';
 
 class AlohaClass extends Component {
   render() {
