@@ -79,8 +79,14 @@ export default function wrapWith<
     contentComponent: ComponentType<ContentProps>
   ): ComponentType<Simplify<PropsWithoutRef<PropsOf<typeof contentComponent> & ExtractProps> & RefAttributes<Ref>>> {
     const WithContainer = forwardRef<Ref, ExtractProps & ContentProps>((props, ref) => {
-      const [extractedProps, contentProps] = pickAndOmit<ExtractProps, ContentProps>(props, extractPropsKeys);
-      const spyProps = pick<ContentProps, keyof PropsOf<typeof contentComponent>>(props, spyPropsKeys);
+      const [extractedProps, contentProps] = pickAndOmit<ExtractProps, ContentProps>(
+        props as ExtractProps & ContentProps, // "props" do not have "ref", we will assign it below.
+        extractPropsKeys
+      );
+      const spyProps = pick<ContentProps, keyof PropsOf<typeof contentComponent>>(
+        props as ExtractProps & ContentProps, // "props" do not have "ref" but spy will never have "ref" either.
+        spyPropsKeys
+      );
 
       return createElement(
         containerComponent,

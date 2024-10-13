@@ -72,17 +72,11 @@
   },
   "switch:react-18": {
     "devDependencies": {
-      "@types/react": "^18.3.4",
+      "@types/react": "^18",
       "react": "18.0.0",
       "react-dom": "18.0.0",
       "react-test-renderer": "18.0.0"
     }
-  },
-  "pinDependencies": {
-    "@types/react": [
-      "^18.3.4",
-      "@types/react@18.3.5 is causing build break"
-    ]
   },
   "devDependencies": {
     "@babel/preset-env": "^7.25.8",
@@ -95,7 +89,7 @@
     "@tsconfig/strictest": "^2.0.5",
     "@types/jest": "^29.5.13",
     "@types/node": "^22.7.5",
-    "@types/react": "^18.3.4",
+    "@types/react": "^18.3.11",
     "esbuild": "^0.24.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
