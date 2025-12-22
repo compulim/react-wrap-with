@@ -1,3 +1,5 @@
+/// <reference types="jest" />
+
 import Extract from './Extract';
 
 test('Extract symbol should be global', () => {
