@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/compulim/react-wrap-with.git"
+    "url": "https://github.com/compulim/react-wrap-with.git"
   },
   "keywords": [
     "context",
