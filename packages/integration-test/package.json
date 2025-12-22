@@ -4,10 +4,14 @@
   "description": "",
   "private": true,
   "scripts": {
+    "build": "if test \"$CI\" = \"true\"; then mkdir -p ./test/webDriver/static/js/; cp `node --eval=\"console.log(require('path').resolve(require('resolve-cwd')('@testduet/wait-for'), '../../dist/**'))\"` ./test/webDriver/static/js/; else mkdir -p ./test/webDriver/static/; ln --relative --symbolic `node --eval=\"console.log(require('path').resolve(require('resolve-cwd')('@testduet/wait-for'), '../../dist'))\"` ./test/webDriver/static/js; fi",
     "bump": "npm run bump:prod && npm run bump:dev",
     "bump:dev": "PACKAGES_TO_BUMP=$(cat package.json | jq -r '(.pinDependencies // {}) as $P | (.localPeerDependencies // {}) as $L | (.devDependencies // {}) | to_entries | map(select(.key as $K | $L | has($K) | not)) | map(.key + \"@\" + ($P[.key] // [\"latest\"])[0]) | join(\" \")') && [ ! -z \"$PACKAGES_TO_BUMP\" ] && npm install $PACKAGES_TO_BUMP || true",
     "bump:prod": "PACKAGES_TO_BUMP=$(cat package.json | jq -r '(.pinDependencies // {}) as $P | (.localPeerDependencies // {}) as $L | (.dependencies // {}) | to_entries | map(select(.key as $K | $L | has($K) | not)) | map(.key + \"@\" + ($P[.key] // [\"latest\"])[0]) | join(\" \")') && [ ! -z \"$PACKAGES_TO_BUMP\" ] && npm install $PACKAGES_TO_BUMP || true",
+    "docker": "docker compose up --quiet-pull --scale chromium=4",
+    "posttest": "if test \"$CI\" = \"true\"; then docker compose logs; docker compose down; fi",
     "precommit": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts ./",
+    "pretest": "if test \"$CI\" = \"true\"; then npm run build; npm run docker -- --detach --wait; fi",
     "switch": "cat package.json | jq --arg SWITCH_NAME $SWITCH_NAME -r '(.[\"switch:\" + $SWITCH_NAME] // {}) as $TEMPLATE | .devDependencies += ($TEMPLATE.devDependencies // {}) | .dependencies += ($TEMPLATE.dependencies // {})' | tee ./package.json.tmp && mv ./package.json.tmp ./package.json",
     "test": "jest"
   },
@@ -48,6 +52,9 @@
   "devDependencies": {
     "@babel/preset-env": "^7.25.8",
     "@babel/preset-react": "^7.25.7",
+    "@happy-dom/global-registrator": "^20.0.11",
+    "@happy-dom/jest-environment": "^20.0.11",
+    "@testduet/wait-for": "^0.1.1",
     "@testing-library/react": "^16.0.1",
     "@tsconfig/strictest": "^2.0.5",
     "@types/jest": "^29.5.13",

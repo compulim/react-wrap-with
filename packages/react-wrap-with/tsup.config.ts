@@ -7,6 +7,7 @@ export default defineConfig([
       'react-wrap-with': './src/index.ts'
     },
     format: ['cjs', 'esm'],
-    sourcemap: true
+    sourcemap: true,
+    target: 'esnext'
   }
 ]);

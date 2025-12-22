@@ -1,3 +1,5 @@
+/// <reference types="jest" />
+
 import Spy from './Spy';
 
 test('Spy symbol should be global', () => {
