@@ -83,6 +83,20 @@
       "react-test-renderer": "18.0.0"
     }
   },
+  "pinDependencies": {
+    "@types/react": [
+      "18"
+    ],
+    "@types/react-dom": [
+      "18"
+    ],
+    "react": [
+      "18"
+    ],
+    "react-dom": [
+      "18"
+    ]
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5",
@@ -96,21 +110,18 @@
     "@tsconfig/strictest": "^2.0.8",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.0.3",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
     "esbuild": "^0.27.2",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "prettier": "^3.7.4",
     "publint": "^0.3.16",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-test-renderer": "^19.2.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-test-renderer": "^18.3.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0"
   },
   "dependencies": {
     "type-fest": "^5.3.1"

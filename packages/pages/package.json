@@ -62,7 +62,7 @@
     ]
   },
   "localPeerDependencies": {
-    "react-wrap-with": "^0.0.0-0"
+    "react-wrap-with": "0.0.0-0"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.8",
@@ -74,7 +74,7 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-wrap-with": "^0.0.0-0",
+    "react-wrap-with": "0.0.0-0",
     "use-ref-from": "^0.1.0"
   }
 }
