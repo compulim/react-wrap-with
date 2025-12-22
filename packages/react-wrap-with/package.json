@@ -95,6 +95,9 @@
     ],
     "react-dom": [
       "18"
+    ],
+    "react-test-renderer": [
+      "18"
     ]
   },
   "devDependencies": {
