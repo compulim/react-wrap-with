@@ -47,6 +47,20 @@
       "react-dom": "18.0.0"
     }
   },
+  "pinDependencies": {
+    "@types/react": [
+      "18"
+    ],
+    "@types/react-dom": [
+      "18"
+    ],
+    "react": [
+      "18"
+    ],
+    "react-dom": [
+      "18"
+    ]
+  },
   "localPeerDependencies": {
     "react-wrap-with": "^0.0.0-0"
   },
@@ -58,8 +72,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "react": "18",
+    "react-dom": "18",
     "react-wrap-with": "^0.0.0-0",
     "use-ref-from": "^0.1.0"
   }
