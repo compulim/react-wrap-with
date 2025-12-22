@@ -51,15 +51,15 @@
     "react-wrap-with": "^0.0.0-0"
   },
   "devDependencies": {
-    "@tsconfig/strictest": "^2.0.5",
-    "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.1",
-    "esbuild": "^0.25.0",
-    "typescript": "^5.6.3"
+    "@tsconfig/strictest": "^2.0.8",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "esbuild": "^0.27.2",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-wrap-with": "^0.0.0-0",
     "use-ref-from": "^0.1.0"
   }
