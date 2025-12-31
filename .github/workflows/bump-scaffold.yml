@@ -25,5 +25,4 @@ jobs:
     uses: compulim/workflows/.github/workflows/bump-scaffold.yml@main
     with:
       package-name: ${{ inputs.package-name }}
-      skip-integration-test: ${{ inputs.skip-integration-test }}
       use-react: ${{ inputs.use-react }}
