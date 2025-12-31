@@ -1,10 +1,11 @@
-/** @jest-environment jsdom */
-/// <reference types="@types/jest" />
-
-import { render, RenderResult } from '@testing-library/react';
-import React, { Component, type ComponentClass, type ComponentType, createContext, useContext } from 'react';
-
+import { describeEach } from '@compulim/test-harness/describeEach';
+import { render, type RenderResult } from '@testing-library/react';
+import { expect } from 'expect';
+import { beforeEach, test } from 'node:test';
+import React, { type ComponentClass, type ComponentType } from 'react';
 import { Extract, type HowOf, wrapWith } from '../../src/index.ts';
+
+const { Component, createContext, useContext } = React;
 
 const Context = createContext<string>('');
 
@@ -29,10 +30,10 @@ class AlohaClass extends Component<Props> {
 AlohaClass.contextType = Context;
 (AlohaClass as ComponentClass<Props>).displayName = 'Aloha';
 
-describe.each([
-  ['functional component', FunctionalAloha, 'wrapWith(Component)(Aloha)'],
-  ['component class', AlohaClass, 'wrapWith(Component)(Aloha)']
-])('with a %s', (_, Aloha: ComponentType<Props>, displayName) => {
+describeEach([
+  ['functional component', FunctionalAloha, 'wrapWith(Component)(Aloha)'] as const,
+  ['component class', AlohaClass, 'wrapWith(Component)(Aloha)'] as const
+])('with a %s wrapped with React Context', (_, Aloha: ComponentType<Props>, displayName) => {
   let BlinkingAloha: ComponentType<{ effect?: string; value: string }>;
   let result: RenderResult;
 
@@ -43,9 +44,7 @@ describe.each([
   });
 
   test('should render as expected', () =>
-    expect(result.container.innerHTML).toMatchInlineSnapshot(
-      Aloha ? `"<h1 class="effect effect--blink">Hello, World!</h1>"` : '""'
-    ));
+    expect(result.container.innerHTML).toBe(Aloha ? '<h1 class="effect effect--blink">Hello, World!</h1>' : ''));
 
   test(`should have 'displayName'`, () => expect(BlinkingAloha.displayName).toBe(displayName));
 });

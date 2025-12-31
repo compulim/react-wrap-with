@@ -1,15 +1,13 @@
 // Related to https://github.com/import-js/eslint-plugin-import/issues/2872.
 // eslint-disable-next-line import/consistent-type-specifier-style
-import type { ConditionalKeys, Simplify } from 'type-fest';
+export type { ConditionalKeys, Simplify } from 'type-fest';
 
-import Extract from './Extract.ts';
-import Spy from './Spy.ts';
-import withProps from './withProps.ts';
-import wrapWith from './wrapWith.ts';
+export { default as Extract } from './Extract.ts';
+export { default as Spy } from './Spy.ts';
+export { default as withProps } from './withProps.ts';
+export { default as wrapWith } from './wrapWith.ts';
 
 // Due to [a TypeScript bug with monorepo](https://github.com/microsoft/TypeScript/issues/47663), we need to export types from dependencies.
-import { type HowOf } from './HowOf.ts';
-import { type PropsOf } from './PropsOf.ts';
-import { type RefOf } from './RefOf.ts';
-
-export { ConditionalKeys, Extract, Simplify, Spy, withProps, wrapWith, type HowOf, type PropsOf, type RefOf };
+export { type HowOf } from './HowOf.ts';
+export { type PropsOf } from './PropsOf.ts';
+export { type RefOf } from './RefOf.ts';

@@ -1,17 +1,11 @@
-/** @jest-environment jsdom */
-/// <reference types="@types/jest" />
-
-import { render, RenderResult } from '@testing-library/react';
-import React, {
-  Component,
-  type ComponentClass,
-  type ComponentType,
-  createContext,
-  type ReactNode,
-  useContext
-} from 'react';
-
+import { describeEach } from '@compulim/test-harness/describeEach';
+import { render, type RenderResult } from '@testing-library/react';
+import { expect } from 'expect';
+import { beforeEach, test } from 'node:test';
+import React, { type ComponentClass, type ComponentType, type ReactNode } from 'react';
 import { withProps, wrapWith } from '../../src/index.ts';
+
+const { Component, createContext, useContext } = React;
 
 const ThemeContext = createContext<{ accent: string }>({ accent: 'default' });
 
@@ -38,26 +32,24 @@ class AlohaClass extends Component<Props> {
 AlohaClass.contextType = ThemeContext;
 (AlohaClass as ComponentClass<Props>).displayName = 'Aloha';
 
-describe.each([
-  ['functional component', FunctionalAloha],
-  ['component class', AlohaClass]
-])('with a %s', (_, Aloha: ComponentType<Props>) => {
-  let BlueThemedAloha: ComponentType<Props>;
-  let result: RenderResult;
+describeEach([['functional component', FunctionalAloha] as const, ['component class', AlohaClass] as const])(
+  'with a %s wrapped with React Context (props)',
+  (_, Aloha: ComponentType<Props>) => {
+    let BlueThemedAloha: ComponentType<Props>;
+    let result: RenderResult;
 
-  beforeEach(() => {
-    const BlueThemeContextProvider = withProps(ThemeContext.Provider, { value: { accent: 'blue' } });
+    beforeEach(() => {
+      const BlueThemeContextProvider = withProps(ThemeContext.Provider, { value: { accent: 'blue' } });
 
-    BlueThemedAloha = wrapWith(BlueThemeContextProvider)(Aloha);
+      BlueThemedAloha = wrapWith(BlueThemeContextProvider)(Aloha);
 
-    result = render(<BlueThemedAloha>Hello, World!</BlueThemedAloha>);
-  });
+      result = render(<BlueThemedAloha>Hello, World!</BlueThemedAloha>);
+    });
 
-  test('should render as expected', () =>
-    expect(result.container.innerHTML).toMatchInlineSnapshot(
-      Aloha ? `"<h1 class="themed themed--blue">Hello, World!</h1>"` : '""'
-    ));
+    test('should render as expected', () =>
+      expect(result.container.innerHTML).toBe(Aloha ? '<h1 class="themed themed--blue">Hello, World!</h1>' : ''));
 
-  test(`should have 'displayName'`, () =>
-    expect(BlueThemedAloha).toHaveProperty('displayName', 'wrapWith(withProps(Component))(Aloha)'));
-});
+    test(`should have 'displayName'`, () =>
+      expect(BlueThemedAloha).toHaveProperty('displayName', 'wrapWith(withProps(Component))(Aloha)'));
+  }
+);

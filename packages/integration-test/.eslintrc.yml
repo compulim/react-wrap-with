@@ -1,7 +1,7 @@
 extends:
   - ./.eslintrc.custom.yml
 ignorePatterns:
-  - test/webDriver/static/**
+  - webDriver/**
 overrides:
   - env:
       commonjs: true
@@ -15,3 +15,7 @@ overrides:
     parserOptions:
       ecmaVersion: latest
       sourceType: module
+  - files:
+      - '**/*.test-types.*'
+    rules:
+      react-hooks/rules-of-hooks: off
