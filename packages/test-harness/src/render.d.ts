@@ -1,1 +1,1 @@
-export { render } from '@testing-library/react';
+export { render, type RenderResult } from '@testing-library/react';

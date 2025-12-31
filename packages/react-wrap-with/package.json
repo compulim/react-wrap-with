@@ -37,7 +37,7 @@
     "switch": "cat package.json | jq --arg SWITCH_NAME $SWITCH_NAME -r '(.[\"switch:\" + $SWITCH_NAME] // {}) as $TEMPLATE | .devDependencies += ($TEMPLATE.devDependencies // {}) | .dependencies += ($TEMPLATE.dependencies // {})' | tee ./package.json.tmp && mv ./package.json.tmp ./package.json",
     "test": "npm run test:unit && npm run test:types",
     "test:types": "node --experimental-strip-types --import @compulim/test-harness/test-types.import --test **/*.test-types.ts",
-    "test:unit": "node --experimental-strip-types --experimental-test-coverage --experimental-test-isolation=none --import @compulim/test-harness/happy-dom.import --import @compulim/test-harness/jsx.import --test **/*.test.{cjs,cts,js,jsx,mjs,mts,ts,tsx}"
+    "test:unit": "node --experimental-strip-types --experimental-test-coverage --experimental-test-isolation=none --import @compulim/test-harness/happy-dom.import --import @compulim/test-harness/jsx.import --test --test-force-exit **/*.test.{cjs,cts,js,jsx,mjs,mts,ts,tsx}"
   },
   "repository": {
     "type": "git",
@@ -60,9 +60,9 @@
   "homepage": "https://github.com/compulim/react-wrap-with#readme",
   "switch:react-16": {
     "devDependencies": {
-      "@testing-library/react": "^12",
       "@types/react": "^16",
       "@types/react-dom": "^16",
+      "@types/react-test-renderer": "^16",
       "react": "16.8.0",
       "react-dom": "16.8.0",
       "react-test-renderer": "16.8.0"
@@ -70,9 +70,9 @@
   },
   "switch:react-17": {
     "devDependencies": {
-      "@testing-library/react": "^12",
       "@types/react": "^17",
       "@types/react-dom": "^17",
+      "@types/react-test-renderer": "^17",
       "react": "17.0.0",
       "react-dom": "17.0.0",
       "react-test-renderer": "17.0.0"
@@ -82,6 +82,7 @@
     "devDependencies": {
       "@types/react": "^18",
       "@types/react-dom": "^18",
+      "@types/react-test-renderer": "^18",
       "react": "18.0.0",
       "react-dom": "18.0.0",
       "react-test-renderer": "18.0.0"
@@ -92,6 +93,9 @@
       "18"
     ],
     "@types/react-dom": [
+      "18"
+    ],
+    "@types/react-test-renderer": [
       "18"
     ],
     "react": [
