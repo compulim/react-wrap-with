@@ -1,6 +1,6 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
 import { expect } from 'expect';
-import { beforeEach, mock, test } from 'node:test';
+import { beforeEach, describe, mock, test } from 'node:test';
 import { render, type RenderResult } from '@testing-library/react';
 import React, { type ComponentType, type RefAttributes } from 'react';
 import { Extract, type HowOf, Spy, wrapWith } from '../../src/index.ts';
@@ -31,22 +31,24 @@ describeEach([
       result = render(<BlinkingHello effect="blink" ref={refCallback} text="Hello, World!" />);
     });
 
-    test('should render as expected', () => {
-      expect(result.container.innerHTML).toBe(
-        Effect
-          ? Hello
-            ? '<span class="effect effect--blink"><h1>Hello, World!</h1></span>'
-            : '<span class="effect effect--blink"></span>'
-          : '<h1>Hello, World!</h1>'
-      );
-    });
+    describe('when render with a ref of type RefCallback', () => {
+      test('should render as expected', () => {
+        expect(result.container.innerHTML).toBe(
+          Effect
+            ? Hello
+              ? '<span class="effect effect--blink"><h1>Hello, World!</h1></span>'
+              : '<span class="effect effect--blink"></span>'
+            : '<h1>Hello, World!</h1>'
+        );
+      });
 
-    if (Hello) {
-      test('should called "refCallback" once', () => expect(refCallback.mock.callCount()).toBe(1));
-      test('should have "tagName" of "H1"', () =>
-        expect(refCallback.mock.calls[0]?.arguments[0]).toHaveProperty('tagName', 'H1'));
-    } else {
-      test('should not called "refCallback"', () => expect(refCallback.mock.callCount()).toBe(0));
-    }
+      if (Hello) {
+        test('should called "refCallback" once', () => expect(refCallback.mock.callCount()).toBe(1));
+        test('should have "tagName" of "H1"', () =>
+          expect(refCallback.mock.calls[0]?.arguments[0]).toHaveProperty('tagName', 'H1'));
+      } else {
+        test('should not called "refCallback"', () => expect(refCallback.mock.callCount()).toBe(0));
+      }
+    });
   }
 );

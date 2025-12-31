@@ -1,6 +1,6 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
 import { expect } from 'expect';
-import { beforeEach, test } from 'node:test';
+import { beforeEach, describe, test } from 'node:test';
 import { render, type RenderResult } from '@testing-library/react';
 import React, { type ComponentType, type ReactNode } from 'react';
 import { wrapWith } from '../../src/index.ts';
@@ -25,10 +25,12 @@ describeEach([
     result = render(<BlinkingHello emphasis={true} text="Hello, World!" />);
   });
 
-  test('should render as expected', () =>
-    expect(result.container.innerHTML).toBe(
-      Hello
-        ? '<span class="effect effect--blink"><h1 class="hello--emphasis">Hello, World!</h1></span>'
-        : '<span class="effect effect--blink"></span>'
-    ));
+  describe('when render without How option passed', () => {
+    test('should render as expected', () =>
+      expect(result.container.innerHTML).toBe(
+        Hello
+          ? '<span class="effect effect--blink"><h1 class="hello--emphasis">Hello, World!</h1></span>'
+          : '<span class="effect effect--blink"></span>'
+      ));
+  });
 });

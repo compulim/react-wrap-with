@@ -1,6 +1,7 @@
-import React, { Component, forwardRef, type ForwardedRef } from 'react';
-
+import React, { type ForwardedRef } from 'react';
 import { type HelloProps } from './Hello.props.ts';
+
+const { Component, forwardRef } = React;
 
 class _Hello extends Component<HelloProps & { forwardedRef: ForwardedRef<HTMLHeadingElement> }> {
   render() {

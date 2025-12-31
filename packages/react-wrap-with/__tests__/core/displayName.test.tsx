@@ -16,5 +16,5 @@ describeEach([
     FunctionalHello
   );
 
-  test('should render as expected', () => expect(wrappedComponent).toHaveProperty('displayName', displayName));
+  test('should have "displayName" property', () => expect(wrappedComponent).toHaveProperty('displayName', displayName));
 });

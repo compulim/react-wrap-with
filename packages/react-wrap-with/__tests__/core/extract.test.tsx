@@ -1,7 +1,7 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
 import { render, type RenderResult } from '@testing-library/react';
 import { expect } from 'expect';
-import { beforeEach, test } from 'node:test';
+import { beforeEach, describe, test } from 'node:test';
 import React, { type ComponentType } from 'react';
 import { Extract, type HowOf, Spy, wrapWith } from '../../src/index.ts';
 import EffectClass from '../__setup__/Effect.class.tsx';
@@ -24,12 +24,14 @@ describeEach([
     result = render(<BlinkingHello effect="blink" emphasis={true} text="Hello, World!" />);
   });
 
-  test('should render as expected', () =>
-    expect(result.container.innerHTML).toBe(
-      Effect
-        ? Hello
-          ? '<span class="effect effect--blink effect--emphasis"><h1 class="hello--emphasis">Hello, World!</h1></span>'
-          : '<span class="effect effect--blink effect--emphasis"></span>'
-        : '<h1 class="hello--emphasis">Hello, World!</h1>'
-    ));
+  describe('when extracting a prop', () => {
+    test('should render as expected', () =>
+      expect(result.container.innerHTML).toBe(
+        Effect
+          ? Hello
+            ? '<span class="effect effect--blink effect--emphasis"><h1 class="hello--emphasis">Hello, World!</h1></span>'
+            : '<span class="effect effect--blink effect--emphasis"></span>'
+          : '<h1 class="hello--emphasis">Hello, World!</h1>'
+      ));
+  });
 });

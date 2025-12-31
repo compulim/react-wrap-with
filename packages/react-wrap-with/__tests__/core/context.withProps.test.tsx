@@ -1,5 +1,5 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
-import { render, RenderResult } from '@testing-library/react';
+import { render, type RenderResult } from '@testing-library/react';
 import { expect } from 'expect';
 import { beforeEach, test } from 'node:test';
 import React, { type ComponentClass, type ComponentType, type ReactNode } from 'react';
@@ -33,7 +33,7 @@ AlohaClass.contextType = ThemeContext;
 (AlohaClass as ComponentClass<Props>).displayName = 'Aloha';
 
 describeEach([['functional component', FunctionalAloha] as const, ['component class', AlohaClass] as const])(
-  'with a %s',
+  'with a %s wrapped with React Context (props)',
   (_, Aloha: ComponentType<Props>) => {
     let BlueThemedAloha: ComponentType<Props>;
     let result: RenderResult;

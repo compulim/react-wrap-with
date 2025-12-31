@@ -1,5 +1,5 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
-import { render, RenderResult } from '@testing-library/react';
+import { render, type RenderResult } from '@testing-library/react';
 import { expect } from 'expect';
 import { beforeEach, test } from 'node:test';
 import React, { type ComponentClass, type ComponentType } from 'react';
@@ -30,12 +30,10 @@ class AlohaClass extends Component<Props> {
 AlohaClass.contextType = Context;
 (AlohaClass as ComponentClass<Props>).displayName = 'Aloha';
 
-// describeEach<string, ComponentClass | FunctionComponent, string>([
-// describeEach<['functional component', FunctionComponent, string] | ['component class', ComponentClass, string]>([
 describeEach([
   ['functional component', FunctionalAloha, 'wrapWith(Component)(Aloha)'] as const,
   ['component class', AlohaClass, 'wrapWith(Component)(Aloha)'] as const
-])('with a %s', (_, Aloha: ComponentType<Props>, displayName) => {
+])('with a %s wrapped with React Context', (_, Aloha: ComponentType<Props>, displayName) => {
   let BlinkingAloha: ComponentType<{ effect?: string; value: string }>;
   let result: RenderResult;
 

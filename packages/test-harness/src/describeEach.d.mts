@@ -1,6 +1,11 @@
-export declare function describeEach<T extends any[]>(
-  rows: readonly T[]
-): (message: string, fn: (...args: T) => void) => void;
+declare interface DescribeEach<T extends any[]> {
+  (rows: readonly T[]): (message: string, fn: (...args: T) => void) => void;
+  only(rows: readonly T[]): (message: string, fn: (...args: T) => void) => void;
+}
+
+declare const describeEach: DescribeEach<T>;
+
+export { describeEach };
 
 // export declare function describeEach<T>(
 //   rows: readonly (readonly [T])[]

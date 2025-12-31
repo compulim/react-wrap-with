@@ -1,7 +1,7 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
 import { render, type RenderResult } from '@testing-library/react';
 import { expect } from 'expect';
-import { beforeEach, test } from 'node:test';
+import { beforeEach, describe, test } from 'node:test';
 import React, { type ComponentType } from 'react';
 import { Extract, type HowOf, Spy, wrapWith } from '../../src/index.ts';
 import EffectClass from '../__setup__/Effect.class.tsx';
@@ -31,12 +31,14 @@ describeEach([
     result = render(<BlinkingAloha effect="blink" />);
   });
 
-  test('should render as expected', () =>
-    expect(result.container.innerHTML).toBe(
-      Effect
-        ? Aloha
-          ? '<span class="effect effect--blink"><h1>Aloha!</h1></span>'
-          : '<span class="effect effect--blink"></span>'
-        : '<h1>Aloha!</h1>'
-    ));
+  describe('when render without props passed', () => {
+    test('should render as expected', () =>
+      expect(result.container.innerHTML).toBe(
+        Effect
+          ? Aloha
+            ? '<span class="effect effect--blink"><h1>Aloha!</h1></span>'
+            : '<span class="effect effect--blink"></span>'
+          : '<h1>Aloha!</h1>'
+      ));
+  });
 });

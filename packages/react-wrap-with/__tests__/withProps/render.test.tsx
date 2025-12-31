@@ -1,5 +1,5 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
-import { render, RenderResult } from '@testing-library/react';
+import { render, type RenderResult } from '@testing-library/react';
 import { expect } from 'expect';
 import { beforeEach, test } from 'node:test';
 import React, { type ComponentType } from 'react';

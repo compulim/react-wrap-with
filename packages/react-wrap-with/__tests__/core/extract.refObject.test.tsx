@@ -1,7 +1,7 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
 import { render } from '@compulim/test-harness/render';
 import { expect } from 'expect';
-import { beforeEach, test } from 'node:test';
+import { beforeEach, describe, test } from 'node:test';
 import React, { type ComponentType, type Ref } from 'react';
 import { Extract, Spy, wrapWith, type HowOf } from '../../src/index.ts';
 import EffectClass from '../__setup__/Effect.class.tsx';
@@ -30,9 +30,11 @@ describeEach([
     render(<BlinkingHello effect="blink" ref={ref} text="Hello, World!" />);
   });
 
-  if (Effect) {
-    test('should have "tagName" of "SPAN"', () => expect(ref).toHaveProperty('current.tagName', 'SPAN'));
-  } else {
-    test('should not have ref', () => expect(ref).toHaveProperty('current', null));
-  }
+  describe('when extracting ref of RefObject', () => {
+    if (Effect) {
+      test('should have "tagName" of "SPAN"', () => expect(ref).toHaveProperty('current.tagName', 'SPAN'));
+    } else {
+      test('should not have ref', () => expect(ref).toHaveProperty('current', null));
+    }
+  });
 });

@@ -1,10 +1,26 @@
 import { describe } from 'node:test';
 import { format } from 'util';
 
-export function describeEach(rows) {
-  return (message, fn) => {
+function describe_(describe, rows) {
+  return (
+    /** @type {string} */
+    message,
+    fn
+  ) => {
     for (const row of rows) {
-      describe(format(message, ...row), () => fn(...row));
+      const countFormatting = message.replaceAll('%%', '').split('%').length - 1;
+
+      describe(format(message, ...row.slice(0, countFormatting)), () => fn(...row));
     }
   };
 }
+
+function describeEach(rows) {
+  return describe_(describe, rows);
+}
+
+describeEach.only = function only(rows) {
+  return describe_(describe.only, rows);
+};
+
+export { describeEach };

@@ -1,7 +1,7 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
 import { render } from '@testing-library/react';
 import { expect } from 'expect';
-import { beforeEach, mock, test } from 'node:test';
+import { beforeEach, describe, mock, test } from 'node:test';
 import React, { type ComponentType } from 'react';
 import { Extract, type HowOf, wrapWith } from '../../src/index.ts';
 import EffectClass from '../__setup__/Effect.class.tsx';
@@ -28,11 +28,13 @@ describeEach([
     render(<BlinkingHello effect="blink" ref={refCallback} text="Hello, World!" />);
   });
 
-  if (Effect) {
-    test('should called "refCallback" once', () => expect(refCallback.mock.callCount()).toBe(1));
-    test('should have "tagName" of "H1"', () =>
-      expect(refCallback.mock.calls[0].arguments[0]).toHaveProperty('tagName', 'SPAN'));
-  } else {
-    test('should not called "refCallback"', () => expect(refCallback.mock.callCount()).toBe(0));
-  }
+  describe('when extracting ref of type RefCallback', () => {
+    if (Effect) {
+      test('should called "refCallback" once', () => expect(refCallback.mock.callCount()).toBe(1));
+      test('should have "tagName" of "H1"', () =>
+        expect(refCallback.mock.calls[0].arguments[0]).toHaveProperty('tagName', 'SPAN'));
+    } else {
+      test('should not called "refCallback"', () => expect(refCallback.mock.callCount()).toBe(0));
+    }
+  });
 });

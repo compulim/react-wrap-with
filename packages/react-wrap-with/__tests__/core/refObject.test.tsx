@@ -1,7 +1,7 @@
 import { describeEach } from '@compulim/test-harness/describeEach';
 import { render, type RenderResult } from '@testing-library/react';
 import { expect } from 'expect';
-import { beforeEach, test } from 'node:test';
+import { beforeEach, describe, test } from 'node:test';
 import React, { type ComponentType, type Ref, type RefAttributes } from 'react';
 import { Extract, type HowOf, Spy, wrapWith } from '../../src/index.ts';
 import EffectClass from '../__setup__/Effect.class.tsx';
@@ -33,19 +33,21 @@ describeEach([
       result = render(<BlinkingHello effect="blink" ref={ref} text="Hello, World!" />);
     });
 
-    test('should render as expected', () =>
-      expect(result.container.innerHTML).toBe(
-        Effect
-          ? Hello
-            ? '<span class="effect effect--blink"><h1>Hello, World!</h1></span>'
-            : '<span class="effect effect--blink"></span>'
-          : '<h1>Hello, World!</h1>'
-      ));
+    describe('when render with a ref of type RefObject', () => {
+      test('should render as expected', () =>
+        expect(result.container.innerHTML).toBe(
+          Effect
+            ? Hello
+              ? '<span class="effect effect--blink"><h1>Hello, World!</h1></span>'
+              : '<span class="effect effect--blink"></span>'
+            : '<h1>Hello, World!</h1>'
+        ));
 
-    if (Hello) {
-      test('should have "tagName" of "H1"', () => expect(ref).toHaveProperty('current.tagName', 'H1'));
-    } else {
-      test('should not have ref', () => expect(ref).toHaveProperty('current', null));
-    }
+      if (Hello) {
+        test('should have "tagName" of "H1"', () => expect(ref).toHaveProperty('current.tagName', 'H1'));
+      } else {
+        test('should not have ref', () => expect(ref).toHaveProperty('current', null));
+      }
+    });
   }
 );
