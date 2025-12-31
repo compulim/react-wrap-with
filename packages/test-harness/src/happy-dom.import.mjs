@@ -13,9 +13,9 @@ before(() => {
   });
 });
 
-after(async () => {
+after(() => {
   // Must unregister, otherwise, there will be promises lingering.
-  GlobalRegistrator.isRegistered && (await GlobalRegistrator.unregister());
+  GlobalRegistrator.unregister();
 });
 
 export {};
