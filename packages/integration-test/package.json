@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "if test \"$CI\" = \"true\"; then mkdir -p ./test/webDriver/static/js/; cp `node --eval=\"console.log(require('path').resolve(require('resolve-cwd')('@testduet/wait-for'), '../../dist/**'))\"` ./test/webDriver/static/js/; else mkdir -p ./test/webDriver/static/; ln --relative --symbolic `node --eval=\"console.log(require('path').resolve(require('resolve-cwd')('@testduet/wait-for'), '../../dist'))\"` ./test/webDriver/static/js; fi",
+    "build": "npm run build:copy && npm run build:custom --if-present",
     "bump": "npm run bump:prod && npm run bump:dev",
     "bump:dev": "PACKAGES_TO_BUMP=$(cat package.json | jq -r '(.pinDependencies // {}) as $P | (.localPeerDependencies // {}) as $L | (.devDependencies // {}) | to_entries | map(select(.key as $K | $L | has($K) | not)) | map(.key + \"@\" + ($P[.key] // [\"latest\"])[0]) | join(\" \")') && [ ! -z \"$PACKAGES_TO_BUMP\" ] && npm install $PACKAGES_TO_BUMP || true",
     "bump:prod": "PACKAGES_TO_BUMP=$(cat package.json | jq -r '(.pinDependencies // {}) as $P | (.localPeerDependencies // {}) as $L | (.dependencies // {}) | to_entries | map(select(.key as $K | $L | has($K) | not)) | map(.key + \"@\" + ($P[.key] // [\"latest\"])[0]) | join(\" \")') && [ ! -z \"$PACKAGES_TO_BUMP\" ] && npm install $PACKAGES_TO_BUMP || true",
@@ -13,7 +13,13 @@
     "precommit": "ESLINT_USE_FLAT_CONFIG=false eslint --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts ./",
     "pretest": "if test \"$CI\" = \"true\"; then npm run build; npm run docker -- --detach --wait; fi",
     "switch": "cat package.json | jq --arg SWITCH_NAME $SWITCH_NAME -r '(.[\"switch:\" + $SWITCH_NAME] // {}) as $TEMPLATE | .devDependencies += ($TEMPLATE.devDependencies // {}) | .dependencies += ($TEMPLATE.dependencies // {})' | tee ./package.json.tmp && mv ./package.json.tmp ./package.json",
-    "test": "jest"
+    "test": "npm run test:unit && npm run test:types",
+    "build:copy": "mkdir -p ./webDriver/static/; SRC=$(node --eval=\"console.log(require('path').resolve(require('resolve-cwd')('react-wrap-with'), '../../dist'))\"); DEST=$(realpath ./webDriver/static); rm -rf $DEST; mkdir -p $DEST/js/; cp $SRC/** $DEST/js/",
+    "init": "npm run init:dev --if-present && npm run init:prod --if-present",
+    "init:dev": "npm install --save-dev @tsconfig/strictest @types/react@18 @types/react-dom@18 expect resolve-cwd typescript",
+    "init:prod": "npm install --save @compulim/test-harness@0.0.0-0 react@18 react-dom@18 react-test-renderer@18 react-wrap-with@0.0.0-0",
+    "test:types": "node --experimental-strip-types --import @compulim/test-harness/test-types.import --test **/*.test-types.ts",
+    "test:unit": "node --experimental-strip-types --experimental-test-coverage --test"
   },
   "author": "William Wong (https://github.com/compulim)",
   "license": "MIT",
@@ -22,6 +28,11 @@
       "@testing-library/react": "^12",
       "@types/react": "^16",
       "@types/react-dom": "^16",
+      "react": "16.8.0",
+      "react-dom": "16.8.0",
+      "react-test-renderer": "16.8.0"
+    },
+    "dependencies": {
       "react": "16.8.0",
       "react-dom": "16.8.0",
       "react-test-renderer": "16.8.0"
@@ -35,6 +46,11 @@
       "react": "17.0.0",
       "react-dom": "17.0.0",
       "react-test-renderer": "17.0.0"
+    },
+    "dependencies": {
+      "react": "17.0.0",
+      "react-dom": "17.0.0",
+      "react-test-renderer": "17.0.0"
     }
   },
   "switch:react-18": {
@@ -44,10 +60,16 @@
       "react": "18.0.0",
       "react-dom": "18.0.0",
       "react-test-renderer": "18.0.0"
+    },
+    "dependencies": {
+      "react": "18.0.0",
+      "react-dom": "18.0.0",
+      "react-test-renderer": "18.0.0"
     }
   },
   "localPeerDependencies": {
-    "react-wrap-with": "0.0.0-0"
+    "react-wrap-with": "0.0.0-0",
+    "@compulim/test-harness": "0.0.0-0"
   },
   "pinDependencies": {
     "@types/react": [
@@ -85,5 +107,11 @@
   },
   "dependencies": {
     "react-wrap-with": "0.0.0-0"
-  }
+  },
+  "files": [
+    "**/*.cjs",
+    "**/*.js",
+    "**/*.mjs",
+    "webDriver/**/*"
+  ]
 }
