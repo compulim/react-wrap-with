@@ -1,6 +1,4 @@
-import {
-  createElement,
-  forwardRef,
+import React, {
   type ComponentType,
   type PropsWithChildren,
   type PropsWithoutRef,
@@ -19,6 +17,8 @@ import { type RefOf } from '../RefOf.ts';
 import Spy from '../Spy.ts';
 import pick from './util/pick.ts';
 import pickAndOmit from './util/pickAndOmit.ts';
+
+const { createElement, forwardRef } = React;
 
 // Everything.
 export default function wrapWith<
