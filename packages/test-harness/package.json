@@ -7,6 +7,16 @@
     "./src/**/*"
   ],
   "exports": {
+    "./act": {
+      "import": {
+        "default": "./src/act.mjs",
+        "types": "./src/act.d.mts"
+      },
+      "require": {
+        "default": "./src/act.js",
+        "types": "./src/act.d.ts"
+      }
+    },
     "./describeEach": {
       "import": {
         "types": "./src/describeEach.d.mts",
@@ -18,15 +28,15 @@
       }
     },
     "./happy-dom.import": "./src/happy-dom.import.mjs",
-    "./test-types.import": "./src/test-types.import.mjs",
-    "./act": {
+    "./jsx.import": "./src/jsx.import.mjs",
+    "./render": {
       "import": {
-        "default": "./src/act.mjs",
-        "types": "./src/act.d.mts"
+        "default": "./src/render.mjs",
+        "types": "./src/render.d.mts"
       },
       "require": {
-        "default": "./src/act.js",
-        "types": "./src/act.d.ts"
+        "default": "./src/render.js",
+        "types": "./src/render.d.ts"
       }
     },
     "./renderHook": {
@@ -38,7 +48,8 @@
         "default": "./src/renderHook.js",
         "types": "./src/renderHook.d.ts"
       }
-    }
+    },
+    "./test-types.import": "./src/test-types.import.mjs"
   },
   "scripts": {
     "bump": "npm run bump:prod && npm run bump:dev",
@@ -52,11 +63,13 @@
     "precommit:typescript": "tsc --noEmit --project ./src/tsconfig.precommit.json",
     "switch": "cat package.json | jq --arg SWITCH_NAME $SWITCH_NAME -r '(.[\"switch:\" + $SWITCH_NAME] // {}) as $TEMPLATE | .devDependencies += ($TEMPLATE.devDependencies // {}) | .dependencies += ($TEMPLATE.dependencies // {})' | tee ./package.json.tmp && mv ./package.json.tmp ./package.json"
   },
+  "author": "William Wong (https://github.com/compulim)",
+  "license": "MIT",
   "peerDependencies": {
-    "typescript": ">=5",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "react-test-renderer": ">=16.8.0"
+    "react-test-renderer": ">=16.8.0",
+    "typescript": "^5.9.3"
   },
   "switch:react-16": {
     "dependencies": {
@@ -110,5 +123,22 @@
     "react-test-renderer": [
       "18"
     ]
+  },
+  "devDependencies": {
+    "@tsconfig/strictest": "^2.0.8",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-test-renderer": "^18.3.1",
+    "resolve-cwd": "^3.0.0"
+  },
+  "dependencies": {
+    "@happy-dom/global-registrator": "^20.0.11",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.1",
+    "esbuild": "^0.27.2",
+    "escape-string-regexp": "^5.0.0",
+    "expect": "^30.2.0"
   }
 }

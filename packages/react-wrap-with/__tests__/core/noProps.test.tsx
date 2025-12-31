@@ -1,13 +1,14 @@
-/** @jest-environment jsdom */
-/// <reference types="@types/jest" />
-
-import { render, RenderResult } from '@testing-library/react';
-import React, { Component, type ComponentType } from 'react';
-
+import { describeEach } from '@compulim/test-harness/describeEach';
+import { render, type RenderResult } from '@testing-library/react';
+import { expect } from 'expect';
+import { beforeEach, test } from 'node:test';
+import React, { type ComponentType } from 'react';
 import { Extract, type HowOf, Spy, wrapWith } from '../../src/index.ts';
 import EffectClass from '../__setup__/Effect.class.tsx';
 import FunctionalEffect from '../__setup__/Effect.functional.tsx';
 import { type EffectProps } from '../__setup__/Effect.props.ts';
+
+const { Component } = React;
 
 class AlohaClass extends Component {
   render() {
@@ -17,9 +18,9 @@ class AlohaClass extends Component {
 
 const FunctionalAloha = () => <h1>Aloha!</h1>;
 
-describe.each([
-  ['functional component', FunctionalEffect, FunctionalAloha],
-  ['component class', EffectClass, AlohaClass]
+describeEach([
+  ['functional component', FunctionalEffect, FunctionalAloha] as const,
+  ['component class', EffectClass, AlohaClass] as const
 ])('with a %s', (_, Effect: ComponentType<EffectProps>, Aloha: ComponentType) => {
   let BlinkingAloha: ComponentType<{ effect: 'blink' }>;
   let result: RenderResult;
@@ -31,11 +32,11 @@ describe.each([
   });
 
   test('should render as expected', () =>
-    expect(result.container.innerHTML).toMatchInlineSnapshot(
+    expect(result.container.innerHTML).toBe(
       Effect
         ? Aloha
-          ? `"<span class="effect effect--blink"><h1>Aloha!</h1></span>"`
-          : `"<span class="effect effect--blink"></span>"`
-        : `"<h1>Aloha!</h1>"`
+          ? '<span class="effect effect--blink"><h1>Aloha!</h1></span>'
+          : '<span class="effect effect--blink"></span>'
+        : '<h1>Aloha!</h1>'
     ));
 });
