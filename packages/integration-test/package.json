@@ -50,7 +50,7 @@
       "@testing-library/react": "^12",
       "@types/react": "^17",
       "@types/react-dom": "^17",
-      "@types/react-renderer": "^17",
+      "@types/react-test-renderer": "^17",
       "react": "17.0.0",
       "react-dom": "17.0.0",
       "react-test-renderer": "17.0.0"
